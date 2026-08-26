@@ -1,0 +1,20 @@
+{
+  "generator": "swarmui",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "masterpiece, best quality, amazing quality, very aesthetic, high resolution, absurdres, newest, photorealistic, realistic, hamburger, mcdonalds,",
+    "negativePrompt": "3d, anime, 2d, bad quality, worst quality, worst detail, sketch, censor, simple background, jpeg artifacts, low quality, watermark, unfinished, displeasing, oldest, early,chromatic aberration, signature,artistic error, username, scan",
+    "cfgScale": 5,
+    "steps": 35,
+    "sampler": "dpmpp_3m_sde_gpu",
+    "seed": 1102589240,
+    "width": 832,
+    "height": 1216,
+    "scheduler": "sgm_uniform",
+    "Model": "OfficialStableDiffusion/kft-requiem-fur-a-dream-v2",
+    "originalSampler": "dpmpp_3m_sde_gpu"
+  },
+  "roundTrip": {
+    "formats": ["png"]
+  }
+}

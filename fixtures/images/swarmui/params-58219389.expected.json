@@ -1,0 +1,19 @@
+{
+  "generator": "swarmui",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "absurdres, highly-detailed, best quality, masterpiece, very aesthetic, amazing quality, l3g0,  1boy, Pyramid Head (Silent Hill), holding absurdly large knife, horror (theme), horror background",
+    "negativePrompt": "anime, 2d, bad quality, worst quality, worst detail, sketch, censor, simple background, jpeg artifacts, low quality, watermark, unfinished, displeasing, oldest, early,chromatic aberration, signature,artistic error, username, scan, nipples",
+    "cfgScale": 5,
+    "steps": 35,
+    "sampler": "Euler a",
+    "seed": 366931152,
+    "width": 832,
+    "height": 1216,
+    "Model": "OfficialStableDiffusion/hassakuXLIllustrious_v12Style",
+    "originalSampler": "euler_ancestral"
+  },
+  "roundTrip": {
+    "formats": ["png"]
+  }
+}

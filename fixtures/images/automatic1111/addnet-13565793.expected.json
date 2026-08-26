@@ -1,0 +1,11 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": false,
+  "meta": {},
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

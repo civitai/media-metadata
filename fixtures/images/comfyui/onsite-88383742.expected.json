@@ -1,0 +1,55 @@
+{
+  "generator": "comfyui",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "masterpiece, best_quality, absurdres, ultra-detailed, intricate_details, sharp_focus, painterly, traditional media, hdr, vibrant_colors, ink_wash, cinematic_lighting, epic_composition, landscape, scenery, wide_shot, aerial_view, panoramic_view, sweeping_view, extreme_depth_of_field, vanishing_point, depth, atmospheric_perspective, layered_landscape, matte_painting, towering_mountains, karst_mountains, mountain_peak, cliff, chasm, pagoda, multi-tiered_pagoda, ancient_china, asian_architecture, ornate_bridge, bridge_over_water, river, waterfall, plunging_waterfall, turquoise_water, rice_paddy, terraced_field, cherry_blossoms, sakura, full_bloom, pine_tree, ancient_tree, prayer_flags, fluttering, sunset, golden_hour, colorful_sky, orange_sky, magenta_sky, lavender_sky, volumetric_lighting, god_rays, ((ethereal, mist, fog)), dreamlike, majestic, breathtaking",
+    "negativePrompt": "(worst quality, low quality, normal quality:2), blurry, pixelated, grainy, noisy, oversaturated, jpeg artifacts, watermark, signature, text, logo, border, frame, sketch, cartoon, 3d, cgi, anime, flat_lighting, broken perspective, depth_fail, unnatural depth, bad composition, ugly color palette, photo, real_life",
+    "cfgScale": 8.5,
+    "steps": 35,
+    "sampler": "DPM++ 2M Karras",
+    "seed": 907808944,
+    "engine": "Civitai",
+    "workflow": "img2img-hires",
+    "civitaiResources": [
+      {
+        "weight": 1,
+        "modelVersionId": 1900496
+      },
+      {
+        "weight": 1.1,
+        "modelVersionId": 1571875
+      },
+      {
+        "type": "upscaler",
+        "modelVersionId": 164821
+      }
+    ],
+    "extra": {
+      "clipSkip": 2,
+      "quantity": 1,
+      "aspectRatio": "13:19",
+      "baseModel": "Illustrious",
+      "width": 832,
+      "height": 1216,
+      "experimental": false,
+      "priority": "low",
+      "sourceImage": {
+        "url": "https://orchestration.civitai.com/v2/consumer/blobs/D7A6W0P1AWAPPY5VSS4D44SWF0.jpeg",
+        "width": 832,
+        "height": 1216
+      },
+      "disablePoi": true,
+      "process": "img2img"
+    },
+    "upscalers": [
+      "urn:air:other:upscaler:civitai:147759@164821"
+    ],
+    "denoise": 0.3
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

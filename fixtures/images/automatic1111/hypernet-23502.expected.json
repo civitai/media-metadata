@@ -1,0 +1,26 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "little mermaid, red hair, long hair, mermaid, mermaid tail, underwater, masterpiece, detailed, portrait, octane render, highly detailed",
+    "negativePrompt": "disfigured, kitsch, ugly, oversaturated, grain, low-res, Deformed, blurry, bad anatomy, disfigured, poorly drawn face, mutation, mutated, extra limb, ugly, poorly drawn hands, missing limb, blurry, floating limbs, disconnected limbs, malformed hands, blur, out of focus, long neck, long body, ugly, disgusting, poorly drawn, childish, mutilated, , mangled, old, surreal, text",
+    "cfgScale": 9,
+    "steps": 35,
+    "sampler": "Euler a",
+    "seed": 3305041585,
+    "clipSkip": 2,
+    "resources": [],
+    "Model hash": "3d1ec685",
+    "Hypernet": "Midjourney",
+    "Denoising strength": "0.7",
+    "First pass size": "0x0",
+    "width": 600,
+    "height": 800
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

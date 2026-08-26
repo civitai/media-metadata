@@ -1,0 +1,31 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "score_9, score_8_up, score_7_up,  san, 1girl, full body, squatting, solo, short hair, brown hair, gray eyes, headband, face paint, earrings, white sleeveless top, navy under dress, arm cuffs, fur headdress, fur cape, light-skinned female, female focus, looking at viewer, smiling, forest, (blush:1.1)  <lora:pony/twilight_style:0.8> concept art, realistic, <lora:pony/expressiveh:0.8> expressiveh, <lora:pony/kenva:0.8> knva, <lora:pony/san_pony_v4> <lora:sdxl/sinfully_stylish_sdxl>",
+    "negativePrompt": "score_6, score_5, score_4",
+    "cfgScale": 7,
+    "steps": 25,
+    "sampler": "Euler a Karras",
+    "seed": 3269595310,
+    "hashes": {
+      "LORA:pony/twilight_style": "2d9ee3fc65",
+      "LORA:pony/expressiveh": "7b53da0391",
+      "LORA:pony/kenva": "189804f733",
+      "LORA:pony/san_pony_v4": "66512e48ec",
+      "LORA:sdxl/sinfully_stylish_sdxl": "033c44dfb8",
+      "model": "67ab2fd8ec"
+    },
+    "resources": [],
+    "Model hash": "67ab2fd8ec",
+    "ponyDiffusionV6XL_v6StartWithThisOne Version": "ComfyUI",
+    "width": 896,
+    "height": 1152
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

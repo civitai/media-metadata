@@ -1,0 +1,77 @@
+{
+  "name": "@civitai/media-metadata",
+  "version": "0.0.0",
+  "description": "Read and write AI generation metadata embedded in media files (images today; video/audio planned)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/civitai/media-metadata.git"
+  },
+  "type": "module",
+  "packageManager": "pnpm@10.28.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./image": {
+      "types": "./dist/image/index.d.ts",
+      "import": "./dist/image/index.js",
+      "require": "./dist/image/index.cjs"
+    },
+    "./civitai": {
+      "types": "./dist/civitai/index.d.ts",
+      "import": "./dist/civitai/index.js",
+      "require": "./dist/civitai/index.cjs"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.js",
+      "require": "./dist/node.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src scripts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prettier:check": "prettier --check src scripts",
+    "prettier:write": "prettier --write src scripts",
+    "bless": "tsx scripts/bless.ts",
+    "fetch-fixtures": "tsx scripts/fetch-fixtures.ts"
+  },
+  "dependencies": {
+    "exifreader": "^4.39.0",
+    "zod": "^4.0.17"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "exifreader",
+      "sharp"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "eslint": "^9.34.0",
+    "prettier": "^3.6.2",
+    "sharp": "^0.34.3",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.40.0",
+    "vitest": "^4.0.0"
+  }
+}

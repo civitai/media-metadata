@@ -1,0 +1,29 @@
+{
+  "generator": "ruinedfooocus",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "ananmo, (stylized by Prateep Kochabua:0.9) , 3D Rendering, over the shoulder shot of a Ludicrous \"Looking for Mr. Goodbart\", Bathed in shadows, Light and shadow plays, One Color, UHD, psychedelic",
+    "cfgScale": 5,
+    "steps": 30,
+    "sampler": "dpmpp_2m_sde_gpu",
+    "seed": 2900952090,
+    "denoise": null,
+    "width": 896,
+    "height": 1152,
+    "Model": "crystalClearXL_ccxl",
+    "Model hash": "cbc222b0",
+    "software": "RuinedFooocus",
+    "other": {
+      "sampler_name": "dpmpp_2m_sde_gpu",
+      "base_model_name": "crystalClearXL_ccxl.safetensors",
+      "loras": "<Style\\SDXL-国潮-泼墨_V1.safetensors:1>,<None:0.5>,<None:0.5>,<None:0.5>,<None:0.5>",
+      "start_step": 0
+    },
+    "scheduler": "karras"
+  },
+  "roundTrip": {
+    "formats": [
+      "png"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "generator": "swarmui",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "cinematic, skyrim themed, a warrior wearing leather armor and horned helmet, 2 swords in hand, looking up at the sky, a dark demonic dragon is flying in the air in circles, snow peaked mountains in background, small village, very detailed, masterpiece, adventurous, cloudy sky, ",
+    "cfgScale": 1,
+    "steps": 30,
+    "seed": 7778,
+    "width": 768,
+    "height": 1216,
+    "Model": "flux1-dev.sft"
+  },
+  "roundTrip": {
+    "formats": ["png"]
+  }
+}

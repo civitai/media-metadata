@@ -1,0 +1,184 @@
+[
+  {
+    "file": "automatic1111/addnet-13565793.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/601c2264-4300-49fc-98d2-a85c239a1330/original=true/601c2264-4300-49fc-98d2-a85c239a1330.jpeg",
+    "sha256": "fc7fad32b06efa09479a84508dfd37d1a8b59730a5d4aec683f839e968d4cac6",
+    "generator": "automatic1111",
+    "notes": "A1111 png with AddNet models (Anything V3 gallery)"
+  },
+  {
+    "file": "automatic1111/addnet-9476750.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/dffcf275-933e-4af5-a2ae-523d19939215/original=true/dffcf275-933e-4af5-a2ae-523d19939215.jpeg",
+    "sha256": "033033db89d372cd1df3b8a422babae381f1a6d8f83908506c964346a2d659c7",
+    "generator": "automatic1111",
+    "notes": "A1111 png with AddNet Enabled extension metadata (early 2023)"
+  },
+  {
+    "file": "automatic1111/hypernet-23501.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/9364e1b0-79b8-41b9-3d22-903d40b39a00/original=true/9364e1b0-79b8-41b9-3d22-903d40b39a00.jpeg",
+    "sha256": "3ba2ed9d67a67a0a158264f6cee9126071eef94d38e542682184f550e64ef2ba",
+    "generator": "automatic1111",
+    "notes": "A1111 png with Hypernet (late 2022, MJV4 hypernetwork gallery)"
+  },
+  {
+    "file": "automatic1111/hypernet-23502.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/249ab8fb-ab3c-49bb-88dc-97382010ea00/original=true/249ab8fb-ab3c-49bb-88dc-97382010ea00.jpeg",
+    "sha256": "a0c83f640c08259e69c1636700fba0d435702074d1cab93a55caee5ab894db22",
+    "generator": "automatic1111",
+    "notes": "A1111 png with Hypernet + Hypernet strength — image id 23502, near the beginning of the Image table (late 2022)"
+  },
+  {
+    "file": "automatic1111/lora-hashes-28005051.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c032f811-e937-46a6-85f7-5e9887130d6b/original=true/c032f811-e937-46a6-85f7-5e9887130d6b.jpeg",
+    "sha256": "8a149dd074c95908ef41c498ed4de76222bdfcb5a8e0a7fdedf4ce6ad5a07538",
+    "generator": "automatic1111",
+    "notes": "A1111 png with Lora hashes block (Deliberate gallery, 2023 era)"
+  },
+  {
+    "file": "automatic1111/offsite-12097475.jpeg",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/936f0e8d-c76f-4aa7-8b5c-37349f9b7da7/original=true/936f0e8d-c76f-4aa7-8b5c-37349f9b7da7.jpeg",
+    "sha256": "46d189671441f0541ac1cd9fd4216f9278f2958ea5c9c808d2420b67a7d80b00",
+    "generator": "automatic1111",
+    "notes": "offsite A1111 jpeg, parameters in EXIF UserComment"
+  },
+  {
+    "file": "automatic1111/old-era-24038040.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/9ecb22f0-2998-41b0-8e7c-0af9ac3c2479/original=true/9ecb22f0-2998-41b0-8e7c-0af9ac3c2479.jpeg",
+    "sha256": "128a1f1df782fbb5c07cc3288197275461eadb06b3627bf34080a33ab7a99294",
+    "generator": "automatic1111",
+    "notes": "A1111 png, classic 2023 Model hash format (Deliberate gallery)"
+  },
+  {
+    "file": "automatic1111/onsite-140937841.jpeg",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c62344b8-c404-4ca4-a20e-83bfd0e16e24/original=true/c62344b8-c404-4ca4-a20e-83bfd0e16e24.jpeg",
+    "sha256": "77c311f1f274ba84c48f389f47881b2680a3ffee694c77347954e119514f1cc3",
+    "generator": "automatic1111",
+    "notes": "civitai on-site generation, A1111-format UserComment with Civitai resources/metadata"
+  },
+  {
+    "file": "automatic1111/onsite-87488990.jpeg",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/77c337fb-036b-42ba-ab55-ba335a377b75/original=true/77c337fb-036b-42ba-ab55-ba335a377b75.jpeg",
+    "sha256": "a5eb28ae3f9f83d0ea2742e66f26c10bc1380bea75fa67cc6b838c519362e1ec",
+    "generator": "automatic1111",
+    "notes": "civitai on-site generation jpeg (Artist=ai)"
+  },
+  {
+    "file": "automatic1111/text-chunks-9517243.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/695375a4-d7af-461e-ae6f-5ee960d34caa/original=true/695375a4-d7af-461e-ae6f-5ee960d34caa.jpeg",
+    "sha256": "490acb4f43975d2359dbcdd86544dae74e573e473ba79a8ae75f3035128b9aae",
+    "generator": "automatic1111",
+    "notes": "offsite A1111 png, parameters tEXt chunk"
+  },
+  {
+    "file": "comfyui/flux-sca-139981506.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b1157f6f-6b82-4db3-8230-fb99da776d8e/original=true/b1157f6f-6b82-4db3-8230-fb99da776d8e.jpeg",
+    "sha256": "74116d1399da02fb1fa99af018594d356d198907e1eff97865e0789ec8174f99",
+    "generator": "comfyui",
+    "notes": "ComfyUI png with Flux-style SamplerCustomAdvanced graph"
+  },
+  {
+    "file": "comfyui/legacy-usercomment-64621413.jpeg",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c145c1be-6532-47a6-a436-f5bda14e99b4/original=true/c145c1be-6532-47a6-a436-f5bda14e99b4.jpeg",
+    "sha256": "059655f140eeffb1708fc3a8872a51b834ac56f54d6b03d6de8dc4d7db6c03b3",
+    "generator": "comfyui",
+    "notes": "ComfyUI jpeg, workflow JSON in UserComment (legacy branch)"
+  },
+  {
+    "file": "comfyui/onsite-88383742.jpeg",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e30f4149-c8d2-4eda-85c3-783e5e2b3352/original=true/e30f4149-c8d2-4eda-85c3-783e5e2b3352.jpeg",
+    "sha256": "5516b8715e4451d692363d140e0213d782ec3de167fc0aab475a1211def1e443",
+    "generator": "comfyui",
+    "notes": "civitai on-site ComfyUI jpeg"
+  },
+  {
+    "file": "comfyui/webp-model-tag-22566974.webp",
+    "url": "synthetic:comfyui/workflow-22566974.png",
+    "sha256": "64a2c29b8c29896fa2b2aa948caeb842807421645948c2eb9f46e8c4618416e4",
+    "generator": "comfyui",
+    "notes": "Synthesized by scripts/make-webp-fixture.ts: the real prompt graph from workflow-22566974.png re-containered as webp with the prompt JSON in EXIF Model, the way ComfyUI webp save nodes write it."
+  },
+  {
+    "file": "comfyui/workflow-22566974.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a6f968b2-1220-422d-a618-ac1e938ffa62/original=true/a6f968b2-1220-422d-a618-ac1e938ffa62.jpeg",
+    "sha256": "d70e2cf7cf84a2ec4ded536e0f97a24728fed85ebc06c6efc6b19bac5a39c40f",
+    "generator": "comfyui",
+    "notes": "ComfyUI png with prompt+workflow tEXt chunks"
+  },
+  {
+    "file": "none/photo-61893679.jpeg",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/012041fd-c1cb-4c08-b0dd-b4ae9148e9bc/original=true/012041fd-c1cb-4c08-b0dd-b4ae9148e9bc.jpeg",
+    "sha256": "00f96e3aeff4c01e264e6eb63c4212ab08519ce295ade44b18e91d2fde51f466",
+    "generator": null,
+    "notes": "negative fixture: jpeg with no generation metadata"
+  },
+  {
+    "file": "none/plain-28674519.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/3bcae6ac-9141-489b-8e14-81954a9e8e76/original=true/3bcae6ac-9141-489b-8e14-81954a9e8e76.jpeg",
+    "sha256": "39901ac5829ec0245ac678259ac42b766df88a030e2a5745bda95984a73dce95",
+    "generator": null,
+    "notes": "negative fixture: png with no generation metadata"
+  },
+  {
+    "file": "ruinedfooocus/software-12132877.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/3fca5a05-600d-4500-8708-577663205935/original=true/3fca5a05-600d-4500-8708-577663205935.jpeg",
+    "sha256": "cff96f37f8d761fb1788521d853de39b5e6a8649ca56ef036abf7fc87da73f7f",
+    "generator": "ruinedfooocus",
+    "notes": "RuinedFooocus png"
+  },
+  {
+    "file": "ruinedfooocus/software-12133683.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ba19c4cf-ceb6-42fb-ab1d-7a3f892a251f/original=true/ba19c4cf-ceb6-42fb-ab1d-7a3f892a251f.jpeg",
+    "sha256": "c1bfc08eafd52f8f47f1ac313bdba8738247c36926c0260c0a55102966938ea5",
+    "generator": "ruinedfooocus",
+    "notes": "RuinedFooocus png"
+  },
+  {
+    "file": "ruinedfooocus/software-7477596.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/fbe72696-a49c-458f-b3ae-8086d4916683/original=true/fbe72696-a49c-458f-b3ae-8086d4916683.jpeg",
+    "sha256": "d943969d54a9ced517ec834211f3b9fbab72598841d805e2af48e07212e682f4",
+    "generator": "ruinedfooocus",
+    "notes": "RuinedFooocus png"
+  },
+  {
+    "file": "ruinedfooocus/software-7519656.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/7be14f70-6605-4549-a692-639cb1cdf4a7/original=true/7be14f70-6605-4549-a692-639cb1cdf4a7.jpeg",
+    "sha256": "0e0f756573d17782b8cf045ad9645a6ae1a25a83b57e0ffede4371b72efe7137",
+    "generator": "ruinedfooocus",
+    "notes": "RuinedFooocus png, JSON parameters with software marker"
+  },
+  {
+    "file": "swarmui/params-24641975.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/d7b48ab2-4d80-4d72-859c-5e2d0533cf28/original=true/d7b48ab2-4d80-4d72-859c-5e2d0533cf28.jpeg",
+    "sha256": "188aea31c975c930a0cae9ce876f68ce975a0946bbf5f59bb361cab9cfb79a7d",
+    "generator": "swarmui",
+    "notes": "SwarmUI png, sui_image_params"
+  },
+  {
+    "file": "swarmui/params-48553207.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/19fd407c-0e02-4b5c-a0cb-d6cd44f120ce/original=true/19fd407c-0e02-4b5c-a0cb-d6cd44f120ce.jpeg",
+    "sha256": "98e642a0cc2f58545540b787e0e0dc101513c83ccdd4bb224c4f4a821b6d7a3f",
+    "generator": "swarmui",
+    "notes": "SwarmUI png"
+  },
+  {
+    "file": "swarmui/params-55580263.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/bdaf14a7-f983-4bda-84f7-be5f6beb92cf/original=true/bdaf14a7-f983-4bda-84f7-be5f6beb92cf.jpeg",
+    "sha256": "5fca647f28be85b7e7de768dcac1e43efbe191dac42ef6d3ac579aa09396fab3",
+    "generator": "swarmui",
+    "notes": "SwarmUI png"
+  },
+  {
+    "file": "swarmui/params-56780951.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/38fdf6dc-452b-4856-ac0b-1d9fe4c1d13b/original=true/38fdf6dc-452b-4856-ac0b-1d9fe4c1d13b.jpeg",
+    "sha256": "83c3665b4ddfda7e7b57c961de6a2a3e5daab5327ee90d64724fe7017a692131",
+    "generator": "swarmui",
+    "notes": "SwarmUI png"
+  },
+  {
+    "file": "swarmui/params-58219389.png",
+    "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/39c808cb-e44a-4d80-bb06-2646ee0d5bb8/original=true/39c808cb-e44a-4d80-bb06-2646ee0d5bb8.jpeg",
+    "sha256": "f51371f629be20a6bbfc215f732391203217cf8c7798f34314325af5da657387",
+    "generator": "swarmui",
+    "notes": "SwarmUI png"
+  }
+]

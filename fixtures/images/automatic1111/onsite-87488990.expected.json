@@ -1,0 +1,49 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "illustrated by Gabriel Picolo, (resplendent highlighting) in the style of casual line and wash sketch, hauntingly beautiful, violento colorido, influenced by Bernard Buffet, a contemporary watercolor painting, tightly framed, close-up portrait of a deltarune githyanki with wild hair, by Aleksi Briclot, fantasy art, super wide angel, ginger wavy hair, karol bak, decay, lovely dark autumn princess FLAT COLORS, concept art by syd mead, minimal shading, plump lips",
+    "negativePrompt": "watermark, cloned face, same face, nsfw, nipples, elongated, long neck makeup, face paint, weapons, sticks, holding objects, long forearms, duplicate ears, (elongated arms:1.5), (Blurry eyes:1.5), Duplicate mouth, duplicate lips, duplicate nostrils, misaligned fingers hand and arm, misaligned toes feet, and leg), (misaligned irises, misaligned pupils), (semi-realistic, CGI, 3D, render, sketch, cartoon, drawing, anime (deformed, distorted, disfigured:1.4), (extra fingers hand or arm, extra toes foot or leg:1.4), (missing fingers hand or arm, missing toes foot or leg:1.4), (elongated hands and too many fingers), (elongated feet and too many toes)",
+    "cfgScale": 6,
+    "steps": 21,
+    "sampler": "Euler a",
+    "seed": 740360497,
+    "clipSkip": 2,
+    "resources": [],
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 128078
+      },
+      {
+        "type": "lora",
+        "weight": 0.5,
+        "modelVersionId": 1140252
+      },
+      {
+        "type": "lora",
+        "weight": 0.7,
+        "modelVersionId": 403123
+      },
+      {
+        "type": "lora",
+        "weight": 0.8,
+        "modelVersionId": 211718
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 1982223
+      }
+    ],
+    "Created Date": "2025-07-10T2157:14.2171687Z",
+    "width": 832,
+    "height": 1216
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}
