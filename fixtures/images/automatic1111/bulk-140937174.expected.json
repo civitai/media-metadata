@@ -1,0 +1,92 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "<lora:TagineXL:1> tagine, food photography style, wide diorama shot, a chubby panda bear made of black and white cotton candy, fully clothed in a chocolate jacket, wearing red hard-candy sunglasses, lounging inside a shop built out of baked tagine clay and gingerbread, eating a mini pizza made of fruit leather and cheese, candy rodents in the background, bright appetizing colors, macro lens, crisp details, masterpiece, best quality⁠",
+    "negativePrompt": "nude, naked, bare skin, shirtless, undressed, exposed torso, nudity, NSFW, real fur, plastic look, dark shadows, blurry foreground, low resolution, draft⁠",
+    "cfgScale": 4.5,
+    "steps": 24,
+    "sampler": "Euler a",
+    "seed": 1267334846,
+    "clipSkip": 2,
+    "resources": [
+      {
+        "type": "lora",
+        "name": "TagineXL",
+        "weight": 1
+      }
+    ],
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 128078
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 135867
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 161586
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 567119
+      }
+    ],
+    "extra": {
+      "workflow": "txt2img",
+      "priority": "low",
+      "outputFormat": "jpeg",
+      "ecosystem": "SDXL",
+      "aspectRatio": {
+        "value": "3:2",
+        "width": 1216,
+        "height": 832
+      },
+      "prompt": "<lora:TagineXL:1> tagine, food photography style, wide diorama shot, a chubby panda bear made of black and white cotton candy, fully clothed in a chocolate jacket, wearing red hard-candy sunglasses, lounging inside a shop built out of baked tagine clay and gingerbread, eating a mini pizza made of fruit leather and cheese, candy rodents in the background, bright appetizing colors, macro lens, crisp details, masterpiece, best quality⁠",
+      "negativePrompt": "nude, naked, bare skin, shirtless, undressed, exposed torso, nudity, NSFW, real fur, plastic look, dark shadows, blurry foreground, low resolution, draft⁠",
+      "sampler": "Euler a",
+      "cfgScale": 4.5,
+      "steps": 24,
+      "clipSkip": 2,
+      "seed": 1267334846,
+      "enhancedCompatibility": false,
+      "quantity": 2,
+      "resources": [
+        {
+          "modelVersionId": 128078,
+          "strength": 1,
+          "type": "Checkpoint"
+        },
+        {
+          "modelVersionId": 135867,
+          "strength": 1,
+          "type": "LORA"
+        },
+        {
+          "modelVersionId": 161586,
+          "strength": 1,
+          "type": "LORA"
+        },
+        {
+          "modelVersionId": 567119,
+          "strength": 1,
+          "type": "LORA"
+        }
+      ]
+    },
+    "Created Date": "2026-08-26T2144:46.0397184Z",
+    "width": 1216,
+    "height": 832
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

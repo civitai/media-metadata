@@ -1,0 +1,58 @@
+{
+  "generator": "comfyui",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "winter wonderland, palace,",
+    "cfgScale": 10,
+    "steps": 48,
+    "sampler": "DPM++ 2M Karras",
+    "seed": 2137888815,
+    "engine": "Civitai",
+    "workflow": "img2img:hires-fix",
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 3187704
+      },
+      {
+        "type": "vae",
+        "modelVersionId": 669051
+      },
+      {
+        "type": "upscaler",
+        "modelVersionId": 164821
+      }
+    ],
+    "extra": {
+      "priority": "low",
+      "outputFormat": "jpeg",
+      "ecosystem": "Illustrious",
+      "images": [
+        {
+          "url": "https://orchestration-new.civitai.com/v2/consumer/blobs/MF9FZ6VWYEAKFDSSMY3PPW0EK0.jpeg?sig=CfDJ8OhuHddet6VHsmTPdSCkBZTBx-1cPe8Vdh5N5POQBCbODhPJDUEGV3wuww3MnHBa61xx3f-gUIPbkK-3WM5Xq-fNnoex9Y1p5E2ZAvlcqhFepTywTa5DzEBUzZTkw4TRUTkNutaqx4QQmtbjcApoX6e3MvCfCewGF1KjJnL9-picLw-US_Ys705SBdf6swb9Skx-izO7p5uJhBIzcdFcH0tmcH23wnDgKb0ytJRH7gBGQYvrS4kLhQTK3arDJmxsj_v0Z5TjaEq0nDBL2p32-RtchQV07SgFsPPcVPvLvbhx&exp=2027-08-26T21:27:51.0286975Z",
+          "width": 1216,
+          "height": 832
+        }
+      ],
+      "clipSkip": 2,
+      "quantity": 1
+    },
+    "models": [
+      "urn:air:sdxl:checkpoint:civitai:24350@3187704"
+    ],
+    "upscalers": [
+      "urn:air:other:upscaler:civitai:147759@164821"
+    ],
+    "vaes": [
+      "urn:air:sdxl:vae:civitai:85106@669051"
+    ],
+    "denoise": 0.75,
+    "Model": "urn:air:sdxl:checkpoint:civitai:24350@3187704"
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

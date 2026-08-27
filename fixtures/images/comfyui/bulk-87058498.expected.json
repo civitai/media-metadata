@@ -1,0 +1,58 @@
+{
+  "generator": "comfyui",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "masterpiece, best quality, very aesthetic, (aliasing:1.2), (jaggy lines:1.2), photo \\(medium\\), cosplay photo, (realistic:1.1), photorealistic, (by 96yottea:1.2),  \n1girl, solo, black ninja outfit, red belts, Japanese words background, head covered by hoodie, holding the katana, katana infront the face, upper body,    sharp eyes, glowing effects, high texture, \nmasterpiece, best quality, amazing quality, very aesthetic, highres, perfect katana, glowing, art, art style, side shot, top view, bloody background, blood, melting, the girl is melting, splash, \n<lora:nhl-005-20:0.8> nhl-005,\n<lora:NEW_DPO_00001_:1>, <lora:PSAIX_MERGE:0.33>, masterpiece, best quality, very aesthetic, absurdres",
+    "negativePrompt": "jpeg artifacts, film graain, scanlines, scan artifacts, adversarial noise,\nbad anatomy, bad hands, (disembodied:1.1), missing fingers, fewer digits, extra, signature, watermark, logo, sweat, sweatdrop, colored inner hair, hair intakes,",
+    "cfgScale": 4,
+    "steps": 19,
+    "sampler": "Euler a",
+    "seed": 2078684535,
+    "engine": "Civitai",
+    "workflow": "img2img-hires",
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 1697082
+      },
+      {
+        "type": "lycoris",
+        "weight": 1,
+        "modelVersionId": 1420683
+      },
+      {
+        "type": "lora",
+        "weight": 0.4,
+        "modelVersionId": 1682812
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 1380520
+      },
+      {
+        "type": "lora",
+        "weight": 0.6,
+        "modelVersionId": 1141520
+      },
+      {
+        "type": "upscaler",
+        "modelVersionId": 164821
+      }
+    ],
+    "extra": {},
+    "models": [
+      "urn:air:sdxl:checkpoint:civitai:140272@1697082"
+    ],
+    "upscalers": [
+      "urn:air:other:upscaler:civitai:147759@164821"
+    ],
+    "Model": "urn:air:sdxl:checkpoint:civitai:140272@1697082"
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

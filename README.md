@@ -72,6 +72,22 @@ AIR identifier parsing (`parseAir`), the on-site marker (`isMadeOnSite`). The de
 context includes it, so results match civitai.com out of the box; pass your own `ParserContext`
 to override (e.g. `resolveAir`, `samplerMap`, `a1111ExcludedKeys`, `onDebug`).
 
+### Sampler normalization (`samplerMap`)
+
+`samplerMap` is a single shared table shaped `A1111 display name → [native aliases]`
+(`'Euler a' → ['euler_ancestral']`). It's used in one direction only: the ComfyUI, SwarmUI, and
+RuinedFooocus parsers look their native sampler name up **by alias value** and rewrite it to the
+A1111 name (with a `_karras` retry when the scheduler is karras). The A1111 parser never uses it —
+its text already carries A1111 vocabulary. One table works because those UIs all emit the same
+comfy-style snake_case family; SwarmUI additionally keeps the native name in `originalSampler`.
+
+- **Add a new ecosystem's names** by appending aliases to the same entries — no second map needed:
+  `map.set('DPM++ 2M', [...map.get('DPM++ 2M'), 'my_ui_dpm_2m'])`.
+- **Disable normalization** (keep raw native names) by passing `samplerMap: new Map()`.
+- A custom parser you register can ignore `ctx.samplerMap` and close over its own table.
+
+### A1111 encode policy (`a1111ExcludedKeys`)
+
 `a1111ExcludedKeys` is the denylist of unified-metadata keys that are internal/cross-parser
 fields rather than A1111 text fields (skipped on details-line passthrough and on encode). It's a
 denylist rather than an allowlist because the A1111 format is open-ended — extensions add
@@ -85,6 +101,26 @@ encodeMetadata(meta, 'automatic1111', {
   a1111ExcludedKeys: [...defaultA1111ExcludedKeys, 'myInternalKey'],
 });
 ```
+
+## Examples & playground
+
+`examples/` contains a runnable script for each way civitai uses this package — upload
+preprocessing, resize-preserving-metadata, copy generation data, paste-parameters, source-metadata
+extraction — plus a third-party usage example with a custom `ParserContext`. Each file's header
+names the exact civitai call site it mirrors; `docs/civitai-migration.md` maps every call site to
+its replacement API.
+
+```bash
+pnpm examples     # run them all against the fixture corpus
+pnpm playground   # drag-and-drop parser inspector at http://localhost:5199
+```
+
+The playground is a dev-only Vite page: drop any image (or paste a civitai CDN URL) and see the
+detected generator, parsed metadata, re-encoded A1111 text, embeddable payload, and raw tags.
+Every card also has a **Transform + copyMetadata** control that resizes/converts the image through
+a canvas (which strips all metadata, same as the app's resize path), restores the metadata with
+`copyMetadata`, re-reads the result, and badges it "metadata fully preserved" or "lossy for this
+target" with a key-level diff — plus a Download button for the transformed file.
 
 ## Fixtures & tests
 
@@ -120,6 +156,10 @@ into metadata; `encode` renders your native text format. Register it in
 - The app's `getMetadata()` stripped the `meta.extra` payload down to three app-specific keys as a
   side effect of its zod schema; this package keeps the full `extra` record. (The app can re-strip.)
 - `detect` failures skip to the next parser instead of aborting the whole read.
+- AddNet weights are read from `AddNet Weight A ${i}` (what the extension writes) and non-finite
+  weights are omitted. Historically a NaN weight failed schema validation and discarded the entire
+  metadata object — every AddNet-era image parsed to `{}`. (Fixed in the app in parallel; see
+  docs/corpus-findings.md item 1.)
 
 ## Development
 

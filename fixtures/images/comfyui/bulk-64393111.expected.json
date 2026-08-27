@@ -1,0 +1,23 @@
+{
+  "generator": "comfyui",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "A mischievous spider in a pirate hat atop a vibrant yellow flower appears to move its legs and gaze around curiously, the camera zooming in for a close-up view of its detailed features and the dramatic contrast between the arachnid and the delicate bloom. cinematic_1940s",
+    "cfgScale": 1,
+    "steps": 25,
+    "sampler": "Euler",
+    "seed": 2193219980,
+    "comfy": "{\"prompt\": {\"10001\": {\"class_type\": \"ECHOCheckpointLoaderSimple\", \"inputs\": {\"ckpt_name\": \"EMS-445260-EMS.safetensors\"}, \"_properties\": null}, \"10007\": {\"class_type\": \"DualCLIPLoader\", \"inputs\": {\"clip_name1\": \"t5xxl_fp8_e4m3fn.safetensors\", \"clip_name2\": \"clip_l_sdxl_base.safetensors\", \"type\": \"flux\"}, \"_properties\": null}, \"10012\": {\"class_type\": \"LoraTagLoader\", \"inputs\": {\"clip\": [\"10007\", 0], \"model\": [\"10001\", 0], \"text\": \"<lora:EMS-810933-FP8-EMS.safetensors:0.800000>\"}, \"_properties\": null}, \"10013\": {\"class_type\": \"VAELoader\", \"inputs\": {\"vae_name\": \"ae.sft\"}, \"_properties\": null}, \"10015\": {\"class_type\": \"EmptySD3LatentImage\", \"inputs\": {\"batch_size\": 2, \"height\": 1216, \"width\": 832}, \"_properties\": null}, \"10026\": {\"class_type\": \"CLIPTextEncode\", \"inputs\": {\"clip\": [\"10012\", 1], \"text\": \"A mischievous spider in a pirate hat atop a vibrant yellow flower appears to move its legs and gaze around curiously, the camera zooming in for a close-up view of its detailed features and the dramatic contrast between the arachnid and the delicate bloom. cinematic_1940s\", \"token_normalization\": \"none\", \"weight_interpretation\": \"comfy\"}, \"_properties\": null}, \"10027\": {\"class_type\": \"CLIPTextEncode\", \"inputs\": {\"clip\": [\"10012\", 1], \"text\": \"\", \"token_normalization\": \"none\", \"weight_interpretation\": \"comfy\"}, \"_properties\": null}, \"10028\": {\"class_type\": \"FluxGuidance\", \"inputs\": {\"conditioning\": [\"10026\", 0], \"guidance\": 3.0}, \"_properties\": null}, \"11001\": {\"class_type\": \"SetSubseeds\", \"inputs\": {\"latent\": [\"10015\", 0]}, \"_properties\": null}, \"11002\": {\"class_type\": \"KSampler\", \"inputs\": {\"cfg\": 1.0, \"denoise\": 1.0, \"ensd\": 31337, \"latent_image\": [\"11001\", 0], \"model\": [\"10012\", 0], \"negative\": [\"10027\", 0], \"positive\": [\"10028\", 0], \"sampler_name\": \"euler\", \"scheduler\": \"beta\", \"seed\": 2193219980, \"seed_mode\": \"A1111\", \"steps\": 25}, \"_properties\": null}, \"11019\": {\"class_type\": \"VAEDecode\", \"inputs\": {\"samples\": [\"11002\", 0], \"vae\": [\"10013\", 0]}, \"_properties\": null}, \"12004\": {\"class_type\": \"SetSubseeds_Image\", \"inputs\": {\"images\": [\"11019\", 0]}, \"_properties\": null}, \"12005\": {\"class_type\": \"SaveImage\", \"inputs\": {\"filename_prefix\": \"840930111086819890\", \"images\": [\"12004\", 0]}, \"_properties\": null}}, \"workflow\": undefined}",
+    "engine": "ComfyUI",
+    "vaes": [
+      "ae.sft"
+    ],
+    "scheduler": "beta",
+    "denoise": 1
+  },
+  "roundTrip": {
+    "formats": [
+      "png"
+    ]
+  }
+}

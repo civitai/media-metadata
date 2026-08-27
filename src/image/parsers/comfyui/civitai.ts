@@ -1,17 +1,6 @@
-import type { ComfyNode } from './graph';
-
-// Resource-name widgets (checkpoint/lora/vae/... names) whose links we resolve to a name/AIR
-// rather than to a node object. Their links are left un-resolved by the generic pass so
-// resolveResourceName still sees the [nodeId, outputSlot] link and can honor the output slot.
-export const RESOURCE_NAME_KEYS = [
-  'ckpt_name',
-  'unet_name',
-  'model_name',
-  'vae_name',
-  'control_net_name',
-  'lora_name',
-];
-const NAME_WIDGET_KEYS = ['value', 'string'];
+import type { CivitaiResource, GenerationMetadata } from '../../../shared/schema';
+import type { ParserContext } from '../types';
+import type { AdditionalResource, ComfyNode } from './graph';
 
 // A CivitaiModelSelector can supply several resources on different output slots; resources_json
 // maps each output slot to its AIR. Resolve the specific slot the loader is wired to, falling
@@ -29,6 +18,8 @@ function getSelectorAir(node: ComfyNode, slot: number | string | undefined): str
   }
   return typeof node.inputs?.air === 'string' ? node.inputs.air : undefined;
 }
+
+const NAME_WIDGET_KEYS = ['value', 'string'];
 
 // Recover a resource name/AIR from a widget value that may be a literal string or a node link.
 // Civitai's ComfyUI resource picker (CivitaiModelSelector) carries AIRs; primitive/string nodes
@@ -60,12 +51,54 @@ export function resolveResourceName(
   return undefined;
 }
 
-export function pushResourceName(
-  names: string[],
-  value: unknown,
-  widgetKey: string,
-  prompt: Record<string, ComfyNode>
-) {
-  const name = resolveResourceName(value, widgetKey, prompt);
-  if (name) names.push(name);
+const LEGACY_AIR_KEYS = ['ckpt_airs', 'lora_airs', 'embedding_airs'];
+
+/** Pre-compliance workflows stored `modelId@versionId` strings under per-type extra keys. */
+export function parseLegacyAirKeys(workflowExtra: Record<string, unknown> | undefined) {
+  const versionIds: number[] = [];
+  const modelIds: number[] = [];
+  if (workflowExtra) {
+    for (const key of LEGACY_AIR_KEYS) {
+      const airs = workflowExtra[key] as string[] | undefined;
+      if (!airs) continue;
+      for (const air of airs) {
+        const [modelId, versionId] = air.split('@');
+        if (versionId) versionIds.push(parseInt(versionId));
+        else if (modelId) modelIds.push(parseInt(modelId));
+      }
+    }
+  }
+  return { versionIds, modelIds };
+}
+
+/**
+ * Resolve the workflow's `urn:air:` identifiers into civitaiResources (dedup by
+ * version id, carry lora strength as weight) and drop the matching entries from
+ * additionalResources. Non-numeric versions (e.g. huggingface checkpoints) are
+ * skipped — they stay in models/vaes/etc. as raw strings rather than becoming a
+ * bogus civitaiResource with a null id.
+ */
+export function applyCivitaiAirs(
+  metadata: GenerationMetadata,
+  airs: string[],
+  additionalResources: AdditionalResource[],
+  ctx: ParserContext
+): void {
+  const civitaiResources = (metadata.civitaiResources ?? []) as CivitaiResource[];
+
+  for (const air of airs) {
+    const { version, type } = ctx.resolveAir(air);
+    if (Number.isNaN(version)) continue;
+    const resource: CivitaiResource = { modelVersionId: version, type };
+    const weight = additionalResources.find((x) => x.name === air)?.strength;
+    if (weight) resource.weight = weight;
+    const index = civitaiResources.findIndex((x) => x.modelVersionId === resource.modelVersionId);
+    if (index > -1) civitaiResources[index] = resource;
+    else civitaiResources.push(resource);
+    metadata.civitaiResources = civitaiResources;
+
+    const additionalResourceIndex = additionalResources.findIndex((x) => x.name === air);
+    if (additionalResourceIndex > -1)
+      metadata.additionalResources?.splice(additionalResourceIndex, 1);
+  }
 }

@@ -1,0 +1,67 @@
+{
+  "generator": "comfyui",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "<lora:ck-shadow-circuit-IL:0.78>, Frieren, smiling, holding black cat, enchanted forest,no hand in frame,\nmasterpiece, best quality, good quality, very aesthetic, absurdres, newest, 8K, depth of field, focused subject,\n close up, stylized, wabi sabi, 1girl,  looking at viewer, dynamic angle, from below, from side, relaxing\n<lora:MoriiMee_Gothic_Niji_Style_Illustrious_r1:0.45>\n<lora:ck-nc-cyberpunk-IL-000011:0.4>\n<lora:ck-neon-retrowave-IL:0.8> , in the style of cksc, in the style of cknc, artist:moriimee, in the style of ck-rw",
+    "negativePrompt": "civit_nsfw, score_6, score_5, score_4, bad quality, worst quality, worst detail, sketch, censorship, furry, window, holding, headphones,",
+    "cfgScale": 5,
+    "steps": 30,
+    "sampler": "Euler a",
+    "engine": "Civitai",
+    "workflow": "img2img-hires",
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 1240288
+      },
+      {
+        "weight": 1,
+        "modelVersionId": 1240288
+      },
+      {
+        "type": "lora",
+        "weight": 0.78,
+        "modelVersionId": 1380520
+      },
+      {
+        "type": "lora",
+        "weight": 0.4,
+        "modelVersionId": 1410611
+      },
+      {
+        "type": "lora",
+        "weight": 0.45,
+        "modelVersionId": 1244133
+      },
+      {
+        "type": "lora",
+        "weight": 0.8,
+        "modelVersionId": 1384132
+      },
+      {
+        "weight": 1,
+        "modelVersionId": 106916
+      },
+      {
+        "type": "upscaler",
+        "modelVersionId": 164821
+      }
+    ],
+    "extra": {
+      "remixOfId": 60177069
+    },
+    "models": [
+      "urn:air:sdxl:checkpoint:civitai:140272@1240288"
+    ],
+    "upscalers": [
+      "urn:air:other:upscaler:civitai:147759@164821"
+    ],
+    "Model": "urn:air:sdxl:checkpoint:civitai:140272@1240288"
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

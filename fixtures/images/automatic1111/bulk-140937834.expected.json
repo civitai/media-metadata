@@ -1,0 +1,126 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "novan_realism_1, cinematic shot of  robot Voodoo doll robot duck DJ made of creamy cookies at the decks, in a cookie-world junkyard minion skate park, wearing sunglasses and a top-hat, a red flower on his hat, manic grin, Voronoi textures, expansive cityscape made of creamy cookies, overcast golden hour, god rays,  baked and glazed voronoi Arches made of creamy cookies,  crazy cookie energy,  soft dynamic light, distant voronoi cake city, consistent depth, soft volumetric lighting, digital art, master piece, high quality,",
+    "negativePrompt": "monochrome, blurry, boring, poor, bad, CyberRealistic_Negative",
+    "cfgScale": 5,
+    "steps": 25,
+    "sampler": "DPM++ 2M Karras",
+    "seed": 351677678,
+    "clipSkip": 2,
+    "resources": [],
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 3017793
+      },
+      {
+        "type": "lora",
+        "weight": 0.4,
+        "modelVersionId": 947620
+      },
+      {
+        "type": "lora",
+        "weight": 0.7,
+        "modelVersionId": 2858836
+      },
+      {
+        "type": "lycoris",
+        "weight": 0.6,
+        "modelVersionId": 595500
+      },
+      {
+        "type": "lora",
+        "weight": 0.25,
+        "modelVersionId": 161586
+      },
+      {
+        "type": "lora",
+        "weight": 0.8,
+        "modelVersionId": 656520
+      },
+      {
+        "type": "embed",
+        "weight": 1,
+        "modelVersionId": 3002212
+      },
+      {
+        "type": "embed",
+        "weight": 1,
+        "modelVersionId": 82745
+      }
+    ],
+    "extra": {
+      "workflow": "txt2img",
+      "priority": "low",
+      "outputFormat": "jpeg",
+      "ecosystem": "SDXL",
+      "aspectRatio": {
+        "value": "1:1",
+        "width": 1024,
+        "height": 1024
+      },
+      "prompt": "novan_realism_1, cinematic shot of  robot Voodoo doll robot duck DJ made of creamy cookies at the decks, in a cookie-world junkyard minion skate park, wearing sunglasses and a top-hat, a red flower on his hat, manic grin, Voronoi textures, expansive cityscape made of creamy cookies, overcast golden hour, god rays,  baked and glazed voronoi Arches made of creamy cookies,  crazy cookie energy,  soft dynamic light, distant voronoi cake city, consistent depth, soft volumetric lighting, digital art, master piece, high quality,",
+      "negativePrompt": "monochrome, blurry, boring, poor, bad, CyberRealistic_Negative",
+      "sampler": "DPM++ 2M Karras",
+      "cfgScale": 5,
+      "steps": 25,
+      "clipSkip": 2,
+      "seed": 351677678,
+      "enhancedCompatibility": false,
+      "quantity": 2,
+      "resources": [
+        {
+          "modelVersionId": 3017793,
+          "strength": 1,
+          "type": "Checkpoint"
+        },
+        {
+          "modelVersionId": 947620,
+          "strength": 0.4,
+          "type": "LORA"
+        },
+        {
+          "modelVersionId": 2858836,
+          "strength": 0.7,
+          "type": "LORA"
+        },
+        {
+          "modelVersionId": 595500,
+          "strength": 0.6,
+          "type": "LoCon"
+        },
+        {
+          "modelVersionId": 161586,
+          "strength": 0.25,
+          "type": "LORA"
+        },
+        {
+          "modelVersionId": 656520,
+          "strength": 0.8,
+          "type": "LORA"
+        },
+        {
+          "modelVersionId": 3002212,
+          "strength": 1,
+          "type": "TextualInversion"
+        },
+        {
+          "modelVersionId": 82745,
+          "strength": 1,
+          "type": "TextualInversion"
+        }
+      ]
+    },
+    "Created Date": "2026-08-26T2246:47.4444795Z",
+    "width": 1024,
+    "height": 1024
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "(masterpiece, extremely detailed, very aesthetic, best quality, ultra-detailed, sharp focus, cinematic lighting, depth of field, dark_art_style, lineweight),\n(Flat color:2),\nstanding,from above,upper view,\n(1girl, solo,   minamoto shizuka,pink shirt,red skirt,), dust cloud,stomping,particles, holding building),minamoto shizuka,white pupils\n(Curvy),\n(sexy pose, ),masterpiece, best quality, high detail, absurdres, awe-inspiring, sunlight, shadow, detailed background, 2d, masterpiece, best quality, amazing quality, highres, absurdres, newest, sky,,tall,adult,smile,looking down,giantess,cloud,micro city,building,detailed background,outdoor,",
+    "negativePrompt": "(verybadimagenegative_v1.3), (easynegative), (worst quality, low quality, blurry, grainy, fake, glitch, poorly drawn), (text, watermark, logo, signature, copyright), (deformed anatomy, bad proportions, twisted limbs, distorted perspective, extra limbs), (stacked hands, stacked torso, missing fingers, extra fingers, deformed fingers, bad hands, badhandv4:0.8), (crazy eyes, constricted pupils, no pupils, bad eyes, bad face, bad teeth, uneven lips, young, loli, teen, child), (backlighting, flat shading, unnatural shadows), (sketch, doodle, unfinished, messy, low detail), (aliasing, distortion, compression artifacts, jpeg artifacts), (error, corrupted, glitched, over-sharpened, oversaturated, washed out colors), (tanlines), (realistic, photorealistic, bright colors), (poorly drawn armor), (nsfw, revealing, nudity),indoors",
+    "cfgScale": 3.5,
+    "steps": 24,
+    "sampler": "Euler a",
+    "seed": 1671333018,
+    "clipSkip": 2,
+    "resources": [],
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 1714002
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 1177886
+      },
+      {
+        "type": "lora",
+        "weight": 0.3,
+        "modelVersionId": 2495565
+      },
+      {
+        "type": "lora",
+        "weight": 0.3,
+        "modelVersionId": 1687928
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 2511516
+      },
+      {
+        "type": "lora",
+        "weight": -1,
+        "modelVersionId": 1509461
+      }
+    ],
+    "extra": {
+      "workflow": "txt2img",
+      "priority": "low",
+      "outputFormat": "jpeg",
+      "ecosystem": "Illustrious",
+      "aspectRatio": {
+        "value": "2:3",
+        "width": 832,
+        "height": 1216
+      },
+      "prompt": "(masterpiece, extremely detailed, very aesthetic, best quality, ultra-detailed, sharp focus, cinematic lighting, depth of field, dark_art_style, lineweight),\n(Flat color:2),\nstanding,from above,upper view,\n\n(1girl, solo,   minamoto shizuka,pink shirt,red skirt,), dust cloud,stomping,particles, holding building),minamoto shizuka,white pupils\n(Curvy),\n(sexy pose, ),masterpiece, best quality, high detail, absurdres, awe-inspiring, sunlight, shadow, detailed background, 2d, masterpiece, best quality, amazing quality, highres, absurdres, newest, sky,,tall,adult,smile,looking down,giantess,cloud,micro city,building,detailed background,outdoor,",
+      "negativePrompt": "(verybadimagenegative_v1.3), (easynegative), (worst quality, low quality, blurry, grainy, fake, glitch, poorly drawn), (text, watermark, logo, signature, copyright), (deformed anatomy, bad proportions, twisted limbs, distorted perspective, extra limbs), (stacked hands, stacked torso, missing fingers, extra fingers, deformed fingers, bad hands, badhandv4:0.8), (crazy eyes, constricted pupils, no pupils, bad eyes, bad face, bad teeth, uneven lips, young, loli, teen, child), (backlighting, flat shading, unnatural shadows), (sketch, doodle, unfinished, messy, low detail), (aliasing, distortion, compression artifacts, jpeg artifacts), (error, corrupted, glitched, over-sharpened, oversaturated, washed out colors), (tanlines), (realistic, photorealistic, bright colors), (poorly drawn armor), (nsfw, revealing, nudity),indoors",
+      "sampler": "Euler a",
+      "cfgScale": 3.5,
+      "steps": 24,
+      "clipSkip": 2,
+      "seed": 1671333018,
+      "enhancedCompatibility": false,
+      "quantity": 4,
+      "resources": [
+        {
+          "modelVersionId": 1714002,
+          "strength": 1,
+          "type": "Checkpoint"
+        },
+        {
+          "modelVersionId": 2495565,
+          "strength": 0.3,
+          "type": "LORA"
+        },
+        {
+          "modelVersionId": 1177886,
+          "strength": 1,
+          "type": "LORA"
+        },
+        {
+          "modelVersionId": 1687928,
+          "strength": 0.3,
+          "type": "LORA"
+        },
+        {
+          "modelVersionId": 1509461,
+          "strength": -1,
+          "type": "LORA"
+        },
+        {
+          "modelVersionId": 2511516,
+          "strength": 1,
+          "type": "LORA"
+        }
+      ]
+    },
+    "Created Date": "2026-08-26T2208:42.1592132Z",
+    "width": 832,
+    "height": 1216
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

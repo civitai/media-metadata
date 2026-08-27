@@ -64,3 +64,115 @@ export function getNumberValue(input: ComfyNumber, valueNames = ['Value']) {
   }
   return 0;
 }
+
+export type AdditionalResource = {
+  name: string;
+  type: string;
+  strength: number;
+  strengthClip: number;
+};
+
+export type GraphScan = {
+  samplerNodes: SamplerNode[];
+  models: string[];
+  upscalers: string[];
+  vaes: string[];
+  controlNets: string[];
+  additionalResources: AdditionalResource[];
+  /** The Flux-style sampler node, when the graph has one. */
+  customAdvancedSampler: ComfyNode | undefined;
+};
+
+/** Widget keys that hold a resource NAME; how a linked name resolves is the caller's policy. */
+export const RESOURCE_NAME_KEYS = [
+  'ckpt_name',
+  'unet_name',
+  'model_name',
+  'vae_name',
+  'control_net_name',
+  'lora_name',
+];
+
+/**
+ * Single pass over the node graph: resolve `[nodeId, slot]` links to node objects
+ * (mutating the freshly-parsed graph — never caller input), collect sampler nodes,
+ * and gather resource names via `resolveName` (which owns link-vs-literal policy —
+ * see ../civitai.ts for the default that understands CivitaiModelSelector).
+ * Resource-name links are deliberately left unresolved so `resolveName` still sees
+ * the `[nodeId, outputSlot]` pair and can honor the output slot.
+ */
+export function scanGraph(
+  prompt: Record<string, ComfyNode>,
+  resolveName: (value: unknown, widgetKey: string) => string | undefined
+): GraphScan {
+  const scan: GraphScan = {
+    samplerNodes: [],
+    models: [],
+    upscalers: [],
+    vaes: [],
+    controlNets: [],
+    additionalResources: [],
+    customAdvancedSampler: undefined,
+  };
+
+  const push = (names: string[], value: unknown, widgetKey: string) => {
+    const name = resolveName(value, widgetKey);
+    if (name) names.push(name);
+  };
+
+  const nodes = Object.values(prompt);
+  for (const node of nodes) {
+    for (const [key, value] of Object.entries(node.inputs)) {
+      if (Array.isArray(value) && !RESOURCE_NAME_KEYS.includes(key))
+        node.inputs[key] = prompt[value[0]];
+    }
+
+    switch (node.class_type) {
+      case 'KSamplerAdvanced': {
+        const simplified = { ...node.inputs };
+        simplified.steps = getNumberValue(simplified.steps as ComfyNumber);
+        simplified.cfg = getNumberValue(simplified.cfg as ComfyNumber);
+        scan.samplerNodes.push(simplified as unknown as SamplerNode);
+        break;
+      }
+      case 'KSampler':
+      case 'KSampler (Efficient)':
+        scan.samplerNodes.push(node.inputs as unknown as SamplerNode);
+        break;
+      case 'LoraLoader':
+      case 'LoraLoaderModelOnly': {
+        const strength = node.inputs.strength_model as number;
+        // strength ~0 means the lora is wired in but disabled
+        if (strength < 0.001 && strength > -0.001) break;
+        const loraName = resolveName(node.inputs.lora_name, 'lora_name');
+        if (!loraName) break;
+        scan.additionalResources.push({
+          name: loraName,
+          type: 'lora',
+          strength,
+          strengthClip: node.inputs.strength_clip as number,
+        });
+        break;
+      }
+      case 'CheckpointLoaderSimple':
+      case 'CheckpointLoader':
+        push(scan.models, node.inputs.ckpt_name, 'ckpt_name');
+        break;
+      case 'UNETLoader':
+        push(scan.models, node.inputs.unet_name, 'unet_name');
+        break;
+      case 'UpscaleModelLoader':
+        push(scan.upscalers, node.inputs.model_name, 'model_name');
+        break;
+      case 'VAELoader':
+        push(scan.vaes, node.inputs.vae_name, 'vae_name');
+        break;
+      case 'ControlNetLoader':
+        push(scan.controlNets, node.inputs.control_net_name, 'control_net_name');
+        break;
+    }
+  }
+
+  scan.customAdvancedSampler = nodes.find((x) => x.class_type === 'SamplerCustomAdvanced');
+  return scan;
+}

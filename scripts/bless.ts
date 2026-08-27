@@ -24,6 +24,22 @@ async function collectImages(dir: string): Promise<string[]> {
   return files;
 }
 
+/**
+ * Which embed targets a fixture's metadata round-trips losslessly:
+ * - A1111 text and no-metadata images survive both containers.
+ * - ComfyUI survives PNG always; JPEG only when the source was already the
+ *   legacy JPEG UserComment format (a fresh comfy→jpeg embed is lossy by design).
+ * - SwarmUI/RuinedFooocus detectors only read the `parameters` chunk, so PNG only.
+ */
+function defaultRoundTripFormats(md: {
+  generator: string | null;
+  format: string;
+}): ('png' | 'jpeg')[] {
+  if (md.generator === 'swarmui' || md.generator === 'ruinedfooocus') return ['png'];
+  if (md.generator === 'comfyui') return md.format === 'jpeg' ? ['png', 'jpeg'] : ['png'];
+  return ['png', 'jpeg'];
+}
+
 const filter = process.argv[2];
 const images = (await collectImages(FIXTURES_DIR)).filter((f) => !filter || f.includes(filter));
 
@@ -49,8 +65,9 @@ for (const image of images) {
     generator: md.generator,
     madeOnSite: md.madeOnSite,
     meta: md.meta,
-    // preserve a hand-edited roundTrip config; default both formats for new fixtures
-    roundTrip: previous?.roundTrip ?? { formats: ['png', 'jpeg'] },
+    // preserve a hand-edited roundTrip config; otherwise default to the formats
+    // this generator's metadata actually survives (see docs/civitai-migration.md)
+    roundTrip: previous?.roundTrip ?? { formats: defaultRoundTripFormats(md) },
   };
 
   const serialized = JSON.stringify(next, null, 2) + '\n';

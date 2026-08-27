@@ -1,0 +1,63 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "masterpiece,best quality,purple hair,long hair,straight hair,sidelocks,half updo,purple eyes,white pupils,blunt bangs,hair ornament,",
+    "negativePrompt": "(worst quality:1.4),(low quality:1.4),(low detail face:1.4),(bad eyes:1.2),(multiple views:1.3),wrong,low quality,bad anatomy,bad composition,poor,low_effort,\neasynegative,FastNegativeV2,verybadimagenegative_v1.3,ng_deepnegative_v1_75t,bad-picture-chill-75v,negative_hand-neg,badhandv4,bad-hands-5,an7,fcHeatPortrait,kid,loli,baby,flutter hair,fly hair,",
+    "cfgScale": 7,
+    "steps": 20,
+    "sampler": "DPM++ 2M Karras",
+    "seed": 3344840556,
+    "hashes": {
+      "vae": "df3c506e51",
+      "model": "812cd9f9d9"
+    },
+    "clipSkip": 2,
+    "resources": [
+      {
+        "type": "model",
+        "name": "A_Anything V3",
+        "hash": "812cd9f9d9"
+      },
+      {
+        "type": "lora",
+        "name": "_v1",
+        "weight": 1,
+        "hash": "447cbd9ec2e7"
+      }
+    ],
+    "Model hash": "812cd9f9d9",
+    "Model": "A_Anything V3",
+    "VAE": "klF8Anime2VAE_klF8Anime2VAE.ckpt",
+    "Denoising strength": "0.7",
+    "Hires upscale": "2",
+    "Hires upscaler": "Latent",
+    "AddNet Enabled": "True",
+    "AddNet Module 1": "LoRA",
+    "AddNet Model 1": "fern_(sousou_no_frieren)_v1(447cbd9ec2e7)",
+    "AddNet Weight A 1": "1",
+    "AddNet Weight B 1": "1",
+    "TI hashes": {
+      "easynegative": "c74b4e810b03",
+      "FastNegativeV2": "a7465e7cc2a2",
+      "verybadimagenegative_v1.3": "d70463f87042",
+      "ng_deepnegative_v1_75t": "54e7e4826d53",
+      "bad-picture-chill-75v": "7d9cc5f549d7",
+      "negative_hand-neg": "73b524a2da12",
+      "badhandv4": "5e40d722fc3d",
+      "bad-hands-5": "aa7651be154c",
+      "an7": "b5da65912f9f",
+      "fcHeatPortrait": "f257fca13352"
+    },
+    "Discard penultimate sigma": "True",
+    "Version": "v1.7.0",
+    "width": 512,
+    "height": 512
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

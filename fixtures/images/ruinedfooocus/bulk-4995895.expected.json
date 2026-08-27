@@ -1,0 +1,29 @@
+{
+  "generator": "ruinedfooocus",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "Gordon ramsey in his chefs whites, wielding dual chickens, background is a kitchen",
+    "cfgScale": 5,
+    "steps": 30,
+    "sampler": "dpmpp_2m_sde_gpu",
+    "seed": 2556997800,
+    "denoise": null,
+    "width": 896,
+    "height": 1152,
+    "Model": "wowXLV3_v3",
+    "Model hash": "47e404bc",
+    "software": "RuinedFooocus",
+    "other": {
+      "sampler_name": "dpmpp_2m_sde_gpu",
+      "base_model_name": "wowXLV3_v3.safetensors",
+      "loras": "Loras:<Style\\XL_Weapon_Dual_Pistols_-_By_HailoKnight.safetensors:1>,<None:0.5>,<None:0.5>,<None:0.5>,<None:0.5>",
+      "start_step": 0
+    },
+    "scheduler": "karras"
+  },
+  "roundTrip": {
+    "formats": [
+      "png"
+    ]
+  }
+}

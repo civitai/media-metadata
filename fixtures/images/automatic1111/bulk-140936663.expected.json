@@ -1,0 +1,76 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "tagine pot, cookies, food, Hyperrealistic macro photo of patchwork wizard cat, velvet and burlap fur, stitched starry robe, raising crystal wand to weave a newborn planet and swirling galaxy from luminous golden thread, floating in cosmic mist, soft rim lighting, shallow focus, ultra‑detailed textile art.",
+    "negativePrompt": "speech bubble, text, dialogue, caption, comic panel, multiple panels, grid layout, page layout, watermark, logo, multipanel, multiple panels, text, watermark, username, artist name, patreon username:,worst quality, low quality, bad quality:, worst detail:, low resolution, jpeg artifacts, blurry,censor, text box, tag, glitch, duplicate,ugly, morbid, mutilated, mutation, deformed, disfigured,bad anatomy:, bad proportions, gross proportions, malformed limbs,extra limbs:, extra arms, extra legs, missing arms, missing legs,cloned face, poorly drawn face, poorly drawn eyes,bad hands, poorly drawn hands, mutated hands,extra fingers:1.5), polydactyly, extra digits, missing fingers,fused fingers, split fingers, deformed fingers,deformed iris:, deformed pupils:,long neck, dehydrated,fused arms:, fused hands,deformed feet:, bad feet:, fused toes, missing toes, bad composition, out of frame, Black hat, black headwear, necktie, black jacket, white shirt, black pants, black boots, blue collared shirt, grey pants, suspenders, black footwear,",
+    "cfgScale": 7,
+    "steps": 20,
+    "sampler": "Euler a",
+    "seed": 441238194,
+    "clipSkip": 2,
+    "resources": [],
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 1759168
+      },
+      {
+        "type": "lora",
+        "weight": 0.7,
+        "modelVersionId": 161586
+      },
+      {
+        "type": "lora",
+        "weight": 0.85,
+        "modelVersionId": 2281234
+      }
+    ],
+    "extra": {
+      "workflow": "txt2img",
+      "priority": "low",
+      "outputFormat": "jpeg",
+      "ecosystem": "SDXL",
+      "aspectRatio": {
+        "value": "1:1",
+        "width": 1024,
+        "height": 1024
+      },
+      "prompt": "tagine pot, cookies, food, Hyperrealistic macro photo of patchwork wizard cat, velvet and burlap fur, stitched starry robe, raising crystal wand to weave a newborn planet and swirling galaxy from luminous golden thread, floating in cosmic mist, soft rim lighting, shallow focus, ultra‑detailed textile art.",
+      "negativePrompt": "speech bubble, text, dialogue, caption, comic panel, multiple panels, grid layout, page layout, watermark, logo, multipanel, multiple panels, text, watermark, username, artist name, patreon username:,worst quality, low quality, bad quality:, worst detail:, low resolution, jpeg artifacts, blurry,censor, text box, tag, glitch, duplicate,ugly, morbid, mutilated, mutation, deformed, disfigured,bad anatomy:, bad proportions, gross proportions, malformed limbs,extra limbs:, extra arms, extra legs, missing arms, missing legs,cloned face, poorly drawn face, poorly drawn eyes,bad hands, poorly drawn hands, mutated hands,extra fingers:1.5), polydactyly, extra digits, missing fingers,fused fingers, split fingers, deformed fingers,deformed iris:, deformed pupils:,long neck, dehydrated,fused arms:, fused hands,deformed feet:, bad feet:, fused toes, missing toes, bad composition, out of frame, Black hat, black headwear, necktie, black jacket, white shirt, black pants, black boots, blue collared shirt, grey pants, suspenders, black footwear,",
+      "sampler": "Euler a",
+      "cfgScale": 7,
+      "steps": 20,
+      "clipSkip": 2,
+      "seed": 441238194,
+      "enhancedCompatibility": false,
+      "quantity": 4,
+      "resources": [
+        {
+          "modelVersionId": 1759168,
+          "strength": 1,
+          "type": "Checkpoint"
+        },
+        {
+          "modelVersionId": 161586,
+          "strength": 0.7,
+          "type": "LORA"
+        },
+        {
+          "modelVersionId": 2281234,
+          "strength": 0.85,
+          "type": "LORA"
+        }
+      ]
+    },
+    "Created Date": "2026-08-26T1757:26.4503095Z",
+    "width": 1024,
+    "height": 1024
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

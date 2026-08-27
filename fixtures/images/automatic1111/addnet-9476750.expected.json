@@ -1,7 +1,77 @@
 {
   "generator": "automatic1111",
   "madeOnSite": false,
-  "meta": {},
+  "meta": {
+    "prompt": "BioshockARTDECO, poster, 1930s \\(style\\), simplistic, art deco, bioshock, advertisement for restaurant, 8k, uhd, best quality, negative space, high quality illustration,, cinematic lighting",
+    "negativePrompt": "bad art, kitsch, poor quality, easynegative, deformed, poor quality, blurry, photorealistic, photo, cg, 3d,",
+    "cfgScale": 7.5,
+    "steps": 40,
+    "sampler": "DPM++ 2M Karras",
+    "seed": 1169129937,
+    "hashes": {
+      "vae": "0b204ad0ca",
+      "model": "aadddd3d75"
+    },
+    "clipSkip": 2,
+    "resources": [
+      {
+        "type": "model",
+        "name": "deliberate_v3",
+        "hash": "aadddd3d75"
+      },
+      {
+        "type": "lora",
+        "name": "BioshockARTDECO",
+        "weight": 0.9,
+        "hash": "a68c0549f355"
+      }
+    ],
+    "Model hash": "aadddd3d75",
+    "Model": "deliberate_v3",
+    "VAE": "vae-ft-mse-840000-ema-pruned.safetensors",
+    "Denoising strength": "0.7",
+    "ADetailer model": "face_yolov8n.pt",
+    "ADetailer confidence": "0.3",
+    "ADetailer dilate erode": "4",
+    "ADetailer mask blur": "4",
+    "ADetailer denoising strength": "0.4",
+    "ADetailer inpaint only masked": "True",
+    "ADetailer inpaint padding": "32",
+    "ADetailer model 2nd": "hand_yolov8n.pt",
+    "ADetailer prompt 2nd": "5 fingers",
+    "ADetailer negative prompt 2nd": "bad-hands-5",
+    "ADetailer confidence 2nd": "0.3",
+    "ADetailer dilate erode 2nd": "4",
+    "ADetailer mask blur 2nd": "4",
+    "ADetailer denoising strength 2nd": "0.4",
+    "ADetailer inpaint only masked 2nd": "True",
+    "ADetailer inpaint padding 2nd": "32",
+    "ADetailer version": "23.11.0",
+    "ControlNet 0": {
+      "Module": "none",
+      "Model": "control_v11p_sd15_openpose [cab727d4]",
+      "Weight": "0.65",
+      "Resize Mode": "Crop and Resize",
+      "Low Vram": "False",
+      "Guidance Start": "0",
+      "Guidance End": "1",
+      "Pixel Perfect": "False",
+      "Control Mode": "Balanced"
+    },
+    "Hires upscale": "2",
+    "Hires upscaler": "4x_NMKD-Superscale-SP_178000_G",
+    "AddNet Enabled": "True",
+    "AddNet Module 1": "LoRA",
+    "AddNet Model 1": "BioshockARTDECO(a68c0549f355)",
+    "AddNet Weight A 1": "0.9",
+    "AddNet Weight B 1": "0.9",
+    "TI hashes": {
+      "bad-hands-5": "aa7651be154c"
+    },
+    "Version": "v1.6.0-2-g4afaaf8a",
+    "width": 384,
+    "height": 640
+  },
   "roundTrip": {
     "formats": [
       "png",

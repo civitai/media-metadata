@@ -1,0 +1,55 @@
+{
+  "generator": "comfyui",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "witch, botanist, herbs, plants, fungus,\n\ngrab basket,\nlight, pastel,\n\ninside, magical plants, herbs, plant-pots,\n\ninkyo, masterpiece, best quality, highres, absurdres, newest, aesthetic, very awa",
+    "negativePrompt": "4 toes, 6 toes, merged toes, 4 digits, 6 digits, merged_fingers,\n\nlogo, name, text,",
+    "cfgScale": 3.5,
+    "steps": 34,
+    "sampler": "Euler a",
+    "seed": 1761147208,
+    "engine": "Civitai",
+    "workflow": "img2img-hires",
+    "civitaiResources": [
+      {
+        "weight": 1,
+        "modelVersionId": 1761560
+      },
+      {
+        "weight": 1,
+        "modelVersionId": 1953811
+      },
+      {
+        "type": "upscaler",
+        "modelVersionId": 164821
+      }
+    ],
+    "extra": {
+      "clipSkip": 2,
+      "quantity": 6,
+      "aspectRatio": "13:19",
+      "baseModel": "Illustrious",
+      "width": 832,
+      "height": 1216,
+      "experimental": false,
+      "priority": "low",
+      "sourceImage": {
+        "url": "https://orchestration.civitai.com/v2/consumer/blobs/M29NR78ZMKJH4RFTPXBV6ZCDM0.jpeg",
+        "width": 832,
+        "height": 1216
+      },
+      "disablePoi": true,
+      "process": "img2img"
+    },
+    "upscalers": [
+      "urn:air:other:upscaler:civitai:147759@164821"
+    ],
+    "denoise": 0.4
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

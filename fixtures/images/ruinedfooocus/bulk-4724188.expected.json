@@ -1,0 +1,29 @@
+{
+  "generator": "ruinedfooocus",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "scaleborn, an alien woman covered in white hexagonal scales",
+    "cfgScale": 5,
+    "steps": 30,
+    "sampler": "dpmpp_2m_sde_gpu",
+    "seed": 119692191,
+    "denoise": null,
+    "width": 896,
+    "height": 1152,
+    "Model": "crystalClearXL_ccxl",
+    "Model hash": "cbc222b0",
+    "software": "RuinedFooocus",
+    "other": {
+      "sampler_name": "dpmpp_2m_sde_gpu",
+      "base_model_name": "crystalClearXL_ccxl.safetensors",
+      "loras": "Loras:<A-Rune\\Scaleborn_SDXL.safetensors 🗒️:0.5>,<None:0.5>,<None:0.5>,<None:0.5>,<None:0.5>",
+      "start_step": 0
+    },
+    "scheduler": "karras"
+  },
+  "roundTrip": {
+    "formats": [
+      "png"
+    ]
+  }
+}

@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { encodeMetadata, parseGenerationText } from '../index';
+import { comfyUiParser, createParserContext, encodeMetadata, parseGenerationText } from '../index';
+import type { ParserContext } from '../index';
+import { samplerMap } from '../../shared/constants';
 import { parseAir, parseAirSafe } from '../../civitai/air';
 
 describe('parseGenerationText', () => {
@@ -41,6 +43,52 @@ describe('encodeMetadata', () => {
     expect(
       encodeMetadata(meta, 'automatic1111', { a1111ExcludedKeys: ['scheduler', 'myInternalKey'] })
     ).toBe('a castle\nSteps: 30');
+  });
+});
+
+describe('samplerMap injection', () => {
+  // One shared normalization table: parser-native sampler names (comfy-style
+  // snake_case) are looked up BY VALUE and rewritten to the A1111 display name.
+  const prompt = JSON.stringify({
+    '3': {
+      class_type: 'KSampler',
+      inputs: {
+        seed: 1,
+        steps: 20,
+        cfg: 7,
+        sampler_name: 'dpmpp_2m',
+        scheduler: 'normal',
+        denoise: 1,
+        positive: ['6', 0],
+        negative: ['6', 0],
+        latent_image: ['5', 0],
+      },
+    },
+    '5': { class_type: 'EmptyLatentImage', inputs: { width: 512, height: 512 } },
+    '6': { class_type: 'CLIPTextEncode', inputs: { text: 'a cat' } },
+  });
+
+  function parseWith(context: Partial<ParserContext>) {
+    const ctx = createParserContext(context);
+    const state = comfyUiParser.detect({ prompt, workflow: '{}' }, ctx);
+    return comfyUiParser.parse(state!, ctx);
+  }
+
+  it('normalizes to A1111 vocabulary by default', () => {
+    expect(parseWith({}).sampler).toBe('DPM++ 2M');
+  });
+
+  it('an empty samplerMap disables normalization and keeps the native name', () => {
+    expect(parseWith({ samplerMap: new Map() }).sampler).toBe('dpmpp_2m');
+  });
+
+  it('new ecosystems plug in by appending aliases to the same map', () => {
+    const extended = new Map([...samplerMap]);
+    extended.set('DPM++ 2M', [...(extended.get('DPM++ 2M') ?? []), 'my_ui_dpm_2m']);
+    const promptWithAlias = prompt.replace('"dpmpp_2m"', '"my_ui_dpm_2m"');
+    const ctx = createParserContext({ samplerMap: extended });
+    const state = comfyUiParser.detect({ prompt: promptWithAlias, workflow: '{}' }, ctx);
+    expect(comfyUiParser.parse(state!, ctx).sampler).toBe('DPM++ 2M');
   });
 });
 

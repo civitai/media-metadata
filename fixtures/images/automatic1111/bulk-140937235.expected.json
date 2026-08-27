@@ -1,0 +1,66 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "score_9, score_8_up, score_7_up, score_6_up, high quality, perfect eyes, perfect face source_cartoon, high quality, parody style, Delilah, 1girl, solo, mature woman, brown hair, single hair bun, green jacket, puffy sleeves, long sleeves, long skirt, huge ass, wide hips, gigantic hips, standing, looking at viewer, smile, upper body, cowboy shot bluesky, cloud, desert, wild west, outdoors",
+    "negativePrompt": "score_6, score_5, score_4, symmetrical, (portrait + close up:2), [boring, flaw + error, glitch, distortion, smudge, smearing, hazy, out-of-focus], (worst quality, low quality, low details, minimalist, bad photo, bad photography, bad art:.8),(watermark, signature, text font, username, error, logo, words, letters, digits, autograph, trademark, name:.8), easynegative, remove weights",
+    "cfgScale": 7,
+    "steps": 30,
+    "sampler": "Euler",
+    "seed": 221318335,
+    "clipSkip": 2,
+    "resources": [],
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 290640
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 3257961
+      }
+    ],
+    "extra": {
+      "workflow": "txt2img",
+      "priority": "low",
+      "outputFormat": "jpeg",
+      "ecosystem": "Pony",
+      "aspectRatio": {
+        "value": "2:3",
+        "width": 832,
+        "height": 1216
+      },
+      "prompt": "score_9, score_8_up, score_7_up, score_6_up, high quality, perfect eyes, perfect face source_cartoon, high quality, parody style, Delilah, 1girl, solo, mature woman, brown hair, single hair bun, green jacket, puffy sleeves, long sleeves, long skirt, huge ass, wide hips, gigantic hips, standing, looking at viewer, smile, upper body, cowboy shot bluesky, cloud, desert, wild west, outdoors",
+      "negativePrompt": "score_6, score_5, score_4, symmetrical, (portrait + close up:2), [boring, flaw + error, glitch, distortion, smudge, smearing, hazy, out-of-focus], (worst quality, low quality, low details, minimalist, bad photo, bad photography, bad art:.8),(watermark, signature, text font, username, error, logo, words, letters, digits, autograph, trademark, name:.8), easynegative, remove weights",
+      "sampler": "DDIM",
+      "cfgScale": 7,
+      "steps": 30,
+      "clipSkip": 2,
+      "seed": 221318335,
+      "enhancedCompatibility": false,
+      "quantity": 5,
+      "resources": [
+        {
+          "modelVersionId": 290640,
+          "strength": 1,
+          "type": "Checkpoint"
+        },
+        {
+          "modelVersionId": 3257961,
+          "strength": 1,
+          "type": "LORA"
+        }
+      ]
+    },
+    "Created Date": "2026-08-26T2230:11.2381049Z",
+    "width": 832,
+    "height": 1216
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

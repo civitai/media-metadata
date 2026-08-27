@@ -1,0 +1,60 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "1girl, sakurako mikage, laughing, school uniform,  looking at viewer, upper body, simple background, high quality, detailed",
+    "negativePrompt": "easynegative, bad-hands-5, lowres, bad anatomy, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, blurry",
+    "cfgScale": 7,
+    "steps": 25,
+    "sampler": "DPM++ 2M",
+    "seed": 3574642233,
+    "hashes": {
+      "vae": "f921fb3f29",
+      "model": "812cd9f9d9"
+    },
+    "clipSkip": 2,
+    "resources": [
+      {
+        "type": "model",
+        "name": "Anything-V3.0-pruned-fp16",
+        "hash": "812cd9f9d9"
+      },
+      {
+        "type": "lora",
+        "name": "01",
+        "weight": 0.8,
+        "hash": "8c052dc68980"
+      }
+    ],
+    "Schedule type": "Karras",
+    "Model hash": "812cd9f9d9",
+    "Model": "Anything-V3.0-pruned-fp16",
+    "VAE": "vae-ft-mse-840000-ema-pruned.ckpt",
+    "Denoising strength": "0.5",
+    "ADetailer model": "face_yolov8n.pt",
+    "ADetailer confidence": "0.3",
+    "ADetailer dilate erode": "4",
+    "ADetailer mask blur": "4",
+    "ADetailer denoising strength": "0.4",
+    "ADetailer inpaint only masked": "True",
+    "ADetailer inpaint padding": "32",
+    "ADetailer version": "24.4.2",
+    "Hires upscale": "2",
+    "Hires steps": "20",
+    "Hires upscaler": "R-ESRGAN 4x+ Anime6B",
+    "AddNet Enabled": "True",
+    "AddNet Module 1": "LoRA",
+    "AddNet Model 1": "sakurako-soredemo-01(8c052dc68980)",
+    "AddNet Weight A 1": "0.8",
+    "AddNet Weight B 1": "0.8",
+    "Version": "v1.9.3",
+    "width": 512,
+    "height": 768
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

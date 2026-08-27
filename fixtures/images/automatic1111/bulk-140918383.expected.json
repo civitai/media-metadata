@@ -1,0 +1,46 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "<lora:training_6485327-20260802235924149:1> Noir, Vintage",
+    "cfgScale": 1,
+    "steps": 8,
+    "sampler": "Euler",
+    "seed": 3297666613,
+    "hashes": {
+      "lora:training_6485327-20260802235924149": "2eb5a348a918",
+      "model": "78bbf8f416"
+    },
+    "resources": [
+      {
+        "type": "lora",
+        "name": "training_6485327-20260802235924149",
+        "weight": 1,
+        "hash": "2eb5a348a918"
+      },
+      {
+        "type": "model",
+        "name": "krea2Turbo_fp16_v1",
+        "hash": "78bbf8f416"
+      }
+    ],
+    "Schedule type": "Simple",
+    "Model": "krea2Turbo_fp16_v1",
+    "Model hash": "78bbf8f416",
+    "Module 1": "qwen_image_vae",
+    "Module 2": "qwen3vl_4b_fp8_scaled",
+    "Denoising strength": "0.6",
+    "RNG": "CPU",
+    "Mask blur": "4",
+    "Masked content": "fill",
+    "Version": "neo-2.28",
+    "width": 896,
+    "height": 1152
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "<lora:tech3_dust_beam_v1:0.80>, techdustbeam, a portable power bank lit by a warm beam of light filled with softly floating golden dust particles, cinematic directional light, atmospheric premium mood, sharp focus, product photography",
+    "negativePrompt": "text, watermark, signature, blurry, deformed, lowres, bad anatomy, extra limbs, jpeg artifacts, cropped, out of frame",
+    "cfgScale": 5.5,
+    "steps": 28,
+    "sampler": "DPM++ 2M",
+    "seed": 3417779032,
+    "hashes": {
+      "lora:tech3_dust_beam_v1": "4fc7bac02414",
+      "model": "dd08fa32f9"
+    },
+    "resources": [
+      {
+        "type": "lora",
+        "name": "tech3_dust_beam_v1",
+        "weight": 0.8,
+        "hash": "4fc7bac02414"
+      },
+      {
+        "type": "model",
+        "name": "juggernautXL_ragnarokBy",
+        "hash": "dd08fa32f9"
+      }
+    ],
+    "Schedule type": "Karras",
+    "Model hash": "dd08fa32f9",
+    "Model": "juggernautXL_ragnarokBy",
+    "Version": "f1.0.0v2-v1.10.1RC-latest-2518-g739b2e1d",
+    "width": 1024,
+    "height": 1024
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

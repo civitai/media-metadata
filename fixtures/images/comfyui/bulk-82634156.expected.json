@@ -1,0 +1,78 @@
+{
+  "generator": "comfyui",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "(absurdres, best quality, masterpiece:1.4), score_9, score_8_up, score_7_up, score_6_up, detailed, detailed body, detailed face, world of warcraft, fantasy, \n\nfFaceDetail, SkinDetail, ((female, draenei, tall, athletic arms, pale white skin, smooth skin, long white hair, purple eyes, no pupil, no sclera, long white tail), (h0rns, ram horns, white horns), \n(long fingers, purple fingernails, purple nail polish)), \n\n(long loose cyan dress, simple armlet, black facemask, cyan silk scarf), dagger, holding a dagger,\n\nfull body, squatting, \n\noutdoor, evening, mountains, sunset, snow",
+    "negativePrompt": "civit_nsfw, nude, cleavage, plain background, text, anime, score_4, score_5, easynegative, negative_hand, \n\nlong ears, human, elf, bull horns, kudu horn, split horn, nipples, skin markings, \n\nhair behind eyes, blur, blurry face, broken shoulders,  tattoo, tattoos,  \n\ntight clothing, ",
+    "cfgScale": 3.5,
+    "steps": 25,
+    "sampler": "Euler a",
+    "seed": 658775543,
+    "engine": "Civitai",
+    "workflow": "img2img-hires",
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 770375
+      },
+      {
+        "weight": 1,
+        "modelVersionId": 770375
+      },
+      {
+        "weight": 1,
+        "modelVersionId": 9208
+      },
+      {
+        "weight": 1,
+        "modelVersionId": 60938
+      },
+      {
+        "type": "lora",
+        "weight": 0.85,
+        "modelVersionId": 522995
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 663601
+      },
+      {
+        "type": "lora",
+        "weight": 4,
+        "modelVersionId": 712947
+      },
+      {
+        "weight": 1,
+        "modelVersionId": 720175
+      },
+      {
+        "type": "vae",
+        "modelVersionId": 333245
+      },
+      {
+        "type": "upscaler",
+        "modelVersionId": 164821
+      }
+    ],
+    "extra": {
+      "remixOfId": 81541540
+    },
+    "models": [
+      "urn:air:sdxl:checkpoint:civitai:643227@770375"
+    ],
+    "upscalers": [
+      "urn:air:other:upscaler:civitai:147759@164821"
+    ],
+    "vaes": [
+      "urn:air:sdxl:vae:civitai:296576@333245"
+    ],
+    "Model": "urn:air:sdxl:checkpoint:civitai:643227@770375"
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "generator": "ruinedfooocus",
+  "madeOnSite": false,
+  "meta": {
+    "prompt": "double exposure style,  stormtrooper helmet, battle for andor, black background ",
+    "cfgScale": 8,
+    "steps": 30,
+    "sampler": "dpmpp_2m_sde_gpu",
+    "seed": 11246505945472473000,
+    "denoise": null,
+    "width": 896,
+    "height": 1152,
+    "Model": "crystalClearXL_ccxl",
+    "software": "RuinedFooocus",
+    "other": {
+      "sampler_name": "dpmpp_2m_sde_gpu",
+      "base_model_name": "crystalClearXL_ccxl.safetensors",
+      "loras": "Loras:<Double_Exposure.safetensors:1>,<None:0.5>,<None:0.5>,<None:0.5>,<None:0.5>",
+      "start_step": 0
+    },
+    "scheduler": "karras"
+  },
+  "roundTrip": {
+    "formats": [
+      "png"
+    ]
+  }
+}

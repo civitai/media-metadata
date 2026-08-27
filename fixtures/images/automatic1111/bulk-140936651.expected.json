@@ -1,0 +1,77 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "A tagine work coziness Darth Vader wizard made of tagine theme in a pointy hat holding a wand in a massive computer tagine Magic Elegance style server room, tagine theme decorations everywhere, rubber ducks, flock. Of. Ducks, holding slices of pizza, malachite details, sitting on a toilet seat. \nlazypos <lora:add-detail-xl:1>           <lora:Pizza_World_Morph_SDXL:1>",
+    "negativePrompt": "nsfw, simple background, blurry, lazyneg",
+    "cfgScale": 5,
+    "steps": 25,
+    "sampler": "Euler a",
+    "seed": 1130398975,
+    "clipSkip": 2,
+    "resources": [
+      {
+        "type": "lora",
+        "name": "add-detail-xl",
+        "weight": 1
+      },
+      {
+        "type": "lora",
+        "name": "Pizza_World_Morph_SDXL",
+        "weight": 1
+      }
+    ],
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 686204
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 161586
+      }
+    ],
+    "extra": {
+      "workflow": "txt2img",
+      "priority": "low",
+      "outputFormat": "png",
+      "ecosystem": "SDXL",
+      "aspectRatio": {
+        "value": "2:3",
+        "width": 832,
+        "height": 1216
+      },
+      "prompt": "A tagine work coziness Darth Vader wizard made of tagine theme in a pointy hat holding a wand in a massive computer tagine Magic Elegance style server room, tagine theme decorations everywhere, rubber ducks, flock. Of. Ducks, holding slices of pizza, malachite details, sitting on a toilet seat. \nlazypos <lora:add-detail-xl:1>           <lora:Pizza_World_Morph_SDXL:1>",
+      "negativePrompt": "nsfw, simple background, blurry, lazyneg",
+      "sampler": "Euler a",
+      "cfgScale": 5,
+      "steps": 25,
+      "clipSkip": 2,
+      "seed": 1130398975,
+      "enhancedCompatibility": false,
+      "quantity": 4,
+      "resources": [
+        {
+          "modelVersionId": 686204,
+          "strength": 1,
+          "type": "Checkpoint"
+        },
+        {
+          "modelVersionId": 161586,
+          "strength": 1,
+          "type": "LORA"
+        }
+      ]
+    },
+    "Created Date": "2026-08-26T2217:37.7345742Z",
+    "width": 832,
+    "height": 1216
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

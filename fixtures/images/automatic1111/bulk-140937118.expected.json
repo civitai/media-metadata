@@ -1,0 +1,50 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "A powerful warrior known as the Stormrider, clad in ornate armor that reflects the fury of storms, standing defiantly on a rocky precipice, intense expression showcasing his determination, fantasy art style, mid-shot to capture the intricate details of his armor and the swirling storm clouds above, dramatic lightning illuminating the scene, creating a sense of tension and strength, with the turbulent landscape enhancing the atmosphere of an epic confrontation.",
+    "cfgScale": 1,
+    "steps": 9,
+    "sampler": "Euler",
+    "seed": 1272015079,
+    "resources": [],
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 2442439
+      }
+    ],
+    "extra": {
+      "workflow": "txt2img",
+      "priority": "low",
+      "outputFormat": "jpeg",
+      "ecosystem": "ZImageTurbo",
+      "aspectRatio": {
+        "value": "2:3",
+        "width": 832,
+        "height": 1216
+      },
+      "cfgScale": 1,
+      "steps": 9,
+      "seed": 1272015079,
+      "prompt": "A powerful warrior known as the Stormrider, clad in ornate armor that reflects the fury of storms, standing defiantly on a rocky precipice, intense expression showcasing his determination, fantasy art style, mid-shot to capture the intricate details of his armor and the swirling storm clouds above, dramatic lightning illuminating the scene, creating a sense of tension and strength, with the turbulent landscape enhancing the atmosphere of an epic confrontation.",
+      "quantity": 1,
+      "resources": [
+        {
+          "modelVersionId": 2442439,
+          "type": "Checkpoint"
+        }
+      ]
+    },
+    "Model type": "Z-Image Turbo",
+    "Created Date": "2026-08-26T2229:14.4729802Z",
+    "width": 832,
+    "height": 1216
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}
