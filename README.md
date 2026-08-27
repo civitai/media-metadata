@@ -108,7 +108,7 @@ summaries), workflow-AIR → `civitaiResources` resolution with `engine: 'Civita
 Civitai's orchestrator writes standard A1111 text with its blocks appended, so **without the
 plugin the standard fields (prompt, sampler, steps, size, …) still parse fully** — the core lifts
 any unrecognized `Key: {...}`/`Key: [...]` JSON block out of the details line as a raw string
-passthrough (`meta['Civitai resources']` etc.) instead of letting it mangle the scanner. The
+passthrough (`raw['Civitai resources']` etc.) instead of letting it mangle the scanner. The
 plugin is what *interprets* those blocks (`civitaiResources` with resolved version ids, `extra`,
 `madeOnSite`) and what handles the on-site ComfyUI formats.
 
