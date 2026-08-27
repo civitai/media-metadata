@@ -1,0 +1,62 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "Glitching and surreal, abstract portrait of an young goth woman long black hair. Her eyes are covered with a black, glitched, blurred censor bar. She posing with finger at mouth, black fishnet shirt. A terrifying, glitched scarecrow, with floating purple haze across a fields and old black church in LA backdrop. The brushstrokes are masterfully blended and sophisticated, creating a sense of depth and intrigue. The palette is chosen in the style of horror cinema, sends a sense of suspense and fear. The overall image exudes a palpable mystique and sophistication, a captivating masterpiece of a digital illustration. <lora:ck-shadow-circuit-000021_(FLUX):0.8> <lora:Glitchcore_Flux:1.0> <lora:boFLUX_digital-abyss_(FLUX):0.8> <lora:FluxDFaeTasticDetails:0.5>",
+    "cfgScale": 7,
+    "steps": 30,
+    "sampler": "Undefined",
+    "seed": 2066384887,
+    "clipSkip": 2,
+    "resources": [
+      {
+        "type": "lora",
+        "name": "Glitchcore_Flux",
+        "weight": 1
+      },
+      {
+        "type": "lora",
+        "name": "FluxDFaeTasticDetails",
+        "weight": 0.5
+      }
+    ],
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 691639
+      },
+      {
+        "type": "lora",
+        "weight": 0.5,
+        "modelVersionId": 720252
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 1050932
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 877992
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 945122
+      }
+    ],
+    "extra": {
+      "remixOfId": 49503909
+    },
+    "Created Date": "2025-08-26T1543:53.0251491Z",
+    "width": 832,
+    "height": 1216
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

@@ -16,15 +16,20 @@ pnpm add @civitai/media-metadata
 
 ## Reading
 
+The reader is **bare-bones by default** and extended by plugins. The package bundles one plugin:
+`civitai()`, which adds everything civitai.com writes. **Reading images from civitai requires
+it** — without the plugin, civitai-specific blocks degrade (see Plugins below).
+
 ```ts
 import { readMetadata } from '@civitai/media-metadata';
+import { civitai } from '@civitai/media-metadata/civitai';
 
-const md = await readMetadata(fileOrBytesOrUrl);
+const md = await readMetadata(fileOrBytesOrUrl, { plugins: [civitai()] });
 // md.format     -> 'png' | 'jpeg' | 'webp' | 'unknown'
 // md.generator  -> 'automatic1111' | 'comfyui' | 'swarmui' | 'ruinedfooocus' | null
 // md.meta       -> parsed generation metadata (prompt, sampler, resources, ...)
 // md.exif       -> raw flattened tags
-// md.madeOnSite -> civitai's on-site marker (EXIF Artist === 'ai')
+// md.madeOnSite -> civitai's on-site marker (set by the civitai plugin)
 ```
 
 Inputs can be a `Uint8Array`, `ArrayBuffer`, `Blob`/`File`, or a URL string (fetched). The core is
@@ -65,12 +70,43 @@ const withMeta = await embedMetadata(pngOrJpegBytes, payload);
   copies are byte-lossless.
 - **WebP**: read-only in v1.
 
-## Civitai conventions
+## Plugins
 
-Civitai-specific behavior is injectable and lives under `@civitai/media-metadata/civitai`:
-AIR identifier parsing (`parseAir`), the on-site marker (`isMadeOnSite`). The default parser
-context includes it, so results match civitai.com out of the box; pass your own `ParserContext`
-to override (e.g. `resolveAir`, `samplerMap`, `a1111ExcludedKeys`, `onDebug`).
+The core parses the four generator formats vanilla-style and knows nothing site-specific. A
+`ParserPlugin` has three seams:
+
+- **`parsers`** — transform the registry (wrap, replace, extend, reorder parsers)
+- **`context`** — merge `ParserContext` contributions (details-line extractors, sampler map,
+  excluded keys, debug hook)
+- **`enrich`** — annotate the result envelope after parsing
+
+### The bundled `civitai()` plugin
+
+```ts
+import { civitai } from '@civitai/media-metadata/civitai';
+const md = await readMetadata(input, { plugins: [civitai()] });
+```
+
+It adds: `Civitai resources:` / `Civitai metadata:` details-line blocks (with AIR → version-id
+resolution, overridable via `civitai({ resolveAir })`), the `CivitaiModelSelector` ComfyUI node,
+civitai's on-site generation formats (legacy UserComment JSON, curated `extraMetadata`
+summaries), workflow-AIR → `civitaiResources` resolution with `engine: 'Civitai'`, and the
+`madeOnSite` marker.
+
+Civitai's orchestrator writes standard A1111 text with its blocks appended, so **without the
+plugin the standard fields (prompt, sampler, steps, size, …) still parse fully** — the core lifts
+any unrecognized `Key: {...}`/`Key: [...]` JSON block out of the details line as a raw string
+passthrough (`meta['Civitai resources']` etc.) instead of letting it mangle the scanner. The
+plugin is what *interprets* those blocks (`civitaiResources` with resolved version ids, `extra`,
+`madeOnSite`) and what handles the on-site ComfyUI formats.
+
+### Writing your own
+
+See `examples/06-third-party-usage.ts` for a complete custom plugin (a details-line extractor +
+an enrich hook). `parseGenerationText` and `encodeMetadata` accept the same
+`{ plugins, context }` options.
+
+## Injectable conventions (`ParserContext`)
 
 ### Sampler normalization (`samplerMap`)
 
@@ -117,6 +153,26 @@ pnpm playground   # drag-and-drop parser inspector at http://localhost:5199
 
 The playground is a dev-only Vite page: drop any image (or paste a civitai CDN URL) and see the
 detected generator, parsed metadata, re-encoded A1111 text, embeddable payload, and raw tags.
+Plugin checkboxes control which plugins the next read uses, and "compare vs bare core" adds a
+key-level diff showing exactly what each plugin contributed. The mode is linkable:
+`http://localhost:5199/?plugins=none` opens in bare-core mode (plugin-free read/write testing),
+`?plugins=civitai&compare=1` opens with the plugin plus the diff view; toggling checkboxes keeps
+the URL in sync. A **Report parse issue** button
+opens a prefilled GitHub issue for images that parse wrong — see below.
+
+### Reporting images that parse wrong
+
+Bad parses become test fixtures through a two-step pipeline:
+
+1. Anyone files an issue via the **fixture-report template** (or the playground's per-card
+   Report button / multi-select "Report N selected" button) and drags the *original* image
+   file(s) into it — several per issue is fine; each attachment becomes its own fixture.
+2. A maintainer adds the `fixture-report` label; the `fixture-report.yml` workflow downloads the
+   attachment, ingests it into `fixtures/`, blesses an expectation pinning **current** parser
+   output, and opens a PR. The reviewer compares the expectation against the report — if the
+   parser needs fixing, the fix lands on that branch with a re-bless before merge.
+
+The label gate means untrusted uploads never enter the repo without maintainer action.
 Every card also has a **Transform + copyMetadata** control that resizes/converts the image through
 a canvas (which strips all metadata, same as the app's resize path), restores the metadata with
 `copyMetadata`, re-reads the result, and badges it "metadata fully preserved" or "lossy for this
@@ -160,6 +216,13 @@ into metadata; `encode` renders your native text format. Register it in
   weights are omitted. Historically a NaN weight failed schema validation and discarded the entire
   metadata object — every AddNet-era image parsed to `{}`. (Fixed in the app in parallel; see
   docs/corpus-findings.md item 1.)
+- A1111 `quote()`/`unquote()` semantics (per upstream `infotext_utils.py`): the encoder JSON-quotes
+  values containing commas/newlines/colons/quotes, and the parser unquotes quoted prose back to a
+  plain string (the app turns it into junk nested objects). Quoted values beginning with `key: `
+  (`Lora hashes`, `ControlNet 0`) still parse as nested blocks, matching app output.
+- RuinedFooocus detection is whitespace-tolerant (`"software":"RuinedFooocus"` with or without a
+  space); the app requires python-json spacing.
+- SwarmUI's version is read from the spec-correct `swarm_version` key (also fixed in the app).
 
 ## Development
 

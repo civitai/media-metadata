@@ -1,5 +1,5 @@
 /** Ad-hoc: fetch a URL and report what the reader sees. `tsx scripts/probe.ts <url>` */
-import { readMetadata } from '../src/image/read/read';
+import { readMetadata } from './read';
 
 const url = process.argv[2];
 const res = await fetch(url);

@@ -1,0 +1,58 @@
+{
+  "generator": "comfyui",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "HDR, 8K, high contrast, masterpiece, best quality, amazing quality, very aesthetic, retro artstyle, realistic, promotional art, newest, volumetric lighting, (flat colors:2), haiz_ai, no lineart, no outline,\n(artist:incase:0.5), (artist:tsuaii:0.5), \nwoman, blue gray eyes, silver armor, blonde hair, silver and gold metal, braided hair, flower crown, gold jewelry, holding sword,\nhead turned to the side, looking up at the viewer,\ndramatic lighting, dappled lighting,  \nblurred background, grassy field, stone castle,",
+    "negativePrompt": "bad quality,worst quality,worst detail,sketch,censor,\nworst quality, low quality, displeasing, text, watermark, \nbad anatomy, artist name, signature,",
+    "cfgScale": 5,
+    "steps": 24,
+    "sampler": "Euler",
+    "seed": 903128894,
+    "engine": "Civitai",
+    "workflow": "img2img-hires",
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 1761560
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 2034730
+      },
+      {
+        "type": "lora",
+        "weight": 3,
+        "modelVersionId": 1268294
+      },
+      {
+        "type": "lora",
+        "weight": 2.5,
+        "modelVersionId": 1681903
+      },
+      {
+        "type": "lora",
+        "weight": 0.8,
+        "modelVersionId": 1253047
+      },
+      {
+        "type": "upscaler",
+        "modelVersionId": 164821
+      }
+    ],
+    "extra": {},
+    "models": [
+      "urn:air:sdxl:checkpoint:civitai:827184@1761560"
+    ],
+    "upscalers": [
+      "urn:air:other:upscaler:civitai:147759@164821"
+    ],
+    "Model": "urn:air:sdxl:checkpoint:civitai:827184@1761560"
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

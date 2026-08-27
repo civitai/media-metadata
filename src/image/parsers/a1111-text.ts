@@ -105,10 +105,34 @@ function isPartialDate(value: string) {
   return value.length === 14 && value[11] === 'T';
 }
 
+/** A1111's quote(): JSON-quote a settings value that would break the line format. */
+export function quoteInfotextValue(value: string): string {
+  return /[,\n:"]/.test(value) ? JSON.stringify(value) : value;
+}
+
+// Anchored: KV blocks (`Lora hashes: "a: 1"`, `ControlNet 0: "Module: none, …"`)
+// BEGIN with `key: `; quoted prose that merely contains a colon later does not.
+const KEY_VALUE_SHAPE = /^[\w][\w\s.+-]*: /;
+
+/**
+ * A quoted value is either a nested key/value block (`Lora hashes: "a: 1, b: 2"`,
+ * which A1111 splits after unquoting — we recurse directly) or an A1111
+ * JSON-quoted plain string (`Wildcard prompt: "text, with commas"`), which
+ * unquotes back to text like upstream's unquote().
+ */
+function resolveQuotedValue(raw: string): unknown {
+  if (KEY_VALUE_SHAPE.test(raw)) return parseDetailsLine(raw);
+  try {
+    return JSON.parse(`"${raw}"`);
+  } catch {
+    return raw;
+  }
+}
+
 /**
  * Parse the comma-separated `Key: value` details line. Quoted values recurse
- * (extensions nest key/value blocks inside quotes, e.g. `Lora hashes: "a: 1, b: 2"`),
- * and ISO-8601 timestamps are kept whole despite their internal colons.
+ * into nested key/value blocks or unquote to plain strings (see
+ * resolveQuotedValue); ISO-8601 timestamps are kept whole despite their colons.
  */
 export function parseDetailsLine(line: string | undefined): Record<string, any> {
   const result: Record<string, any> = {};
@@ -121,9 +145,14 @@ export function parseDetailsLine(line: string | undefined): Record<string, any> 
   for (let i = 0; i < line.length; i++) {
     const char = line[i];
 
-    if (char === '"') {
+    if (char === '\\' && insideQuotes) {
+      // JSON-style escape inside a quoted value: keep the pair verbatim so an
+      // escaped quote can't flip the quote state; resolveQuotedValue decodes it
+      currentValue += char + (line[i + 1] ?? '');
+      i++;
+    } else if (char === '"') {
       if (insideQuotes) {
-        result[currentKey] = parseDetailsLine(currentValue.trim());
+        if (currentKey) result[currentKey] = resolveQuotedValue(currentValue.trim());
         currentKey = '';
       }
       insideQuotes = !insideQuotes;

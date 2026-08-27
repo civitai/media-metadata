@@ -1,14 +1,23 @@
-import type { ParsedAir } from '../../civitai/air';
-import { parseAir } from '../../civitai/air';
 import { samplerMap } from '../../shared/constants';
 import type { GenerationMetadata } from '../../shared/schema';
 import type { ExifData, Generator } from '../../shared/types';
+import { hashesDetailExtractor, jsonBlockDetailExtractor } from './detail-extractors';
+
+/**
+ * A details-line extractor: pull a structured block (e.g. a JSON blob some tool
+ * appends) out of the A1111 details line into `metadata`, returning the line
+ * with the block removed so the plain key/value scanner never sees it.
+ * Extractors run in order before the scanner.
+ */
+export type A1111DetailExtractor = (
+  detailsLine: string,
+  metadata: GenerationMetadata,
+  ctx: ParserContext
+) => string;
 
 export interface ParserContext {
   /** A1111 sampler name → equivalent names in other UIs. */
   samplerMap: ReadonlyMap<string, string[]>;
-  /** Resolve an AIR identifier; throws on an invalid identifier. */
-  resolveAir: (air: string) => ParsedAir;
   /**
    * Keys of the unified metadata bag that are internal/cross-parser fields rather
    * than A1111 text fields — skipped when parsing details-line passthrough entries
@@ -17,6 +26,8 @@ export interface ParserContext {
    * would silently drop legitimate keys. Extend it if you add your own internal keys.
    */
   a1111ExcludedKeys: readonly string[];
+  /** Pre-scan extractors for the A1111 details line. Plugins prepend/append their own. */
+  a1111DetailExtractors: readonly A1111DetailExtractor[];
   /** Debug hook for intermediate parser state (e.g. the ComfyUI node graph). */
   onDebug?: (key: string, value: unknown) => void;
 }
@@ -39,8 +50,8 @@ export const defaultA1111ExcludedKeys: readonly string[] = [
 export function createParserContext(overrides?: Partial<ParserContext>): ParserContext {
   return {
     samplerMap,
-    resolveAir: parseAir,
     a1111ExcludedKeys: defaultA1111ExcludedKeys,
+    a1111DetailExtractors: [hashesDetailExtractor, jsonBlockDetailExtractor],
     ...overrides,
   };
 }

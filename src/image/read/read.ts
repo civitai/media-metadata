@@ -1,4 +1,3 @@
-import { isMadeOnSite } from '../../civitai/conventions';
 import type { GenerationMetadata } from '../../shared/schema';
 import { generationMetadataSchema } from '../../shared/schema';
 import type { BinaryInput, ExifData, Generator, ImageFormat } from '../../shared/types';
@@ -6,12 +5,20 @@ import { sniffFormat } from '../format';
 import { defaultParsers } from '../parsers/registry';
 import type { MetadataParser, ParserContext } from '../parsers/types';
 import { createParserContext } from '../parsers/types';
+import type { ParserPlugin } from '../plugins';
+import { applyPlugins } from '../plugins';
 import { extractExif, toBytes } from './exif';
 
 export interface ReadOptions {
+  /**
+   * Plugins extending the bare reader (e.g. `civitai()` from
+   * `@civitai/media-metadata/civitai`). Applied in order; explicit `parsers`/
+   * `context` options override plugin contributions.
+   */
+  plugins?: ParserPlugin[];
   /** Parser registry to walk, in order. Defaults to the built-in parsers. */
   parsers?: MetadataParser<any>[];
-  /** Overrides for injectable behavior (sampler map, AIR resolution, debug hook). */
+  /** Overrides for injectable behavior (sampler map, extractors, debug hook). */
   context?: Partial<ParserContext>;
 }
 
@@ -23,8 +30,8 @@ export interface MediaMetadata {
   meta: GenerationMetadata;
   /** Flattened raw tags (including the raw `userComment` bytes when present). */
   exif: Readonly<ExifData>;
-  /** Civitai convention: EXIF Artist tag equals 'ai'. */
-  madeOnSite: boolean;
+  /** Civitai convention (EXIF Artist === 'ai'); set by the civitai plugin, absent without it. */
+  madeOnSite?: boolean;
 }
 
 export async function readMetadata(
@@ -34,8 +41,11 @@ export async function readMetadata(
   const bytes = await toBytes(input);
   const format = sniffFormat(bytes);
   const exif = extractExif(bytes);
-  const ctx = createParserContext(options?.context);
-  const parsers = options?.parsers ?? defaultParsers;
+
+  const plugins = options?.plugins;
+  // plugins transform the base registry (explicit or default); explicit context wins over plugin context
+  const { parsers, context } = applyPlugins(plugins, options?.parsers ?? defaultParsers);
+  const ctx = createParserContext({ ...context, ...options?.context });
 
   let generator: Generator | null = null;
   let rawMeta: GenerationMetadata | undefined;
@@ -60,5 +70,7 @@ export async function readMetadata(
   const result = generationMetadataSchema.safeParse(rawMeta ?? {});
   const meta = (result.success ? result.data : {}) as GenerationMetadata;
 
-  return { format, generator, meta, exif, madeOnSite: isMadeOnSite(exif) };
+  const md: MediaMetadata = { format, generator, meta, exif };
+  for (const plugin of plugins ?? []) plugin.enrich?.(md);
+  return md;
 }

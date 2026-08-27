@@ -8,6 +8,7 @@
     "steps": 35,
     "sampler": "dpmpp_3m_sde_gpu",
     "seed": 1102589240,
+    "version": "0.9.5.0",
     "width": 832,
     "height": 1216,
     "scheduler": "sgm_uniform",
@@ -15,6 +16,8 @@
     "originalSampler": "dpmpp_3m_sde_gpu"
   },
   "roundTrip": {
-    "formats": ["png"]
+    "formats": [
+      "png"
+    ]
   }
 }

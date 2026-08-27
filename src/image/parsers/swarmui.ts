@@ -42,7 +42,9 @@ export const swarmUiParser: MetadataParser<SwarmUiState> = {
       height: generationDetails.height,
       sampler: generationDetails.sampler,
       scheduler: generationDetails.scheduler,
-      version: generationDetails.swarmVersion,
+      // upstream writes `swarm_version` (see docs/format-references.md);
+      // `swarmVersion` is kept as a fallback for our own historical encodes
+      version: generationDetails.swarm_version ?? generationDetails.swarmVersion,
       Model: generationDetails.model,
       resources: getResources(parsed),
     });
@@ -65,7 +67,7 @@ export const swarmUiParser: MetadataParser<SwarmUiState> = {
         sampler: meta.originalSampler ?? meta.sampler,
         scheduler: meta.scheduler,
         model: meta.Model,
-        swarmVersion: meta.version,
+        swarm_version: meta.version,
       },
       sui_models: (
         meta.resources as

@@ -6,11 +6,14 @@
     "cfgScale": 1,
     "steps": 30,
     "seed": 7778,
+    "version": "0.9.1.1",
     "width": 768,
     "height": 1216,
     "Model": "flux1-dev.sft"
   },
   "roundTrip": {
-    "formats": ["png"]
+    "formats": [
+      "png"
+    ]
   }
 }

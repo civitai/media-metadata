@@ -1,11 +1,17 @@
 import type { ComfyMetaSchema, GenerationMetadata } from '../../../shared/schema';
+import type { ExifData } from '../../../shared/types';
 import { fromJson, removeEmpty } from '../../../shared/utils';
 import { decodeUserComment } from '../../read/user-comment';
 import { applyA1111Compat } from '../a1111-compat';
-import type { MetadataParser } from '../types';
-import { applyCivitaiAirs, parseLegacyAirKeys, resolveResourceName } from './civitai';
-import type { ComfyNode, GraphScan } from './graph';
-import { cleanBadJson, getNumberValue, getPromptText, scanGraph } from './graph';
+import type { MetadataParser, ParserContext } from '../types';
+import type { ComfyNode, GraphScan, NodeNameIntercept } from './graph';
+import {
+  cleanBadJson,
+  createNameResolver,
+  getNumberValue,
+  getPromptText,
+  scanGraph,
+} from './graph';
 import { applyFluxSampler } from './flux';
 
 export type ComfyUiState = {
@@ -15,7 +21,16 @@ export type ComfyUiState = {
 };
 
 // #region [detect]
-function detectWebp(exif: Readonly<Record<string, unknown>>): ComfyUiState | null {
+/** Standard ComfyUI PNG (`prompt`/`workflow` text chunks) and WebP (prompt JSON in EXIF Model). */
+export function detectComfy(exif: Readonly<ExifData>): ComfyUiState | null {
+  if (exif.prompt || exif.workflow) {
+    return {
+      prompt: exif.prompt as string | undefined,
+      workflow: exif.workflow as string | undefined,
+      extraMetadata: exif.extraMetadata,
+    };
+  }
+
   // ComfyUI webp save nodes put the prompt JSON in the EXIF Model tag, prefixed `prompt:`
   const model = exif.Model;
   if (!Array.isArray(model) || typeof model[0] !== 'string' || !model[0].startsWith('prompt:'))
@@ -36,83 +51,11 @@ function detectWebp(exif: Readonly<Record<string, unknown>>): ComfyUiState | nul
   }
   return { prompt: comfyJson, workflow: comfyJson, extraMetadata };
 }
-
-function detectLegacy(exif: Readonly<Record<string, unknown>>): ComfyUiState | null {
-  // Early civitai comfy generations jammed the whole workflow JSON (marked by an
-  // `extra` key) into parameters/UserComment
-  let generationDetails: string | null = null;
-  if (typeof exif.parameters === 'string') {
-    generationDetails = exif.parameters;
-  } else if (exif.userComment instanceof Uint8Array) {
-    generationDetails = decodeUserComment(exif.userComment);
-  }
-  if (!generationDetails) return null;
-
-  try {
-    const details = JSON.parse(generationDetails);
-    if (!details.extra) return null;
-    const { extra: _extra, extraMetadata, ...workflow } = details;
-    let parsedExtraMetadata: unknown;
-    if (typeof extraMetadata === 'string') {
-      try {
-        parsedExtraMetadata = JSON.parse(extraMetadata);
-      } catch {
-        parsedExtraMetadata = undefined;
-      }
-    }
-    return {
-      prompt: JSON.stringify(workflow),
-      workflow: generationDetails,
-      extraMetadata: parsedExtraMetadata,
-    };
-  } catch {
-    return null;
-  }
-}
 // #endregion
 
 // #region [parse phases]
-/**
- * On-site generations carry a curated summary (extraMetadata) alongside the
- * graph — prefer it over graph inference when it has a prompt.
- */
-function applyExtraMetadata(metadata: GenerationMetadata, extraMetadata: Record<string, any>) {
-  const {
-    prompt,
-    negativePrompt,
-    cfgScale,
-    steps,
-    seed,
-    sampler,
-    denoise,
-    workflowId,
-    workflow: workflowKey,
-    resources,
-    ...extra
-  } = extraMetadata;
-  metadata.prompt = prompt;
-  metadata.negativePrompt = negativePrompt;
-  metadata.cfgScale = cfgScale;
-  metadata.steps = steps;
-  metadata.seed = seed;
-  metadata.sampler = sampler;
-  metadata.denoise = denoise;
-  // Newer generations put the workflow key in `workflow`; older ones used `workflowId`.
-  // Store the full value (e.g. 'img2img:hires-fix') — consumers normalize it to a
-  // technique name at lookup time.
-  metadata.workflow = workflowId ?? workflowKey;
-  metadata.civitaiResources = resources.map((x: any) => {
-    if (x.strength) {
-      x.weight = x.strength;
-      delete x.strength;
-    }
-    return x;
-  });
-  if (extra) metadata.extra = extra;
-}
-
 /** Classic KSampler graph: read params off the sampler feeding an EmptyLatentImage. */
-function applySamplerNode(metadata: GenerationMetadata, scan: GraphScan) {
+export function applySamplerNode(metadata: GenerationMetadata, scan: GraphScan) {
   const node =
     scan.samplerNodes.find((x) => x.latent_image?.class_type === 'EmptyLatentImage') ??
     scan.samplerNodes[0];
@@ -128,85 +71,58 @@ function applySamplerNode(metadata: GenerationMetadata, scan: GraphScan) {
   metadata.width = node.latent_image.inputs.width;
   metadata.height = node.latent_image.inputs.height;
 }
+
+/** Shared body for the core parser and plugin parsers that extend it. */
+export function scanComfyState(
+  state: ComfyUiState,
+  ctx: ParserContext,
+  intercept?: NodeNameIntercept
+): { prompt: Record<string, ComfyNode>; scan: GraphScan } {
+  const prompt = JSON.parse(cleanBadJson(state.prompt as string)) as Record<string, ComfyNode>;
+  ctx.onDebug?.('nodeJson', prompt);
+  const scan = scanGraph(prompt, createNameResolver(prompt, intercept));
+  return { prompt, scan };
+}
+
+export function baseComfyMetadata(state: ComfyUiState, scan: GraphScan): GenerationMetadata {
+  return {
+    engine: 'ComfyUI',
+    models: scan.models,
+    upscalers: scan.upscalers,
+    vaes: scan.vaes,
+    additionalResources: scan.additionalResources,
+    controlNets: scan.controlNets,
+    // Stringified to reduce stored size
+    comfy: `{"prompt": ${state.prompt}, "workflow": ${state.workflow}}`,
+  };
+}
+
+export function encodeComfy(meta: GenerationMetadata): string {
+  const comfy = typeof meta.comfy === 'string' ? fromJson<ComfyMetaSchema>(meta.comfy) : meta.comfy;
+  return comfy && comfy.workflow ? JSON.stringify(comfy.workflow) : '';
+}
 // #endregion
 
 export const comfyUiParser: MetadataParser<ComfyUiState> = {
   generator: 'comfyui',
   detect(exif) {
-    // Standard ComfyUI PNG: `prompt` and/or `workflow` text chunks
-    if (exif.prompt || exif.workflow) {
-      return {
-        prompt: exif.prompt as string | undefined,
-        workflow: exif.workflow as string | undefined,
-        extraMetadata: exif.extraMetadata,
-      };
-    }
-    return detectWebp(exif) ?? detectLegacy(exif);
+    return detectComfy(exif);
   },
   parse(state, ctx) {
-    const prompt = JSON.parse(cleanBadJson(state.prompt as string)) as Record<string, ComfyNode>;
-    ctx.onDebug?.('nodeJson', prompt);
+    const { scan } = scanComfyState(state, ctx);
+    const metadata = baseComfyMetadata(state, scan);
 
-    const scan = scanGraph(prompt, (value, widgetKey) =>
-      resolveResourceName(value, widgetKey, prompt)
-    );
-
-    // Default to an object (not undefined) so airs discovered in resource names below can be
-    // attached even when the image carries only a `prompt` chunk and no `workflow` chunk.
-    const workflow = state.workflow ? (JSON.parse(state.workflow) as any) : {};
-    const { versionIds, modelIds } = parseLegacyAirKeys(workflow?.extra);
-    let isCivitComfy = workflow?.extra?.airs?.length > 0;
-
-    const metadata: GenerationMetadata = {
-      engine: isCivitComfy ? 'Civitai' : 'ComfyUI',
-      models: scan.models,
-      upscalers: scan.upscalers,
-      vaes: scan.vaes,
-      additionalResources: scan.additionalResources,
-      controlNets: scan.controlNets,
-      versionIds,
-      modelIds,
-      // Stringified to reduce stored size; omitted for compliant Civitai workflows,
-      // whose graph is recoverable from the airs.
-      comfy: isCivitComfy
-        ? undefined
-        : `{"prompt": ${state.prompt}, "workflow": ${state.workflow}}`,
-    };
-
-    const extraMetadata = state.extraMetadata as Record<string, any> | undefined;
-    if (extraMetadata && typeof extraMetadata === 'object' && extraMetadata.prompt) {
-      applyExtraMetadata(metadata, extraMetadata);
-    } else if (scan.customAdvancedSampler) {
+    if (scan.customAdvancedSampler) {
       applyFluxSampler(scan.customAdvancedSampler, metadata);
     } else {
       applySamplerNode(metadata, scan);
-      if (state.extraMetadata) metadata.extra = state.extraMetadata as Record<string, unknown>;
     }
-
-    // AIRs referenced by resource-name widgets count even when workflow.extra.airs is absent
-    const workflowAirs = [
-      ...scan.models,
-      ...scan.upscalers,
-      ...scan.vaes,
-      ...scan.additionalResources.map((x) => x.name),
-    ].filter((x): x is string => typeof x === 'string' && x.startsWith('urn:air:'));
-    if (workflowAirs.length > 0) {
-      workflow.extra = { airs: workflowAirs };
-      isCivitComfy = true;
-    }
-
-    if (isCivitComfy) {
-      applyCivitaiAirs(metadata, workflow.extra.airs, scan.additionalResources, ctx);
-    }
+    if (state.extraMetadata) metadata.extra = state.extraMetadata as Record<string, unknown>;
 
     applyA1111Compat(metadata, ctx.samplerMap);
-
     return removeEmpty(metadata);
   },
   encode(meta) {
-    const comfy =
-      typeof meta.comfy === 'string' ? fromJson<ComfyMetaSchema>(meta.comfy) : meta.comfy;
-
-    return comfy && comfy.workflow ? JSON.stringify(comfy.workflow) : '';
+    return encodeComfy(meta);
   },
 };

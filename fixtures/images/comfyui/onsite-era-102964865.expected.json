@@ -1,0 +1,58 @@
+{
+  "generator": "comfyui",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "masterpiece, newest,absurdres,incredibly absurdres, best quality, amazing quality, very aesthetic, impressionism, painterly, pastel colors, \n\nAbstract image of a girl, an open window, striped cats, colorful feathers light particles\n\n <lora:Face_Enhancer_Illustrious:1>  <lora:recipe1_v3_Illusv2.0Stable:1> stylized <lora:0__11Xx:0.7> 0__11Xx_illu <lora:bW9tb3dhYWFp-illustriousXL_v01_V1-CAME:1> bW9t",
+    "negativePrompt": "worst quality, bad quality, low quality, anatomical nonsense, bad anatomy,interlocked fingers, extra fingers,watermark, jacket,",
+    "cfgScale": 5,
+    "steps": 45,
+    "sampler": "DPM++ 2M",
+    "seed": 1334422993,
+    "engine": "Civitai",
+    "workflow": "img2img-hires",
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 1761560
+      },
+      {
+        "type": "lora",
+        "weight": 0.7,
+        "modelVersionId": 1348455
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 1839268
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 1701079
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 1840805
+      },
+      {
+        "type": "upscaler",
+        "modelVersionId": 164821
+      }
+    ],
+    "extra": {},
+    "models": [
+      "urn:air:sdxl:checkpoint:civitai:827184@1761560"
+    ],
+    "upscalers": [
+      "urn:air:other:upscaler:civitai:147759@164821"
+    ],
+    "Model": "urn:air:sdxl:checkpoint:civitai:827184@1761560"
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

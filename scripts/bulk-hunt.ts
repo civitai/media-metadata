@@ -9,7 +9,7 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { readMetadata } from '../src/image/read/read';
+import { readMetadata } from './read';
 
 const ROOT = join(import.meta.dirname, '..', 'fixtures');
 const MAX_BYTES = 2_000_000;

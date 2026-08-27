@@ -1,0 +1,62 @@
+# When a maintainer labels an issue `fixture-report`, ingest the images attached
+# to that issue as test fixtures and open a PR for review. The blessed
+# expectation pins CURRENT parser output — if the report is about wrong output,
+# the reviewer fixes the parser and re-blesses on the PR branch before merging.
+name: Fixture report
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  ingest:
+    if: github.event.label.name == 'fixture-report'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Ingest attached images as fixtures
+        run: pnpm exec tsx scripts/ingest-report.ts
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run the suite over the new fixtures
+        run: pnpm test
+        continue-on-error: true # a failing new fixture is exactly what a report may produce
+      - name: Open a PR with the new fixtures
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: fixture-report/issue-${{ github.event.issue.number }}
+          title: 'fixtures: ingest report from #${{ github.event.issue.number }}'
+          commit-message: |
+            fixtures: ingest report from #${{ github.event.issue.number }}
+
+            Blessed expectation pins parser output at ingest time.
+          body: |
+            Ingests the image(s) attached to #${{ github.event.issue.number }} as test fixtures.
+
+            ⚠️ The `.expected.json` pins **current parser output**, which the report says may be
+            wrong. Review it against the report; if the parser needs a fix, land the fix on this
+            branch and run `pnpm bless report-${{ github.event.issue.number }}` before merging.
+
+            Closes #${{ github.event.issue.number }}
+          labels: fixture-report
+      - name: Comment on the issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body: 'Thanks! The attached image(s) were ingested as candidate test fixtures — see the linked PR.',
+            });

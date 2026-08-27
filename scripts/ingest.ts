@@ -7,7 +7,7 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { readMetadata } from '../src/image/read/read';
+import { readMetadata } from './read';
 
 const ROOT = join(import.meta.dirname, '..', 'fixtures');
 const candidates: { name: string; url: string; notes?: string }[] = JSON.parse(

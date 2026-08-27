@@ -4,7 +4,7 @@
  * Verifies hits by downloading + running the new reader before printing them.
  *   tsx scripts/hunt-meta.ts <pages> [apiQuery]
  */
-import { readMetadata } from '../src/image/read/read';
+import { readMetadata } from './read';
 
 const pages = parseInt(process.argv[2] ?? '10');
 const extraQuery = process.argv[3] ?? '';

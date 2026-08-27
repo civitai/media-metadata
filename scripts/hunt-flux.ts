@@ -4,7 +4,7 @@
  * the API, so stored-meta classification can't be used.
  *   tsx scripts/hunt-flux.ts <pages> [apiQuery]
  */
-import { readMetadata } from '../src/image/read/read';
+import { readMetadata } from './read';
 
 const pages = parseInt(process.argv[2] ?? '5');
 const extraQuery = process.argv[3] ?? '';

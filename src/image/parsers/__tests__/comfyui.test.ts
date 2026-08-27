@@ -1,14 +1,61 @@
 import { describe, expect, it } from 'vitest';
+import { createCivitaiComfyParser } from '../../../civitai/comfy';
+import { parseAir } from '../../../civitai/air';
 import { comfyUiParser } from '../comfyui';
 import { createParserContext } from '../types';
 
 const ctx = createParserContext();
+// These suites cover civitai semantics (selector nodes, on-site extraMetadata,
+// engine detection) — the domain of the civitai plugin's comfy parser.
+const civitaiComfy = createCivitaiComfyParser(parseAir);
 
 function detectAndParse(exif: Record<string, unknown>) {
-  const state = comfyUiParser.detect(exif, ctx);
+  const state = civitaiComfy.detect(exif, ctx);
   expect(state).not.toBeNull();
-  return comfyUiParser.parse(state!, ctx) as Record<string, any>;
+  return civitaiComfy.parse(state!, ctx) as Record<string, any>;
 }
+
+describe('core comfyUiParser (no plugin)', () => {
+  const prompt = {
+    '3': {
+      class_type: 'KSampler',
+      inputs: {
+        seed: 1,
+        steps: 20,
+        cfg: 8,
+        sampler_name: 'euler',
+        scheduler: 'normal',
+        denoise: 1,
+        positive: ['6', 0],
+        negative: ['6', 0],
+        latent_image: ['5', 0],
+      },
+    },
+    '5': { class_type: 'EmptyLatentImage', inputs: { width: 512, height: 512 } },
+    '6': { class_type: 'CLIPTextEncode', inputs: { text: 'a cat' } },
+    '17': {
+      class_type: 'CivitaiModelSelector',
+      inputs: { air: 'urn:air:sd1:checkpoint:civitai:43331@176425' },
+    },
+    '4': { class_type: 'CheckpointLoaderSimple', inputs: { ckpt_name: ['17', 1] } },
+  };
+
+  it('parses vanilla graphs but knows nothing about civitai nodes or AIRs', () => {
+    const state = comfyUiParser.detect({ prompt: JSON.stringify(prompt), workflow: '{}' }, ctx);
+    const meta = comfyUiParser.parse(state!, ctx) as Record<string, any>;
+    expect(meta.prompt).toBe('a cat');
+    expect(meta.engine).toBe('ComfyUI');
+    expect(meta.civitaiResources).toBeUndefined();
+    expect(meta.models ?? []).toEqual([]); // selector-supplied name is a civitai concept
+    expect(typeof meta.comfy).toBe('string'); // always kept without the plugin
+  });
+
+  it('does not detect the civitai legacy UserComment format', () => {
+    const legacy = JSON.stringify({ '1': { class_type: 'KSampler', inputs: {} }, extra: {} });
+    expect(comfyUiParser.detect({ parameters: legacy }, ctx)).toBeNull();
+    expect(civitaiComfy.detect({ parameters: legacy }, ctx)).not.toBeNull();
+  });
+});
 
 const baseExtra = {
   prompt: 'a cat',

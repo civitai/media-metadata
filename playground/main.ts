@@ -1,11 +1,78 @@
-import type { MediaMetadata } from '../src/index';
+import type { MediaMetadata, ParserPlugin } from '../src/index';
 import { copyMetadata, encodeMetadata, payloadFromMediaMetadata, readMetadata } from '../src/index';
+import { civitai } from '../src/civitai/index';
+
+const REPO_URL = 'https://github.com/civitai/media-metadata';
+
+const AVAILABLE_PLUGINS: { id: string; make: () => ParserPlugin }[] = [
+  { id: 'civitai', make: () => civitai() },
+];
 
 const drop = document.getElementById('drop')!;
 const fileInput = document.getElementById('file') as HTMLInputElement;
 const urlInput = document.getElementById('url') as HTMLInputElement;
 const fetchBtn = document.getElementById('fetch')!;
 const results = document.getElementById('results')!;
+
+function activePluginIds(): string[] {
+  return [...document.querySelectorAll<HTMLInputElement>('[data-plugin]:checked')].map(
+    (i) => i.dataset.plugin!
+  );
+}
+
+function currentPlugins(): ParserPlugin[] {
+  const ids = activePluginIds();
+  return AVAILABLE_PLUGINS.filter((p) => ids.includes(p.id)).map((p) => p.make());
+}
+
+function compareMode(): boolean {
+  return (document.getElementById('compare') as HTMLInputElement)?.checked ?? false;
+}
+
+// Make the mode linkable: ?plugins=none (bare core), ?plugins=civitai, &compare=1.
+// Toggling a checkbox keeps the URL in sync so the current view can be shared.
+function applyQueryConfig() {
+  const params = new URLSearchParams(location.search);
+  const plugins = params.get('plugins');
+  if (plugins !== null) {
+    const wanted = new Set(plugins.split(',').filter((p) => p && p !== 'none'));
+    for (const box of document.querySelectorAll<HTMLInputElement>('[data-plugin]'))
+      box.checked = wanted.has(box.dataset.plugin!);
+  }
+  if (params.get('compare') === '1')
+    (document.getElementById('compare') as HTMLInputElement).checked = true;
+}
+
+function syncQueryConfig() {
+  const params = new URLSearchParams(location.search);
+  const active = activePluginIds();
+  params.set('plugins', active.length ? active.join(',') : 'none');
+  if (compareMode()) params.set('compare', '1');
+  else params.delete('compare');
+  history.replaceState(null, '', `${location.pathname}?${params}`);
+}
+
+applyQueryConfig();
+for (const box of document.querySelectorAll<HTMLInputElement>('[data-plugin], #compare'))
+  box.addEventListener('change', syncQueryConfig);
+
+// #region [multi-image report selection]
+type ReportItem = { name: string; md: MediaMetadata };
+const selectedReports = new Map<HTMLElement, ReportItem>();
+
+function updateReportBar() {
+  const btn = document.getElementById('report-selected') as HTMLButtonElement | null;
+  if (!btn) return;
+  const n = selectedReports.size;
+  btn.hidden = n === 0;
+  btn.textContent = `Report ${n} selected image${n === 1 ? '' : 's'} as one issue`;
+}
+
+document.getElementById('report-selected')?.addEventListener('click', () => {
+  if (selectedReports.size === 0) return;
+  window.open(buildReportUrl([...selectedReports.values()]), '_blank');
+});
+// #endregion
 
 function el<K extends keyof HTMLElementTagNameMap>(
   tag: K,
@@ -55,6 +122,10 @@ function render(name: string, bytes: Uint8Array, md: MediaMetadata) {
   if (md.madeOnSite) badges.append(el('span', 'badge good', 'made on civitai'));
   const metaKeys = Object.keys(md.meta).length;
   badges.append(el('span', 'badge', `${metaKeys} meta key${metaKeys === 1 ? '' : 's'}`));
+  const pluginIds = activePluginIds();
+  badges.append(
+    el('span', 'badge', pluginIds.length ? `plugins: ${pluginIds.join(', ')}` : 'bare core')
+  );
   info.append(badges);
   header.append(info);
   card.append(header);
@@ -81,11 +152,74 @@ function render(name: string, bytes: Uint8Array, md: MediaMetadata) {
   card.append(section('Raw tags (exif)', JSON.stringify(describeExif(md.exif), null, 2)));
   card.append(transformControls(name, bytes, md));
 
+  const actions = el('div', 'actions');
   const download = el('button', undefined, 'Download');
   download.addEventListener('click', () => downloadBytes(name, bytes, md.format));
-  card.querySelector('.badges')?.after(download);
+  const report = el('button', undefined, 'Report parse issue');
+  report.title = 'Open a prefilled GitHub issue; drag the original image into it before submitting';
+  report.addEventListener('click', () => window.open(buildReportUrl([{ name, md }]), '_blank'));
+  const selectLabel = el('label', 'select-report');
+  const selectBox = el('input') as HTMLInputElement;
+  selectBox.type = 'checkbox';
+  selectBox.title = 'Select several cards, then use the "Report N selected" button up top';
+  selectBox.addEventListener('change', () => {
+    if (selectBox.checked) selectedReports.set(card, { name, md });
+    else selectedReports.delete(card);
+    updateReportBar();
+  });
+  selectLabel.append(selectBox, document.createTextNode(' select for report'));
+  actions.append(download, report, selectLabel);
+  card.querySelector('.badges')?.after(actions);
 
   results.prepend(card);
+  return card;
+}
+
+function reportSection(item: ReportItem, jsonBudget: number): string {
+  const { name, md } = item;
+  const lines = [
+    `### \`${name}\``,
+    `- format: \`${md.format}\` | generator: \`${md.generator}\` | ${Object.keys(md.meta).length} meta key(s) | plugins: \`${activePluginIds().join(', ') || 'none'}\``,
+  ];
+  if (jsonBudget > 0) {
+    const metaJson = JSON.stringify(md.meta, null, 2);
+    lines.push(
+      '```json',
+      metaJson.length > jsonBudget ? metaJson.slice(0, jsonBudget) + '\n… (truncated)' : metaJson,
+      '```'
+    );
+  }
+  return lines.join('\n');
+}
+
+/**
+ * Prefilled GitHub issue for one or more bad/missing parses. The user drags the
+ * ORIGINAL image files (all of them) into the issue before submitting; the
+ * fixture-report workflow ingests every attachment it finds.
+ */
+function buildReportUrl(items: ReportItem[]): string {
+  const title =
+    items.length === 1
+      ? `[fixture-report] ${items[0].md.generator ?? 'undetected'}: ${items[0].name}`
+      : `[fixture-report] ${items.length} images`;
+  const header = [
+    '<!-- fixture-report:v1 -->',
+    `**⬇️ Drag & drop the ORIGINAL image file${items.length === 1 ? '' : `s (all ${items.length})`} into this box before submitting** (do not screenshot or re-save them — that strips the metadata being reported).`,
+    '',
+    '### What looks wrong?',
+    '<!-- e.g. "prompt missing", "wrong sampler", "generator not detected" -->',
+    '',
+  ].join('\n');
+
+  // GitHub caps the new-issue URL around 8k chars — shrink the per-image JSON
+  // until it fits, dropping to summary-only lines as a last resort.
+  for (const jsonBudget of [3000, 1200, 500, 0]) {
+    const body = header + items.map((item) => reportSection(item, jsonBudget)).join('\n\n');
+    const params = new URLSearchParams({ title, labels: 'fixture-report', body });
+    const url = `${REPO_URL}/issues/new?${params}`;
+    if (url.length <= 7600 || jsonBudget === 0) return url;
+  }
+  throw new Error('unreachable');
 }
 
 function downloadBytes(name: string, bytes: Uint8Array, format: string) {
@@ -146,7 +280,7 @@ function transformControls(name: string, source: Uint8Array, sourceMd: MediaMeta
       // this is the line the app's canvas-utils.ts collapses to:
       const restored = await copyMetadata(source, stripped);
 
-      const md = await readMetadata(restored);
+      const md = await readMetadata(restored, { plugins: currentPlugins() });
       const label = `${name} → ${canvas.width}px ${format}`;
       render(label, restored, md);
 
@@ -193,7 +327,37 @@ function renderError(name: string, error: unknown) {
 
 async function handleBytes(name: string, bytes: Uint8Array) {
   try {
-    render(name, bytes, await readMetadata(bytes));
+    const plugins = currentPlugins();
+    const md = await readMetadata(bytes, { plugins });
+    const card = render(name, bytes, md);
+
+    if (compareMode() && plugins.length > 0) {
+      const bare = await readMetadata(bytes);
+      const changed = metaDiff(bare.meta, md.meta as Record<string, unknown>);
+      card
+        .querySelector('.badges')
+        ?.append(
+          el(
+            'span',
+            `badge ${changed.length ? 'gen' : ''}`,
+            `plugins changed ${changed.length} key(s) vs bare core`
+          )
+        );
+      if (changed.length) {
+        card.append(
+          section(
+            'Bare core vs plugins',
+            JSON.stringify(
+              Object.fromEntries(
+                changed.map((k) => [k, { bare: bare.meta[k], withPlugins: md.meta[k] }])
+              ),
+              null,
+              2
+            )
+          )
+        );
+      }
+    }
   } catch (error) {
     renderError(name, error);
   }

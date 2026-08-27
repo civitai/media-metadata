@@ -17,6 +17,21 @@ pnpm link ../media-metadata
 
 Once published, it's just `pnpm add @civitai/media-metadata`.
 
+## The civitai plugin is required
+
+The reader is bare-bones by default; **every read the app does must pass the bundled plugin**:
+
+```ts
+import { civitai } from '@civitai/media-metadata/civitai';
+const md = await readMetadata(file, { plugins: [civitai()] });
+```
+
+The plugin carries all on-site formats, `Civitai resources`/`Civitai metadata` block
+interpretation, AIR resolution, and `madeOnSite`. Without it the A1111-standard fields still
+parse (the blocks stay as raw string passthrough), but none of the civitai semantics appear and
+the legacy on-site ComfyUI format goes undetected. The adapter below is the natural place to
+bake the plugin in once so call sites never think about it.
+
 ## Recommended adoption shape
 
 Keep `src/utils/metadata/index.ts` as a **thin adapter** that re-exports package APIs under the

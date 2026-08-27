@@ -10,7 +10,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import sharp from 'sharp';
 import { getTextChunks } from '../src/image/write/png';
-import { readMetadata } from '../src/image/read/read';
+import { readMetadata } from './read';
 
 const ROOT = join(import.meta.dirname, '..', 'fixtures');
 const sourceFile = 'comfyui/workflow-22566974.png';

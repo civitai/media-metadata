@@ -1,24 +1,15 @@
 import type { GenerationMetadata } from '../../shared/schema';
 import { decodeUserComment } from '../read/user-comment';
 import {
-  extractBalancedJson,
   normalizeGenerationDetails,
   parseDetailsLine,
+  quoteInfotextValue,
   toA1111Key,
   toUnifiedKey,
 } from './a1111-text';
 import type { MetadataParser, ParserContext } from './types';
 
 export { normalizeGenerationDetails } from './a1111-text';
-
-type CivitaiResourceRaw = {
-  weight?: number;
-  air?: string;
-  modelVersionId?: number;
-  type?: string;
-  versionName?: string;
-  modelName?: string;
-};
 
 type SDResource = {
   type: string;
@@ -29,9 +20,6 @@ type SDResource = {
 
 export type Automatic1111State = { generationDetails: string };
 
-const HASHES_PREFIX = ', Hashes: ';
-const CIVITAI_RESOURCES = /, Civitai resources:\s*(\[\{.*?\}\])/;
-const CIVITAI_METADATA_PREFIX = ', Civitai metadata: ';
 /** Extension output that breaks details parsing — everything after these is dropped. */
 const BAD_EXTENSION_KEYS = ['Resources: ', 'Hashed prompt: ', 'Hashed Negative prompt: '];
 const TEMPLATE_KEYS = ['Template: ', 'Negative Template: '] as const;
@@ -68,44 +56,6 @@ function takeDetailsLine(lines: string[]): string | undefined {
     detailsLine = detailsLine.split(key)[0];
   }
   return detailsLine;
-}
-
-/** `, Hashes: {...}` → metadata.hashes; returns the details line with the block removed. */
-function extractHashes(detailsLine: string | undefined, metadata: GenerationMetadata) {
-  const result = detailsLine ? extractBalancedJson(detailsLine, HASHES_PREFIX) : null;
-  if (!result || !detailsLine) return detailsLine;
-  metadata.hashes = JSON.parse(result.json);
-  return detailsLine.slice(0, result.start) + detailsLine.slice(result.end);
-}
-
-/** `, Civitai resources: [{...}]` → metadata.civitaiResources with AIRs resolved to version ids. */
-function extractCivitaiResources(
-  detailsLine: string | undefined,
-  metadata: GenerationMetadata,
-  ctx: ParserContext
-) {
-  const match = detailsLine?.match(CIVITAI_RESOURCES)?.[1];
-  if (!match || !detailsLine) return detailsLine;
-  metadata.civitaiResources = JSON.parse(match);
-  for (const resource of metadata.civitaiResources as CivitaiResourceRaw[]) {
-    delete resource.modelName;
-    delete resource.versionName;
-    if (!resource.air) continue;
-    const { version, type } = ctx.resolveAir(resource.air);
-    resource.modelVersionId = version;
-    resource.type = type;
-    delete resource.air;
-  }
-  return detailsLine.replace(CIVITAI_RESOURCES, '');
-}
-
-/** `, Civitai metadata: {...}` (may nest) → metadata.extra. */
-function extractCivitaiMetadata(detailsLine: string | undefined, metadata: GenerationMetadata) {
-  const result = detailsLine ? extractBalancedJson(detailsLine, CIVITAI_METADATA_PREFIX) : null;
-  if (!result || !detailsLine) return detailsLine;
-  const data = JSON.parse(result.json) as Record<string, any>;
-  if (Object.keys(data).length !== 0) metadata.extra = data;
-  return detailsLine.slice(0, result.start) + detailsLine.slice(result.end);
 }
 
 /** Remaining `Key: value` pairs → metadata, minus internal keys. */
@@ -245,9 +195,11 @@ export const automatic1111Parser: MetadataParser<Automatic1111State> = {
     stripTemplateLines(lines);
 
     let detailsLine = takeDetailsLine(lines);
-    detailsLine = extractHashes(detailsLine, metadata);
-    detailsLine = extractCivitaiResources(detailsLine, metadata, ctx);
-    detailsLine = extractCivitaiMetadata(detailsLine, metadata);
+    if (detailsLine) {
+      for (const extract of ctx.a1111DetailExtractors) {
+        detailsLine = extract(detailsLine, metadata, ctx);
+      }
+    }
     applyDetailEntries(detailsLine, metadata, ctx);
 
     applyPrompts(lines, metadata);
@@ -267,7 +219,7 @@ export const automatic1111Parser: MetadataParser<Automatic1111State> = {
       if (v == null || typeof v === 'object') continue;
       const key = toA1111Key(k);
       if (ctx.a1111ExcludedKeys.includes(key)) continue;
-      fineDetails.push(`${key}: ${v}`);
+      fineDetails.push(`${key}: ${quoteInfotextValue(String(v))}`);
     }
     if (fineDetails.length > 0) lines.push(fineDetails.join(', '));
 

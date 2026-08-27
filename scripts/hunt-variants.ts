@@ -4,7 +4,7 @@
  * new reader, and print ingest-ready lines.
  *   tsx scripts/hunt-variants.ts <pages> [apiQuery]
  */
-import { readMetadata } from '../src/image/read/read';
+import { readMetadata } from './read';
 
 const pages = parseInt(process.argv[2] ?? '5');
 const extraQuery = process.argv[3] ?? '';

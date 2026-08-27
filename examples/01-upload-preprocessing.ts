@@ -11,6 +11,7 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { readMetadata } from '../src/index';
+import { civitai } from '../src/civitai/index';
 
 const file = join(
   import.meta.dirname,
@@ -22,7 +23,7 @@ const file = join(
 );
 const bytes = new Uint8Array(await readFile(file));
 
-const md = await readMetadata(bytes);
+const md = await readMetadata(bytes, { plugins: [civitai()] });
 
 // The app stores md.meta on the Image row and gates "AI-generated" on it:
 const isValidAiMeta = !!(md.meta.prompt || md.meta.civitaiResources);

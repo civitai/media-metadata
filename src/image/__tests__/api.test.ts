@@ -35,13 +35,30 @@ describe('encodeMetadata', () => {
     expect(encodeMetadata({ comfy: 'not json' }, 'comfyui')).toBe('');
   });
 
+  it('JSON-quotes values with commas/colons (A1111 quote() rule) and they re-parse intact', () => {
+    const meta = {
+      prompt: 'a castle',
+      steps: 30,
+      'Hires upscaler': 'R-ESRGAN 4x+ Anime6B, fast: yes',
+      'ADetailer prompt': 'face, "quoted", detailed',
+    };
+    const text = encodeMetadata(meta);
+    expect(text).toContain('"R-ESRGAN 4x+ Anime6B, fast: yes"');
+    const reparsed = parseGenerationText(text);
+    expect(reparsed['Hires upscaler']).toBe('R-ESRGAN 4x+ Anime6B, fast: yes');
+    expect(reparsed['ADetailer prompt']).toBe('face, "quoted", detailed');
+    expect(reparsed.steps).toBe('30');
+  });
+
   it('honors a caller-supplied a1111ExcludedKeys list', () => {
     const meta = { prompt: 'a castle', steps: 30, myInternalKey: 'secret', scheduler: 'karras' };
     // default context: scheduler excluded, custom key passes through
     expect(encodeMetadata(meta)).toBe('a castle\nSteps: 30, myInternalKey: secret');
     // extended denylist: custom key excluded too
     expect(
-      encodeMetadata(meta, 'automatic1111', { a1111ExcludedKeys: ['scheduler', 'myInternalKey'] })
+      encodeMetadata(meta, 'automatic1111', {
+        context: { a1111ExcludedKeys: ['scheduler', 'myInternalKey'] },
+      })
     ).toBe('a castle\nSteps: 30');
   });
 });

@@ -93,6 +93,50 @@ export const RESOURCE_NAME_KEYS = [
   'lora_name',
 ];
 
+const NAME_WIDGET_KEYS = ['value', 'string'];
+
+/** Plugin hook: recognize a custom node that supplies a resource name (e.g. a picker node). */
+export type NodeNameIntercept = (
+  node: ComfyNode,
+  outputSlot: number | string | undefined
+) => string | undefined;
+
+/**
+ * Build a resolver that recovers a resource name from a widget value that may be
+ * a literal string or a node link. Primitive/string nodes expose the value under
+ * a `value`/`string` widget; `intercept` lets plugins claim custom node types
+ * (civitai's CivitaiModelSelector carries AIRs this way).
+ */
+export function createNameResolver(
+  prompt: Record<string, ComfyNode>,
+  intercept?: NodeNameIntercept
+): (value: unknown, widgetKey: string) => string | undefined {
+  function resolve(value: unknown, widgetKey: string, depth = 0): string | undefined {
+    if (typeof value === 'string') return value;
+    if (depth >= 5 || value == null) return undefined;
+
+    // Un-resolved node link: [nodeId, outputSlot]
+    if (Array.isArray(value)) {
+      const node = prompt[value[0]];
+      if (!node) return undefined;
+      const intercepted = intercept?.(node, value[1]);
+      if (intercepted) return intercepted;
+      return resolve(node, widgetKey, depth + 1);
+    }
+
+    if (typeof value !== 'object') return undefined;
+    const node = value as ComfyNode;
+    const intercepted = intercept?.(node, undefined);
+    if (intercepted) return intercepted;
+    for (const key of [widgetKey, ...NAME_WIDGET_KEYS]) {
+      const nested = resolve(node.inputs?.[key], widgetKey, depth + 1);
+      if (nested) return nested;
+    }
+    return undefined;
+  }
+  return (value, widgetKey) => resolve(value, widgetKey);
+}
+
 /**
  * Single pass over the node graph: resolve `[nodeId, slot]` links to node objects
  * (mutating the freshly-parsed graph — never caller input), collect sampler nodes,

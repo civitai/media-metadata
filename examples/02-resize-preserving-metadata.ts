@@ -20,6 +20,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import sharp from 'sharp';
 import { copyMetadata, readMetadata } from '../src/index';
+import { civitai } from '../src/civitai/index';
 
 const file = join(
   import.meta.dirname,
@@ -33,11 +34,12 @@ const source = new Uint8Array(await readFile(file));
 
 // resizing strips everything…
 const resized = await sharp(source).resize({ width: 256 }).png().toBuffer();
-console.log('after resize:  generator =', (await readMetadata(new Uint8Array(resized))).generator);
+const strippedMd = await readMetadata(new Uint8Array(resized), { plugins: [civitai()] });
+console.log('after resize:  generator =', strippedMd.generator);
 
 // …copyMetadata puts it back
 const restored = await copyMetadata(source, new Uint8Array(resized));
-const md = await readMetadata(restored);
+const md = await readMetadata(restored, { plugins: [civitai()] });
 console.log('after restore: generator =', md.generator);
 console.log(
   'workflow survived:',

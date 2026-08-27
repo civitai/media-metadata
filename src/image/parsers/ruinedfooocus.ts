@@ -9,7 +9,8 @@ export const ruinedFooocusParser: MetadataParser<RuinedFooocusState> = {
   detect(exif) {
     const parameters = exif.parameters;
     if (typeof parameters !== 'string') return null;
-    if (!parameters.includes('"software": "RuinedFooocus"')) return null;
+    // whitespace-tolerant: python's json.dumps writes `": "`, JS's stringify writes `":"`
+    if (!/"software":\s*"RuinedFooocus"/.test(parameters)) return null;
     return { parameters };
   },
   parse(state, ctx) {

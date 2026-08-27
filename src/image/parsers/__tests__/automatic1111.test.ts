@@ -1,8 +1,13 @@
 import { describe, expect, it } from 'vitest';
+import { civitai } from '../../../civitai/plugin';
+import { applyPlugins } from '../../plugins';
+import { defaultParsers } from '../registry';
 import { automatic1111Parser } from '../automatic1111';
 import { createParserContext } from '../types';
 
-const ctx = createParserContext();
+// Most of these strings carry civitai blocks (Civitai resources/metadata), so
+// run with the civitai plugin's context — the same shape readMetadata composes.
+const ctx = createParserContext(applyPlugins([civitai()], defaultParsers).context);
 
 function detectAndParse(text: string) {
   const state = automatic1111Parser.detect({ parameters: text }, ctx);

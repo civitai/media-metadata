@@ -4,7 +4,7 @@
  *   tsx scripts/hunt.ts <pages> [apiQuery] [perBucket]
  * Prints found candidates as JSON lines ready for scripts/ingest.ts.
  */
-import { readMetadata } from '../src/image/read/read';
+import { readMetadata } from './read';
 
 const PER_BUCKET: Record<string, number> = {
   automatic1111: 5,

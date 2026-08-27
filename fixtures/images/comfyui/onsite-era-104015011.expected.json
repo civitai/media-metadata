@@ -1,0 +1,81 @@
+{
+  "generator": "comfyui",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "Lazypos, masterpiece, best quality, very aesthetic,\nBREAK\n1 girl, Large breast, \nKiaKaBum, high ponytail, kiana kaslana, white hair, long hair, blue eyes, symbol-shaped pupils, white leotard, leotard under clothes, black corset, corset, underbust, snake print, detached collar, chinese clothes, red collared collar, half-skirt, high-waist skirt, red skirt, red waist cape, snake around leg, asymmetrical clothes, single-shoulder cape, single bare shoulder, red cape, light brown neck ribbon, halterneck, single detached sleeve, sleeve garter, layered clothes, jewelry, single sleeve, arm strap, armlet, single wrist guard, single fingerless glove, black gloves, red tassel, hair scrunchie,\nBREAK\n1 animal, RicCakHi3, no humans, animal, red scarf, horns, snake, white snake, +_+, snake floating near chest,\nRed theme, fireworks, fetal position, holding animal, cheek to cheek, happy, floating, :D, open mouth, one eye closed, full body,\nBREAK\n(rella:1.2), (redum4:1.2) (au \\(d elete\\):1.2) (dino \\(dinoartforame\\):1.1), wlop, epic,",
+    "negativePrompt": " (realistic, photorealistic) ,(worst quality, bad quality:1.2), lipstick, 3d lips, lowres,low quality,bad_quality,anatomical nonsense,interlocked fingers,extra fingers,watermark,transparent,logo,text,signature,jpeg artifacts,username,censored,extra digit,ugly,bad_hands,bad_feet,bad_anatomy,deformed anatomy,bad proportions,",
+    "cfgScale": 5,
+    "steps": 20,
+    "sampler": "Euler a",
+    "engine": "Civitai",
+    "workflow": "img2img-hires",
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 1896532
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 1459992
+      },
+      {
+        "type": "lora",
+        "weight": 1,
+        "modelVersionId": 1459981
+      },
+      {
+        "type": "lora",
+        "weight": 0.3,
+        "modelVersionId": 1191626
+      },
+      {
+        "type": "lora",
+        "weight": 0.1,
+        "modelVersionId": 1278054
+      },
+      {
+        "type": "lora",
+        "weight": 0.3,
+        "modelVersionId": 1247042
+      },
+      {
+        "type": "lora",
+        "weight": 0.3,
+        "modelVersionId": 1398703
+      },
+      {
+        "type": "lora",
+        "weight": -0.5,
+        "modelVersionId": 1444863
+      },
+      {
+        "weight": 1,
+        "modelVersionId": 1833157
+      },
+      {
+        "type": "lora",
+        "weight": 0.3,
+        "modelVersionId": 2237448
+      },
+      {
+        "type": "upscaler",
+        "modelVersionId": 164821
+      }
+    ],
+    "extra": {},
+    "models": [
+      "urn:air:sdxl:checkpoint:civitai:1277670@1896532"
+    ],
+    "upscalers": [
+      "urn:air:other:upscaler:civitai:147759@164821"
+    ],
+    "Model": "urn:air:sdxl:checkpoint:civitai:1277670@1896532"
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

@@ -12,9 +12,10 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { readMetadata } from '../src/index';
+import { civitai } from '../src/civitai/index';
 
 async function extractSourceMetadata(bytes: Uint8Array) {
-  const { meta } = await readMetadata(bytes);
+  const { meta } = await readMetadata(bytes, { plugins: [civitai()] });
   if (Object.keys(meta).length === 0) return undefined;
 
   const { resources, civitaiResources, additionalResources, ...params } = meta;

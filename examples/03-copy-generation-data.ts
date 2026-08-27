@@ -12,6 +12,7 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { encodeMetadata, readMetadata } from '../src/index';
+import { civitai } from '../src/civitai/index';
 
 const file = join(
   import.meta.dirname,
@@ -21,7 +22,7 @@ const file = join(
   'automatic1111',
   'lora-hashes-28005051.png'
 );
-const md = await readMetadata(new Uint8Array(await readFile(file)));
+const md = await readMetadata(new Uint8Array(await readFile(file)), { plugins: [civitai()] });
 
 // text/plain half of the clipboard payload (the app pairs it with a JSON-carrying
 // text/html blob via its own copyMetadataToClipboard)

@@ -109,7 +109,18 @@ consumers must not treat the meta bag as a curated schema.
   exactly this). The app can re-validate at its boundary to restore old behavior.
 - A parser whose `detect` throws is skipped; the app's equivalent aborted the whole read.
 
-## 9. Repo weight — open decision
+## 9. On-site metadata has two format eras — informational
+
+Sweeping popular feeds for `madeOnSite` images across image-ID ranges (2026-08-27, 778 top
+all-time images checked) found **no on-site images below ID ~82M carrying embedded generation
+metadata in the A1111-style format**. The observable history: on-site generations in the
+~82–104M range embed the *legacy ComfyUI JSON* UserComment format (9 fixtures), and the
+A1111-style UserComment output appears from ~87M onward (12 fixtures spanning 87M → 140M).
+Anything older either never embedded metadata or no longer surfaces in public feeds. The
+corpus's on-site coverage now spans both eras; the same-day near-duplicate batch from the first
+bulk sweep was pruned to a representative handful.
+
+## 10. Repo weight — open decision
 
 `fixtures/images/` is ~98 MB of committed binary. Options: leave as-is (it's a test corpus),
 move `fixtures/images/**` to git-lfs, or trim. The manifest records URL + sha256 for every
