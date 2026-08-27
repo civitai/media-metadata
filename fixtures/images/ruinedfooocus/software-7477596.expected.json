@@ -22,7 +22,34 @@
     },
     "scheduler": "karras"
   },
+  "generation": {
+    "prompt": "ethereal fantasy concept art of  celtic forest, celts, celtic style, Triskele, magnificent, celestial, ethereal, painterly, epic, majestic, magical, fantasy art, cover art, dreamy",
+    "negativePrompt": "photographic, realistic, realism, 35mm film, dslr, cropped, frame, text, deformed, glitch, noise, noisy, off-center, deformed, cross-eyed, closed eyes, bad anatomy, ugly, disfigured, sloppy, duplicate, mutated, black and white",
+    "steps": 4,
+    "cfgScale": 2,
+    "seed": 194971849,
+    "width": 1024,
+    "height": 1024,
+    "sampler": "DPM++ SDE",
+    "scheduler": "karras",
+    "model": {
+      "name": "crystalClearXL_ccxl",
+      "hash": "cbc222b0"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "crystalClearXL_ccxl",
+        "hash": "cbc222b0"
+      }
+    ],
+    "tool": {
+      "name": "ruinedfooocus"
+    }
+  },
   "roundTrip": {
-    "formats": ["png"]
+    "formats": [
+      "png"
+    ]
   }
 }

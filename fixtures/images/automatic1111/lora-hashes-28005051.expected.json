@@ -34,6 +34,38 @@
     "width": 1024,
     "height": 768
   },
+  "generation": {
+    "prompt": "Volumetric Lighting, Design a stunning artwork featuring an Antique Steampunk Horse with Intricate Mechanical Details. The composition should showcase the horse as if it were made entirely of brass and copper, adorned with gears and other steampunk elements that move and shimmer in the light. Emphasize the beauty of this mechanical beast while also highlighting its unique blend of fantasy and reality to create an unforgettable experience for viewers. Trend this piece on ArtStation by showcasing its unique blend of styles and themes, , light depth, dramatic atmospheric lighting, volumetric lighting",
+    "negativePrompt": "ugly, deformed, noisy, blurry,, long torso, deformed torso, ugly, deformed head shape, deformed, noisy, blurry, low contrast, deformed, glitch, noisy, low contrast, anime, photorealistic",
+    "steps": 31,
+    "cfgScale": 7,
+    "seed": 3351508344,
+    "width": 1024,
+    "height": 768,
+    "sampler": "DPM++ 2M",
+    "scheduler": "karras",
+    "model": {
+      "name": "deliberate_v3",
+      "hash": "aadddd3d75"
+    },
+    "resources": [
+      {
+        "kind": "lora",
+        "name": "FF-Midj-Rise-v0564",
+        "hash": "dcb69cd2497f",
+        "weight": 1
+      },
+      {
+        "kind": "checkpoint",
+        "name": "deliberate_v3",
+        "hash": "aadddd3d75"
+      }
+    ],
+    "tool": {
+      "name": "automatic1111",
+      "version": "v1.6.0-2-g4afaaf8a"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

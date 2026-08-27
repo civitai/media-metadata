@@ -5,14 +5,15 @@ import { samplerMap } from '../../shared/constants';
 import { parseAir, parseAirSafe } from '../../civitai/air';
 
 describe('parseGenerationText', () => {
-  it('parses pasted A1111 parameters', () => {
-    const meta = parseGenerationText(
+  it('parses pasted A1111 parameters into a normalized view plus the raw bag', () => {
+    const { generation, raw } = parseGenerationText(
       `a castle on a hill\nNegative prompt: blurry\nSteps: 30, Sampler: Euler a, CFG scale: 7, Seed: 42, Size: 512x512`
     );
-    expect(meta.prompt).toBe('a castle on a hill');
-    expect(meta.negativePrompt).toBe('blurry');
-    expect(meta.steps).toBe('30');
-    expect(meta.width).toBe(512);
+    expect(generation?.prompt).toBe('a castle on a hill');
+    expect(generation?.negativePrompt).toBe('blurry');
+    expect(generation?.steps).toBe(30); // normalized: always a number
+    expect(generation?.width).toBe(512);
+    expect(raw.steps).toBe(30); // raw is schema-validated too (coerced)
   });
 });
 
@@ -44,10 +45,10 @@ describe('encodeMetadata', () => {
     };
     const text = encodeMetadata(meta);
     expect(text).toContain('"R-ESRGAN 4x+ Anime6B, fast: yes"');
-    const reparsed = parseGenerationText(text);
-    expect(reparsed['Hires upscaler']).toBe('R-ESRGAN 4x+ Anime6B, fast: yes');
-    expect(reparsed['ADetailer prompt']).toBe('face, "quoted", detailed');
-    expect(reparsed.steps).toBe('30');
+    const { raw } = parseGenerationText(text);
+    expect(raw['Hires upscaler']).toBe('R-ESRGAN 4x+ Anime6B, fast: yes');
+    expect(raw['ADetailer prompt']).toBe('face, "quoted", detailed');
+    expect(raw.steps).toBe(30);
   });
 
   it('honors a caller-supplied a1111ExcludedKeys list', () => {

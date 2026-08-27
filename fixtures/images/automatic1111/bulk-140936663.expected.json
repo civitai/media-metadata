@@ -67,6 +67,39 @@
     "width": 1024,
     "height": 1024
   },
+  "generation": {
+    "prompt": "tagine pot, cookies, food, Hyperrealistic macro photo of patchwork wizard cat, velvet and burlap fur, stitched starry robe, raising crystal wand to weave a newborn planet and swirling galaxy from luminous golden thread, floating in cosmic mist, soft rim lighting, shallow focus, ultra‑detailed textile art.",
+    "negativePrompt": "speech bubble, text, dialogue, caption, comic panel, multiple panels, grid layout, page layout, watermark, logo, multipanel, multiple panels, text, watermark, username, artist name, patreon username:,worst quality, low quality, bad quality:, worst detail:, low resolution, jpeg artifacts, blurry,censor, text box, tag, glitch, duplicate,ugly, morbid, mutilated, mutation, deformed, disfigured,bad anatomy:, bad proportions, gross proportions, malformed limbs,extra limbs:, extra arms, extra legs, missing arms, missing legs,cloned face, poorly drawn face, poorly drawn eyes,bad hands, poorly drawn hands, mutated hands,extra fingers:1.5), polydactyly, extra digits, missing fingers,fused fingers, split fingers, deformed fingers,deformed iris:, deformed pupils:,long neck, dehydrated,fused arms:, fused hands,deformed feet:, bad feet:, fused toes, missing toes, bad composition, out of frame, Black hat, black headwear, necktie, black jacket, white shirt, black pants, black boots, blue collared shirt, grey pants, suspenders, black footwear",
+    "steps": 20,
+    "cfgScale": 7,
+    "seed": 441238194,
+    "clipSkip": 2,
+    "width": 1024,
+    "height": 1024,
+    "sampler": "Euler a",
+    "model": {
+      "civitaiModelVersionId": 1759168
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "civitaiModelVersionId": 1759168
+      },
+      {
+        "kind": "lora",
+        "weight": 0.7,
+        "civitaiModelVersionId": 161586
+      },
+      {
+        "kind": "lora",
+        "weight": 0.85,
+        "civitaiModelVersionId": 2281234
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

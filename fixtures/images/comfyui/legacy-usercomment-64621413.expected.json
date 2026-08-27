@@ -36,6 +36,37 @@
       "urn:air:other:upscaler:civitai:147759@164821"
     ]
   },
+  "generation": {
+    "prompt": "A golden road winds through a misty valley towards towering mountains. The rising sun peeks over the horizon, painting the sky in vivid hues of pink, orange, and gold. Ancient white cherry trees line the path, their blossoms awakening to the dawn's first light, petals glowing with an ethereal radiance. Dew-kissed grass sparkles as sunbeams dance across the landscape. Wispy clouds catch the morning light, transforming into floating islands of color. In the distance, the mountains' peaks emerge from shadow, their crystal spires glinting in the new day's brilliance. As the world stirs to life, luminous flowers unfurl along the roadside, their soft glow harmonizing with the cherry blossoms' increasing luminescence.",
+    "steps": 30,
+    "cfgScale": 3.5,
+    "seed": 444860461,
+    "sampler": "DPM++ 2M",
+    "resources": [
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 691639
+      },
+      {
+        "kind": "other",
+        "weight": 0.7,
+        "civitaiModelVersionId": 720252
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 766438
+      },
+      {
+        "kind": "upscaler",
+        "civitaiModelVersionId": 164821
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

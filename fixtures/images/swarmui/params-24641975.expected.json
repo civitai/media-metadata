@@ -11,6 +11,27 @@
     "height": 1216,
     "Model": "flux1-dev.sft"
   },
+  "generation": {
+    "prompt": "cinematic, skyrim themed, a warrior wearing leather armor and horned helmet, 2 swords in hand, looking up at the sky, a dark demonic dragon is flying in the air in circles, snow peaked mountains in background, small village, very detailed, masterpiece, adventurous, cloudy sky",
+    "steps": 30,
+    "cfgScale": 1,
+    "seed": 7778,
+    "width": 768,
+    "height": 1216,
+    "model": {
+      "name": "flux1-dev"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "flux1-dev"
+      }
+    ],
+    "tool": {
+      "name": "swarmui",
+      "version": "0.9.1.1"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

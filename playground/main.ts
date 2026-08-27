@@ -119,8 +119,8 @@ function render(name: string, bytes: Uint8Array, md: MediaMetadata) {
   badges.append(
     el('span', `badge ${md.generator ? 'gen' : 'bad'}`, md.generator ?? 'no generator detected')
   );
-  if (md.madeOnSite) badges.append(el('span', 'badge good', 'made on civitai'));
-  const metaKeys = Object.keys(md.meta).length;
+  if (md.civitai?.madeOnSite) badges.append(el('span', 'badge good', 'made on civitai'));
+  const metaKeys = Object.keys(md.raw).length;
   badges.append(el('span', 'badge', `${metaKeys} meta key${metaKeys === 1 ? '' : 's'}`));
   const pluginIds = activePluginIds();
   badges.append(
@@ -130,8 +130,13 @@ function render(name: string, bytes: Uint8Array, md: MediaMetadata) {
   header.append(info);
   card.append(header);
 
-  card.append(section('Parsed metadata (meta)', JSON.stringify(md.meta, null, 2), true));
-  const encoded = encodeMetadata(md.meta);
+  if (md.generation)
+    card.append(
+      section('Normalized generation (primary)', JSON.stringify(md.generation, null, 2), true)
+    );
+  if (md.civitai) card.append(section('civitai namespace', JSON.stringify(md.civitai, null, 2)));
+  card.append(section('Raw parser bag (raw)', JSON.stringify(md.raw, null, 2)));
+  const encoded = encodeMetadata(md.raw);
   if (encoded) card.append(section('Re-encoded A1111 text (encodeMetadata)', encoded));
   const payload = payloadFromMediaMetadata(md);
   card.append(
@@ -179,10 +184,10 @@ function reportSection(item: ReportItem, jsonBudget: number): string {
   const { name, md } = item;
   const lines = [
     `### \`${name}\``,
-    `- format: \`${md.format}\` | generator: \`${md.generator}\` | ${Object.keys(md.meta).length} meta key(s) | plugins: \`${activePluginIds().join(', ') || 'none'}\``,
+    `- format: \`${md.format}\` | generator: \`${md.generator}\` | ${Object.keys(md.raw).length} meta key(s) | plugins: \`${activePluginIds().join(', ') || 'none'}\``,
   ];
   if (jsonBudget > 0) {
-    const metaJson = JSON.stringify(md.meta, null, 2);
+    const metaJson = JSON.stringify(md.raw, null, 2);
     lines.push(
       '```json',
       metaJson.length > jsonBudget ? metaJson.slice(0, jsonBudget) + '\n… (truncated)' : metaJson,
@@ -286,7 +291,7 @@ function transformControls(name: string, source: Uint8Array, sourceMd: MediaMeta
 
       // annotate the freshly prepended card with the round-trip verdict
       const badges = results.firstElementChild?.querySelector('.badges');
-      const changed = metaDiff(sourceMd.meta, md.meta as Record<string, unknown>);
+      const changed = metaDiff(sourceMd.raw, md.raw as Record<string, unknown>);
       if (changed.length === 0) {
         badges?.append(el('span', 'badge good', 'metadata fully preserved'));
       } else {
@@ -298,7 +303,7 @@ function transformControls(name: string, source: Uint8Array, sourceMd: MediaMeta
             'Changed/lost keys vs source',
             JSON.stringify(
               Object.fromEntries(
-                changed.map((k) => [k, { before: sourceMd.meta[k], after: md.meta[k] }])
+                changed.map((k) => [k, { before: sourceMd.raw[k], after: md.raw[k] }])
               ),
               null,
               2
@@ -333,7 +338,7 @@ async function handleBytes(name: string, bytes: Uint8Array) {
 
     if (compareMode() && plugins.length > 0) {
       const bare = await readMetadata(bytes);
-      const changed = metaDiff(bare.meta, md.meta as Record<string, unknown>);
+      const changed = metaDiff(bare.raw, md.raw as Record<string, unknown>);
       card
         .querySelector('.badges')
         ?.append(
@@ -349,7 +354,7 @@ async function handleBytes(name: string, bytes: Uint8Array) {
             'Bare core vs plugins',
             JSON.stringify(
               Object.fromEntries(
-                changed.map((k) => [k, { bare: bare.meta[k], withPlugins: md.meta[k] }])
+                changed.map((k) => [k, { bare: bare.raw[k], withPlugins: md.raw[k] }])
               ),
               null,
               2

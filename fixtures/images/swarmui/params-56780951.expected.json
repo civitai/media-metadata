@@ -15,6 +15,30 @@
     "Model": "OfficialStableDiffusion/kft-requiem-fur-a-dream-v2",
     "originalSampler": "dpmpp_3m_sde_gpu"
   },
+  "generation": {
+    "prompt": "masterpiece, best quality, amazing quality, very aesthetic, high resolution, absurdres, newest, photorealistic, realistic, hamburger, mcdonalds",
+    "negativePrompt": "3d, anime, 2d, bad quality, worst quality, worst detail, sketch, censor, simple background, jpeg artifacts, low quality, watermark, unfinished, displeasing, oldest, early,chromatic aberration, signature,artistic error, username, scan",
+    "steps": 35,
+    "cfgScale": 5,
+    "seed": 1102589240,
+    "width": 832,
+    "height": 1216,
+    "sampler": "DPM++ 3M SDE",
+    "scheduler": "sgm_uniform",
+    "model": {
+      "name": "kft-requiem-fur-a-dream-v2"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "kft-requiem-fur-a-dream-v2"
+      }
+    ],
+    "tool": {
+      "name": "swarmui",
+      "version": "0.9.5.0"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

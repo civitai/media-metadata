@@ -88,7 +88,7 @@ outer: for (const source of SOURCES) {
         const sha256 = createHash('sha256').update(bytes).digest('hex');
         if (knownShas.has(sha256)) continue;
         const md = await readMetadata(bytes);
-        if (!md.madeOnSite || !md.generator) continue;
+        if (!md.civitai?.madeOnSite || !md.generator) continue;
         const bucket = bucketFor(item.id, md.generator);
         if (!bucket || (counts[bucket] ?? 0) >= PER_BUCKET) continue;
 

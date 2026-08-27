@@ -97,6 +97,54 @@
     "width": 832,
     "height": 1216
   },
+  "generation": {
+    "prompt": "(masterpiece, extremely detailed, very aesthetic, best quality, ultra-detailed, sharp focus, cinematic lighting, depth of field, dark_art_style, lineweight),\n(Flat color:2),\nstanding,from above,upper view,\n(1girl, solo,   minamoto shizuka,pink shirt,red skirt,), dust cloud,stomping,particles, holding building),minamoto shizuka,white pupils\n(Curvy),\n(sexy pose, ),masterpiece, best quality, high detail, absurdres, awe-inspiring, sunlight, shadow, detailed background, 2d, masterpiece, best quality, amazing quality, highres, absurdres, newest, sky,,tall,adult,smile,looking down,giantess,cloud,micro city,building,detailed background,outdoor",
+    "negativePrompt": "(verybadimagenegative_v1.3), (easynegative), (worst quality, low quality, blurry, grainy, fake, glitch, poorly drawn), (text, watermark, logo, signature, copyright), (deformed anatomy, bad proportions, twisted limbs, distorted perspective, extra limbs), (stacked hands, stacked torso, missing fingers, extra fingers, deformed fingers, bad hands, badhandv4:0.8), (crazy eyes, constricted pupils, no pupils, bad eyes, bad face, bad teeth, uneven lips, young, loli, teen, child), (backlighting, flat shading, unnatural shadows), (sketch, doodle, unfinished, messy, low detail), (aliasing, distortion, compression artifacts, jpeg artifacts), (error, corrupted, glitched, over-sharpened, oversaturated, washed out colors), (tanlines), (realistic, photorealistic, bright colors), (poorly drawn armor), (nsfw, revealing, nudity),indoors",
+    "steps": 24,
+    "cfgScale": 3.5,
+    "seed": 1671333018,
+    "clipSkip": 2,
+    "width": 832,
+    "height": 1216,
+    "sampler": "Euler a",
+    "model": {
+      "civitaiModelVersionId": 1714002
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "civitaiModelVersionId": 1714002
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 1177886
+      },
+      {
+        "kind": "lora",
+        "weight": 0.3,
+        "civitaiModelVersionId": 2495565
+      },
+      {
+        "kind": "lora",
+        "weight": 0.3,
+        "civitaiModelVersionId": 1687928
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 2511516
+      },
+      {
+        "kind": "lora",
+        "weight": -1,
+        "civitaiModelVersionId": 1509461
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

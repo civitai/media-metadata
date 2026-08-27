@@ -60,7 +60,7 @@ for (let page = 0; page < pages; page++) {
       list.push({ id: item.id, url: item.url, size: bytes.length, format: md.format });
       found.set(bucket, list);
       console.log(
-        `FOUND ${bucket}/${md.format}${md.madeOnSite ? '/onsite' : ''}  id=${item.id} size=${bytes.length}  ${item.url}`
+        `FOUND ${bucket}/${md.format}${md.civitai?.madeOnSite ? '/onsite' : ''}  id=${item.id} size=${bytes.length}  ${item.url}`
       );
     } catch {
       // skip unreadable images

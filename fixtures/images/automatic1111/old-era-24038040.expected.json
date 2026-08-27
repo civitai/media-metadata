@@ -27,6 +27,32 @@
     "width": 512,
     "height": 512
   },
+  "generation": {
+    "prompt": "Design a stunning artwork in the style of Louis Sullivan featuring an ((Antique decorative panel)) with a ((( bird as the centerpiece))) made up of ornaments with Intricate Details. The composition should ((only showcase the decorative panel)) made entirely of brass and copper. This is one of Louis Sullivan's most elaborate pieces, described by his admirers as being \"over the top\".  Emphasize the beauty of this mechanical beast while also highlighting its unique blend of fantasy and reality to create an unforgettable experience for viewers. Trend this piece on ArtStation by showcasing its unique blend of styles and themes",
+    "negativePrompt": "long torso, deformed torso, ugly, deformed head shape, deformed, noisy, blurry, low contrast, deformed, glitch, noisy, low contrast, anime, show everything except the panel\n CyberRealistic_Negative-neg",
+    "steps": 20,
+    "cfgScale": 7,
+    "seed": 3733520962,
+    "width": 512,
+    "height": 512,
+    "sampler": "DPM++ 2M",
+    "scheduler": "karras",
+    "model": {
+      "name": "deliberate_v3",
+      "hash": "aadddd3d75"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "deliberate_v3",
+        "hash": "aadddd3d75"
+      }
+    ],
+    "tool": {
+      "name": "automatic1111",
+      "version": "v1.6.0-2-g4afaaf8a"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

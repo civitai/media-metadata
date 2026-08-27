@@ -68,6 +68,44 @@
     "width": 832,
     "height": 1216
   },
+  "generation": {
+    "prompt": "A tagine work coziness Darth Vader wizard made of tagine theme in a pointy hat holding a wand in a massive computer tagine Magic Elegance style server room, tagine theme decorations everywhere, rubber ducks, flock. Of. Ducks, holding slices of pizza, malachite details, sitting on a toilet seat. \nlazypos",
+    "negativePrompt": "nsfw, simple background, blurry, lazyneg",
+    "steps": 25,
+    "cfgScale": 5,
+    "seed": 1130398975,
+    "clipSkip": 2,
+    "width": 832,
+    "height": 1216,
+    "sampler": "Euler a",
+    "model": {
+      "civitaiModelVersionId": 686204
+    },
+    "resources": [
+      {
+        "kind": "lora",
+        "name": "add-detail-xl",
+        "weight": 1
+      },
+      {
+        "kind": "lora",
+        "name": "Pizza_World_Morph_SDXL",
+        "weight": 1
+      },
+      {
+        "kind": "checkpoint",
+        "civitaiModelVersionId": 686204
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 161586
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

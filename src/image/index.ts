@@ -4,7 +4,10 @@ import type { ParserContext } from './parsers/types';
 import { createParserContext } from './parsers/types';
 import type { ParserPlugin } from './plugins';
 import { applyPlugins } from './plugins';
+import type { NormalizedGeneration } from '../shared/normalized';
+import { normalizeGeneration } from '../shared/normalized';
 import type { GenerationMetadata } from '../shared/schema';
+import { generationMetadataSchema } from '../shared/schema';
 import type { Generator } from '../shared/types';
 
 export { readMetadata, type MediaMetadata, type ReadOptions } from './read/read';
@@ -57,8 +60,16 @@ function resolveContext(options?: TextOptions): ParserContext {
 }
 
 /** Parse A1111-style generation text (e.g. pasted parameters) into metadata. */
-export function parseGenerationText(text: string, options?: TextOptions): GenerationMetadata {
-  return automatic1111Parser.parse({ generationDetails: text }, resolveContext(options));
+export function parseGenerationText(
+  text: string,
+  options?: TextOptions
+): { generation?: NormalizedGeneration; raw: GenerationMetadata } {
+  const parsed = automatic1111Parser.parse({ generationDetails: text }, resolveContext(options));
+  const result = generationMetadataSchema.safeParse(parsed);
+  const raw = (result.success ? result.data : {}) as GenerationMetadata;
+  const generation =
+    Object.keys(raw).length > 0 ? normalizeGeneration(raw, 'automatic1111') : undefined;
+  return { generation, raw };
 }
 
 /** Encode metadata back into a generator's native text format. Returns '' on failure. */

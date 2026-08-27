@@ -25,12 +25,12 @@ const bytes = new Uint8Array(await readFile(file));
 
 const md = await readMetadata(bytes, { plugins: [civitai()] });
 
-// The app stores md.meta on the Image row and gates "AI-generated" on it:
-const isValidAiMeta = !!(md.meta.prompt || md.meta.civitaiResources);
+// The app stores md.raw on the Image row and gates "AI-generated" on it:
+const isValidAiMeta = !!(md.raw.prompt || md.raw.civitaiResources);
 
 console.log('generator:   ', md.generator);
-console.log('madeOnSite:  ', md.madeOnSite);
+console.log('madeOnSite:  ', md.civitai?.madeOnSite);
 console.log('isValidAiMeta:', isValidAiMeta);
-console.log('prompt:      ', String(md.meta.prompt).slice(0, 80) + '…');
-console.log('sampler:     ', md.meta.sampler, '| steps:', md.meta.steps, '| seed:', md.meta.seed);
-console.log('civitaiResources:', JSON.stringify(md.meta.civitaiResources));
+console.log('prompt:      ', String(md.raw.prompt).slice(0, 80) + '…');
+console.log('sampler:     ', md.raw.sampler, '| steps:', md.raw.steps, '| seed:', md.raw.seed);
+console.log('civitaiResources:', JSON.stringify(md.raw.civitaiResources));

@@ -31,6 +31,37 @@
     "width": 896,
     "height": 1152
   },
+  "generation": {
+    "prompt": ", pseudomcht, danganronpa_(series) , In the pseudomcht art style. A digital anime-style illustration of Chiaki Nanami, featuring soft pink hair and pink eyes, wearing a crisp white blouse with a small pink bow, an oversized dark teal fabric jacket, and a brown pleated fabric skirt. She reclines in a black leather ergonomic gaming chair with her hands behind her head. To her right, a wooden desk holds two glowing computer monitors displaying lines of code, a blue aluminum energy drink can, and a black mechanical keyboard. A white ceramic cup sits on a wooden side table in the lower left. The scene is enclosed by plain beige walls. Warm yellow light descends from above, contrasted by a cool blue glow emanating from the screens that illuminates her face. The camera is positioned at a medium distance and a low angle with a soft depth of field. The color palette consists of dark teal, muted pink, honey yellow, and chocolate brown, finished with a smooth digital render and soft contrast.",
+    "negativePrompt": "low quality, worst quality, low detail, bad drawing, bad quality, oldest, (score_3, score_2, score_1:0.25), jpeg artifacts, watermark, signature, artist name, low detail, missing head, missing limb, text, bad anatomy, bad proportions, bad hands, missing fingers, blurry , smudged",
+    "steps": 4,
+    "cfgScale": 1,
+    "seed": 623900778,
+    "width": 896,
+    "height": 1152,
+    "sampler": "Euler",
+    "scheduler": "flux",
+    "model": {
+      "name": "flux-2-klein-9b-Q8_0",
+      "hash": "5e1ed608"
+    },
+    "resources": [
+      {
+        "kind": "lora",
+        "name": "Pseudomcht_Klein_9B_flux2klein_9b_3267293_epoch_10",
+        "hash": "a515f32b",
+        "weight": 1
+      },
+      {
+        "kind": "checkpoint",
+        "name": "flux-2-klein-9b-Q8_0",
+        "hash": "5e1ed608"
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

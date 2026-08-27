@@ -47,6 +47,35 @@
     },
     "Model": "Krea2_Turbo_convrot_int8mixed"
   },
+  "generation": {
+    "steps": 8,
+    "cfgScale": 1,
+    "seed": 580059059455692,
+    "denoise": 1,
+    "sampler": "Euler",
+    "scheduler": "simple",
+    "model": {
+      "name": "Krea2_Turbo_convrot_int8mixed"
+    },
+    "resources": [
+      {
+        "kind": "lora",
+        "name": "snofs_photoSlider_000000200",
+        "weight": 1
+      },
+      {
+        "kind": "checkpoint",
+        "name": "Krea2_Turbo_convrot_int8mixed"
+      },
+      {
+        "kind": "vae",
+        "name": "qwen_image_vae"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

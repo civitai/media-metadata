@@ -57,6 +57,34 @@
     "width": 832,
     "height": 1216
   },
+  "generation": {
+    "prompt": "score_9, score_8_up, score_7_up, score_6_up, high quality, perfect eyes, perfect face source_cartoon, high quality, parody style, Delilah, 1girl, solo, mature woman, brown hair, single hair bun, green jacket, puffy sleeves, long sleeves, long skirt, huge ass, wide hips, gigantic hips, high heels, holster, holding stone, mining, standing, looking at viewer, smile, upper body, cowboy shot bluesky, cloud, desert, wild west, outdoors",
+    "negativePrompt": "score_6, score_5, score_4, symmetrical, (portrait + close up:2), [boring, flaw + error, glitch, distortion, smudge, smearing, hazy, out-of-focus], (worst quality, low quality, low details, minimalist, bad photo, bad photography, bad art:.8),(watermark, signature, text font, username, error, logo, words, letters, digits, autograph, trademark, name:.8), easynegative, remove weights",
+    "steps": 30,
+    "cfgScale": 7,
+    "seed": 221318335,
+    "clipSkip": 2,
+    "width": 832,
+    "height": 1216,
+    "sampler": "Euler",
+    "model": {
+      "civitaiModelVersionId": 290640
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "civitaiModelVersionId": 290640
+      },
+      {
+        "kind": "lora",
+        "weight": 0.85,
+        "civitaiModelVersionId": 3257961
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

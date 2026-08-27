@@ -37,6 +37,43 @@
     "width": 832,
     "height": 1216
   },
+  "generation": {
+    "prompt": "image of a hand offering money to a fishmonger cat, holding fish, 8k, ultra detailed, at the market",
+    "steps": 20,
+    "cfgScale": 4.5,
+    "seed": 3912581945,
+    "width": 832,
+    "height": 1216,
+    "sampler": "DPM++ 2M SDE",
+    "scheduler": "karras",
+    "model": {
+      "name": "zavychromaxl_v60",
+      "hash": "835d65144c"
+    },
+    "resources": [
+      {
+        "kind": "lora",
+        "name": "cashbaba",
+        "hash": "e6fb445891ee",
+        "weight": 0.6
+      },
+      {
+        "kind": "lora",
+        "name": "xl_more_art-full_v1",
+        "hash": "fe3b4816be83",
+        "weight": 0.5
+      },
+      {
+        "kind": "checkpoint",
+        "name": "zavychromaxl_v60",
+        "hash": "835d65144c"
+      }
+    ],
+    "tool": {
+      "name": "automatic1111",
+      "version": "v1.8.0"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

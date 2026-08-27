@@ -42,6 +42,25 @@
       }
     }
   },
+  "generation": {
+    "prompt": "illustration Image\nposter\ndigital art\n\nA striking, hyper-detailed close-up photograph of a magnificent gynoid's face, with the composition centered on her right profile against a deep black background. \nHer face is an incredibly intricate mosaic of precisely fit polished brass and bronze metallic tiles, creating a rich, articulated skin with warm, copper-like tones. \nDetailed mechanical joints and conduits run beneath the surface, traced with brilliant, intensely glowing cyan-blue LED light strips that define the contours of her cheek, jawline, and brow. \nThe focal point is her human-like, deep blue iris set within a complex cybernetic eye socket, featuring intricate, concentric gold and silver details and a piercing gaze. \nA stream of bright blue data light or speed lines flashes from the side of her temple. \nAround her ear, exposed, elaborate multi-layered gear and servo mechanisms are visible, highlighted with gold and silver accents and small red indicator lights. \nHer lips are a perfectly sculpted, reflective dark copper-chrome. The skin on the other side of her face (just visible) is also made of the same tiled brass work. \n\nThe entire structure feels heavy, precise, and alive with ancient technology. \nThe texture of the etched metal panels and the clarity of the LED lights are in sharp focus. \nThe lighting is focused and dramatic, making the metal gleam and the light lines pop against the total darkness. \nThe shot is a sharp, macro-style focus.",
+    "negativePrompt": "lowres, worst quality, low quality, bad anatomy, bad hands, jpeg artifacts, signature, watermark, artist name, extra digits, censored, patreon username, loli, deformed, wrong fingers, missing fingers, extra fingers, crooked",
+    "steps": 8,
+    "cfgScale": 1,
+    "seed": 317045445900148,
+    "denoise": 1,
+    "sampler": "Euler",
+    "scheduler": "simple",
+    "resources": [
+      {
+        "kind": "vae",
+        "name": "Qwen_Image-VAE"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

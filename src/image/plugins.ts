@@ -14,7 +14,7 @@ export interface ParserPlugin {
   parsers?: (parsers: MetadataParser<any>[]) => MetadataParser<any>[];
   /** Contributions merged into the ParserContext (later plugins win; explicit options win over all). */
   context?: Partial<ParserContext>;
-  /** Post-read hook: annotate the result envelope (e.g. set `madeOnSite`). */
+  /** Post-read hook: attach the plugin's namespace to the envelope (e.g. `md.civitai`). */
   enrich?: (md: MediaMetadata) => void;
 }
 

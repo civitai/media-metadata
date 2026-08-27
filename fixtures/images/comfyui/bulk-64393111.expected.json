@@ -15,6 +15,24 @@
     "scheduler": "beta",
     "denoise": 1
   },
+  "generation": {
+    "prompt": "A mischievous spider in a pirate hat atop a vibrant yellow flower appears to move its legs and gaze around curiously, the camera zooming in for a close-up view of its detailed features and the dramatic contrast between the arachnid and the delicate bloom. cinematic_1940s",
+    "steps": 25,
+    "cfgScale": 1,
+    "seed": 2193219980,
+    "denoise": 1,
+    "sampler": "Euler",
+    "scheduler": "beta",
+    "resources": [
+      {
+        "kind": "vae",
+        "name": "ae"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

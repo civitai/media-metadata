@@ -116,7 +116,7 @@ outer: for (const source of SOURCES) {
         const bucket = md.generator ?? 'none';
 
         // gold: detection succeeded but parsing produced nothing
-        if (md.generator && Object.keys(md.meta).length === 0) {
+        if (md.generator && Object.keys(md.raw).length === 0) {
           quirkCount++;
           await save(
             bucket,

@@ -23,6 +23,30 @@
     "width": 832,
     "height": 1216
   },
+  "generation": {
+    "prompt": "1800s masked hero with sad face, from the side, small natural breasts, sagging breasts, cape, floppy hat, hand on her rapier in the scabbard, in rain, a small stream of water running down over her face, high contrast shadowing,\n candid style. high contrast, grain effect prominent throughout image, high contrast lighting creating dramatic shadows, grainy film-like texture",
+    "negativePrompt": "photo , photography, bad quality, bad anatomy, worst quality, low quality, low resolution, extra fingers, blur, blurry, ugly, wrong proportions, watermark, image artifacts, lowres, ugly, jpeg artifacts, deformed, noisy image",
+    "steps": 40,
+    "cfgScale": 7,
+    "seed": 1622034501,
+    "clipSkip": 2,
+    "width": 832,
+    "height": 1216,
+    "sampler": "DPM++ 2M",
+    "scheduler": "karras",
+    "model": {
+      "civitaiModelVersionId": 1714314
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "civitaiModelVersionId": 1714314
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

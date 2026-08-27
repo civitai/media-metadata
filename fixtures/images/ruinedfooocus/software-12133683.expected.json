@@ -22,7 +22,33 @@
     },
     "scheduler": "karras"
   },
+  "generation": {
+    "prompt": "elven cleric with a noface mask, branches for hair, nature",
+    "steps": 30,
+    "cfgScale": 8,
+    "seed": 484008488,
+    "width": 896,
+    "height": 1152,
+    "sampler": "DPM++ 2M SDE",
+    "scheduler": "karras",
+    "model": {
+      "name": "crystalClearXL_ccxl",
+      "hash": "cbc222b0"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "crystalClearXL_ccxl",
+        "hash": "cbc222b0"
+      }
+    ],
+    "tool": {
+      "name": "ruinedfooocus"
+    }
+  },
   "roundTrip": {
-    "formats": ["png"]
+    "formats": [
+      "png"
+    ]
   }
 }

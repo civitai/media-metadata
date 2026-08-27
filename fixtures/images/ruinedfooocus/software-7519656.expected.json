@@ -21,6 +21,30 @@
     },
     "scheduler": "karras"
   },
+  "generation": {
+    "prompt": "ananmo, (stylized by Prateep Kochabua:0.9) , 3D Rendering, over the shoulder shot of a Ludicrous \"Looking for Mr. Goodbart\", Bathed in shadows, Light and shadow plays, One Color, UHD, psychedelic",
+    "steps": 30,
+    "cfgScale": 5,
+    "seed": 2900952090,
+    "width": 896,
+    "height": 1152,
+    "sampler": "DPM++ 2M SDE",
+    "scheduler": "karras",
+    "model": {
+      "name": "crystalClearXL_ccxl",
+      "hash": "cbc222b0"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "crystalClearXL_ccxl",
+        "hash": "cbc222b0"
+      }
+    ],
+    "tool": {
+      "name": "ruinedfooocus"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

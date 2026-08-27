@@ -56,6 +56,50 @@
     ],
     "denoise": 0.65
   },
+  "generation": {
+    "prompt": ",\nmasterpiece, lazypos, best quality, good quality, very aesthetic, absurdres, insane detail, detailed face, detailed expression, newest, 8K, depth of field, focused subject, stylized, wabi sabi, relaxing, Abstract figure, (light skin tone:1.2), (androgynous features:1.3), (expression:1.2), (body type:1.1), (pose:1.2), (standing:1.1), (wearing light blue jacket:1.2), (accessories:1.1), (no visible accessories), (in the center of frame), (facing viewer), (detailed clothing:1.2), (soft, pastel colours), (fluid, abstract shapes), (face obscured by swirling colours:1.3), (vivid, abstract sky/clouds resembling paint strokes:1.3), (pastel colour palette of light blues, pinks, oranges, and yellows), (dynamic composition), (soft lighting), (style:digital art), (dreamy atmosphere), (abstract, ethereal style), (photorealistic style), (digital painting).",
+    "negativePrompt": "Worst quality, blurry, bad anatomy, bad position, low quality, glitch, watermark, dull, painting, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, deformed, ugly, blurry, bad anatomy, bad proportions, extra limbs, mutated limbs, cloned face, skinny, glitchy, double torso, extra arms, extra hand, lazyneg, lazyhand, easynegative, score_4, score_3_up, score_2_up, boring, flat, lazyneg",
+    "steps": 25,
+    "cfgScale": 5,
+    "denoise": 0.65,
+    "width": 736,
+    "height": 1104,
+    "sampler": "Euler a",
+    "resources": [
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 1240288
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 1470451
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 1591915
+      },
+      {
+        "kind": "other",
+        "weight": 0.78,
+        "civitaiModelVersionId": 1380520
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 1455983
+      },
+      {
+        "kind": "upscaler",
+        "civitaiModelVersionId": 164821
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

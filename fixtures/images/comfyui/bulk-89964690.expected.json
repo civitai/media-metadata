@@ -46,6 +46,36 @@
     ],
     "denoise": 0.4
   },
+  "generation": {
+    "prompt": "witch, botanist, herbs, plants, fungus,\n\ngrab basket,\nlight, pastel,\n\ninside, magical plants, herbs, plant-pots,\n\ninkyo, masterpiece, best quality, highres, absurdres, newest, aesthetic, very awa",
+    "negativePrompt": "4 toes, 6 toes, merged toes, 4 digits, 6 digits, merged_fingers,\n\nlogo, name, text",
+    "steps": 34,
+    "cfgScale": 3.5,
+    "seed": 1761147208,
+    "denoise": 0.4,
+    "width": 832,
+    "height": 1216,
+    "sampler": "Euler a",
+    "resources": [
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 1761560
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 1953811
+      },
+      {
+        "kind": "upscaler",
+        "civitaiModelVersionId": 164821
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

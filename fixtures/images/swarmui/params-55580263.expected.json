@@ -14,6 +14,29 @@
     "Model": "OfficialStableDiffusion/hassakuXLIllustrious_v12Style",
     "originalSampler": "euler_ancestral"
   },
+  "generation": {
+    "prompt": "kftlove, absurdres, highly-detailed, best quality, masterpiece, realism, very aesthetic, 1boy, Bowser (Super Mario), 1girl, Princess Peach (Super Mario), kissing, bed, hugging, under covers, heart",
+    "negativePrompt": "3d, anime, 2d, bad quality, worst quality, worst detail, sketch, censor, simple background, jpeg artifacts, low quality, watermark, unfinished, displeasing, oldest, early,chromatic aberration, signature,artistic error, username, scan",
+    "steps": 35,
+    "cfgScale": 5,
+    "seed": 830489285,
+    "width": 832,
+    "height": 1216,
+    "sampler": "Euler a",
+    "model": {
+      "name": "hassakuXLIllustrious_v12Style"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "hassakuXLIllustrious_v12Style"
+      }
+    ],
+    "tool": {
+      "name": "swarmui",
+      "version": "0.9.5.0"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

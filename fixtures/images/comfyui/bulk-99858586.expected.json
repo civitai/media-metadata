@@ -43,6 +43,53 @@
     "height": 1216,
     "Model": "Flux/flux_dev"
   },
+  "generation": {
+    "prompt": "a blonde woman is walking though a weight feild, she is looking thoughtful while walking but happy. The character is a woman a white women with pale skin and blonde hair and blue eyes and multiple braids, She is wearing a vibrant Ukrainian Vyshivanka dress with intricate patterns blue dress, and her lips are painted a striking red. She is holding Wheat Bunch. Behind her, a mindmill is visible in the distance with four blades moving, the whole image has strong summer theme and is outdoors in the country side golden light with a blue sky. The image has a white boarder around it",
+    "steps": 30,
+    "cfgScale": 3.5,
+    "seed": 1007505939985132,
+    "denoise": 1,
+    "width": 832,
+    "height": 1216,
+    "sampler": "DPM++ 2M",
+    "scheduler": "simple",
+    "model": {
+      "name": "flux_dev"
+    },
+    "resources": [
+      {
+        "kind": "lora",
+        "name": "FluxMythG0thicL1nes",
+        "weight": 0.6000000000000001
+      },
+      {
+        "kind": "lora",
+        "name": "OB半写实肖像画V2.0",
+        "weight": 0.6000000000000001
+      },
+      {
+        "kind": "lora",
+        "name": "FluxMythR3alisticF",
+        "weight": 0.5000000000000001
+      },
+      {
+        "kind": "lora",
+        "name": "FluxMythR3tr0Style",
+        "weight": 0.6000000000000001
+      },
+      {
+        "kind": "checkpoint",
+        "name": "flux_dev"
+      },
+      {
+        "kind": "vae",
+        "name": "ae"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

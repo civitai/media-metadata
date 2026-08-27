@@ -22,6 +22,31 @@
     },
     "scheduler": "karras"
   },
+  "generation": {
+    "prompt": "(designed by Rembrandt van Rijn:1.2) , noface of a majestic, cyborg, wearing Titanium and Reflective Glass black and orange armor, Foggy, Sharp and in focus, Lonely, Decopunk, side lit",
+    "negativePrompt": "low contrast, photorealism, modernist, minimalist, moody, portrait, people, bright, sunny, light, vibrant, colorful, bokeh, blurry, blur",
+    "steps": 30,
+    "cfgScale": 5,
+    "seed": 2928787971,
+    "width": 896,
+    "height": 1152,
+    "sampler": "DPM++ 2M SDE",
+    "scheduler": "karras",
+    "model": {
+      "name": "crystalClearXL_ccxl",
+      "hash": "cbc222b0"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "crystalClearXL_ccxl",
+        "hash": "cbc222b0"
+      }
+    ],
+    "tool": {
+      "name": "ruinedfooocus"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

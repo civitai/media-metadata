@@ -48,8 +48,9 @@ for (const image of images) {
 
   const next = {
     generator: md.generator,
-    madeOnSite: md.madeOnSite,
-    meta: md.meta,
+    madeOnSite: md.civitai?.madeOnSite,
+    meta: md.raw,
+    generation: md.generation ?? null,
     // preserve a hand-edited roundTrip config; otherwise default to the formats
     // this generator's metadata actually survives (see docs/civitai-migration.md)
     roundTrip: previous?.roundTrip ?? { formats: defaultRoundTripFormats(md) },

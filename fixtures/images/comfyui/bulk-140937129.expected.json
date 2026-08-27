@@ -49,6 +49,37 @@
     "denoise": 0.75,
     "Model": "urn:air:sdxl:checkpoint:civitai:24350@3187704"
   },
+  "generation": {
+    "prompt": "winter wonderland, palace",
+    "steps": 48,
+    "cfgScale": 10,
+    "seed": 2137888815,
+    "denoise": 0.75,
+    "sampler": "DPM++ 2M",
+    "scheduler": "karras",
+    "model": {
+      "name": "urn:air:sdxl:checkpoint:civitai:24350@3187704",
+      "civitaiModelVersionId": 3187704
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "urn:air:sdxl:checkpoint:civitai:24350@3187704",
+        "civitaiModelVersionId": 3187704
+      },
+      {
+        "kind": "vae",
+        "civitaiModelVersionId": 669051
+      },
+      {
+        "kind": "upscaler",
+        "civitaiModelVersionId": 164821
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

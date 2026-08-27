@@ -58,6 +58,56 @@
     ],
     "Model": "urn:air:sdxl:checkpoint:civitai:140272@1240288"
   },
+  "generation": {
+    "prompt": ", Frieren, smiling, holding black cat, enchanted forest,no hand in frame,\nmasterpiece, best quality, good quality, very aesthetic, absurdres, newest, 8K, depth of field, focused subject,\n close up, stylized, wabi sabi, 1girl, looking at viewer, dynamic angle, from below, from side, relaxing\n\n\n , in the style of cksc, in the style of cknc, artist:moriimee, in the style of ck-rw",
+    "negativePrompt": "civit_nsfw, score_6, score_5, score_4, bad quality, worst quality, worst detail, sketch, censorship, furry, window, holding, headphones",
+    "steps": 30,
+    "cfgScale": 5,
+    "sampler": "Euler a",
+    "model": {
+      "name": "urn:air:sdxl:checkpoint:civitai:140272@1240288",
+      "civitaiModelVersionId": 1240288
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "urn:air:sdxl:checkpoint:civitai:140272@1240288",
+        "civitaiModelVersionId": 1240288
+      },
+      {
+        "kind": "lora",
+        "weight": 0.78,
+        "civitaiModelVersionId": 1380520
+      },
+      {
+        "kind": "lora",
+        "weight": 0.4,
+        "civitaiModelVersionId": 1410611
+      },
+      {
+        "kind": "lora",
+        "weight": 0.45,
+        "civitaiModelVersionId": 1244133
+      },
+      {
+        "kind": "lora",
+        "weight": 0.8,
+        "civitaiModelVersionId": 1384132
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 106916
+      },
+      {
+        "kind": "upscaler",
+        "civitaiModelVersionId": 164821
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

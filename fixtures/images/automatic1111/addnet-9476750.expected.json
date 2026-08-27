@@ -72,6 +72,44 @@
     "width": 384,
     "height": 640
   },
+  "generation": {
+    "prompt": "BioshockARTDECO, poster, 1930s \\(style\\), simplistic, art deco, bioshock, advertisement for restaurant, 8k, uhd, best quality, negative space, high quality illustration,, cinematic lighting",
+    "negativePrompt": "bad art, kitsch, poor quality, easynegative, deformed, poor quality, blurry, photorealistic, photo, cg, 3d",
+    "steps": 40,
+    "cfgScale": 7.5,
+    "seed": 1169129937,
+    "clipSkip": 2,
+    "denoise": 0.7,
+    "width": 384,
+    "height": 640,
+    "sampler": "DPM++ 2M",
+    "scheduler": "karras",
+    "model": {
+      "name": "deliberate_v3",
+      "hash": "aadddd3d75"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "deliberate_v3",
+        "hash": "aadddd3d75"
+      },
+      {
+        "kind": "lora",
+        "name": "BioshockARTDECO",
+        "hash": "a68c0549f355",
+        "weight": 0.9
+      },
+      {
+        "kind": "vae",
+        "hash": "0b204ad0ca"
+      }
+    ],
+    "tool": {
+      "name": "automatic1111",
+      "version": "v1.6.0-2-g4afaaf8a"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

@@ -17,6 +17,30 @@
     "width": 600,
     "height": 800
   },
+  "generation": {
+    "prompt": "little mermaid, red hair, long hair, mermaid, mermaid tail, underwater, masterpiece, detailed, portrait, octane render, highly detailed",
+    "negativePrompt": "disfigured, kitsch, ugly, oversaturated, grain, low-res, Deformed, blurry, bad anatomy, disfigured, poorly drawn face, mutation, mutated, extra limb, ugly, poorly drawn hands, missing limb, blurry, floating limbs, disconnected limbs, malformed hands, blur, out of focus, long neck, long body, ugly, disgusting, poorly drawn, childish, mutilated, , mangled, old, surreal, text",
+    "steps": 35,
+    "cfgScale": 9,
+    "seed": 3305041585,
+    "clipSkip": 2,
+    "denoise": 0.7,
+    "width": 600,
+    "height": 800,
+    "sampler": "Euler a",
+    "model": {
+      "hash": "3d1ec685"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "hash": "3d1ec685"
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

@@ -15,6 +15,30 @@
     "Model": "juggernautXL_juggXIByRundiffusion",
     "originalSampler": "dpmpp_2m"
   },
+  "generation": {
+    "prompt": "improved cinematic photo, 35mm photograph, film, professional, 4k, highly detailed,\nAn amber fragment enclosing a Human Heart,\nThe amber fragment is a smooth, slightly irregular sphere, roughly the size of a marble, with a warm golden-brown hue. Its surface is polished, gleaming softly under light, revealing a mesmerizing play of golden, honey, and orange tones. Tiny air bubbles and organic inclusions are scattered throughout, lending it a sense of antiquity and natural complexity.\nInside, a perfectly preserved Human Heart lies suspended in time, its delicate body encased in the translucent amber.\nAround the Human Heart, subtle striations and minute organic fragments, possibly plant material or dust, create a vignette that frames the insect. The amber’s clarity varies in places, with some sections slightly cloudy, further accentuating the Human Heart as the focal point. The fragment feels timeless, a tiny time capsule offering a glimpse into a prehistoric world millions of years ago",
+    "negativePrompt": "female, woman, girl",
+    "steps": 30,
+    "cfgScale": 5,
+    "seed": 188805232,
+    "width": 896,
+    "height": 1152,
+    "sampler": "DPM++ 2M",
+    "scheduler": "karras",
+    "model": {
+      "name": "juggernautXL_juggXIByRundiffusion"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "juggernautXL_juggXIByRundiffusion"
+      }
+    ],
+    "tool": {
+      "name": "swarmui",
+      "version": "0.9.4.0"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

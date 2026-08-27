@@ -2,6 +2,7 @@
   "generator": null,
   "madeOnSite": false,
   "meta": {},
+  "generation": null,
   "roundTrip": {
     "formats": [
       "png",

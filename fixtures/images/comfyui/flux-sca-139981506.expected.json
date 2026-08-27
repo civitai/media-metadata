@@ -19,7 +19,34 @@
     "denoise": 1,
     "Model": "anima_aestheticV11"
   },
+  "generation": {
+    "negativePrompt": "score_1, score_2, score_3, worst quality, low quality, bad anatomy, bad hands, extra fingers, deformed body, blurry, low resolution, poorly drawn face ,Image cropping，Out of frame",
+    "steps": 30,
+    "cfgScale": 5,
+    "seed": 0,
+    "denoise": 1,
+    "sampler": "Euler",
+    "scheduler": "simple",
+    "model": {
+      "name": "anima_aestheticV11"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "anima_aestheticV11"
+      },
+      {
+        "kind": "vae",
+        "name": "qwen_image_vae"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
-    "formats": ["png"]
+    "formats": [
+      "png"
+    ]
   }
 }

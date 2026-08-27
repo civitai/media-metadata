@@ -53,6 +53,49 @@
     "width": 832,
     "height": 1216
   },
+  "generation": {
+    "prompt": "Glitching and surreal, abstract portrait of an young goth woman long black hair. Her eyes are covered with a black, glitched, blurred censor bar. She posing with finger at mouth, black fishnet shirt. A terrifying, glitched scarecrow, with floating purple haze across a fields and old black church in LA backdrop. The brushstrokes are masterfully blended and sophisticated, creating a sense of depth and intrigue. The palette is chosen in the style of horror cinema, sends a sense of suspense and fear. The overall image exudes a palpable mystique and sophistication, a captivating masterpiece of a digital illustration.",
+    "steps": 30,
+    "cfgScale": 7,
+    "seed": 2066384887,
+    "clipSkip": 2,
+    "width": 832,
+    "height": 1216,
+    "model": {
+      "civitaiModelVersionId": 691639
+    },
+    "resources": [
+      {
+        "kind": "lora",
+        "name": "Glitchcore_Flux",
+        "weight": 1,
+        "civitaiModelVersionId": 1050932
+      },
+      {
+        "kind": "lora",
+        "name": "FluxDFaeTasticDetails",
+        "weight": 0.5,
+        "civitaiModelVersionId": 720252
+      },
+      {
+        "kind": "checkpoint",
+        "civitaiModelVersionId": 691639
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 877992
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 945122
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

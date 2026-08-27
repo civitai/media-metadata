@@ -81,8 +81,9 @@ for (const [index, url] of urls.entries()) {
     JSON.stringify(
       {
         generator: md.generator,
-        madeOnSite: md.madeOnSite ?? false,
-        meta: md.meta,
+        madeOnSite: md.civitai?.madeOnSite ?? false,
+        meta: md.raw,
+        generation: md.generation ?? null,
         roundTrip: { formats: defaultRoundTripFormats(md) },
       },
       null,

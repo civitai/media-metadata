@@ -42,6 +42,25 @@
       }
     }
   },
+  "generation": {
+    "prompt": "illustration Image\nposter\ndigital art\n\nThis is a highly detailed digital painting of a gynoid figure with a distinctly eerie and unsettling appearance. \nThe subject has an Asian-inspired face painted in white with bold red accents, resembling a traditional mask but with exaggerated, mechanical eyes that are wide open, giving an expression of horror and threat. \nThe mouth is partially open in a wicked smile, revealing dark teeth. \nThe figure's hair is styled into two large, round pigtails, each tied with red bands.\n\nThe subject wears a tattered, red kimono adorned with white patterns on the sleeves. \nA mechanical element, featuring metallic parts and wires, is visible at the neck, suggesting a cyborg or robotic nature. \nA katana with a black hilt is sheathed at the figure's side. \n\nThe background is an abstract blend of warm brown and orange hues, adding to the overall unsettling atmosphere.\n\nThe texture of the kimono appears rough and worn, contrasting with the smooth, mechanical parts of the figure's neck. \nThe lighting emphasizes the stark contrasts between the red and white on the face, as well as the metallic components. \nThis image combines elements of traditional Japanese culture with a futuristic, horror-themed twist.",
+    "negativePrompt": "lowres, worst quality, low quality, bad anatomy, bad hands, jpeg artifacts, signature, watermark, artist name, extra digits, censored, patreon username, loli, deformed, wrong fingers, missing fingers, extra fingers, crooked",
+    "steps": 8,
+    "cfgScale": 1,
+    "seed": 1024751891023427,
+    "denoise": 1,
+    "sampler": "Euler",
+    "scheduler": "simple",
+    "resources": [
+      {
+        "kind": "vae",
+        "name": "Qwen_Image-VAE"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

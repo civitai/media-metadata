@@ -41,6 +41,27 @@
     "width": 832,
     "height": 1216
   },
+  "generation": {
+    "prompt": "A powerful warrior known as the Stormrider, clad in ornate armor that reflects the fury of storms, standing defiantly on a rocky precipice, intense expression showcasing his determination, fantasy art style, mid-shot to capture the intricate details of his armor and the swirling storm clouds above, dramatic lightning illuminating the scene, creating a sense of tension and strength, with the turbulent landscape enhancing the atmosphere of an epic confrontation.",
+    "steps": 9,
+    "cfgScale": 1,
+    "seed": 1272015079,
+    "width": 832,
+    "height": 1216,
+    "sampler": "Euler",
+    "model": {
+      "civitaiModelVersionId": 2442439
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "civitaiModelVersionId": 2442439
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

@@ -1,6 +1,14 @@
+import type { NormalizedGeneration } from '../../shared/normalized';
+import { normalizeGeneration } from '../../shared/normalized';
 import type { GenerationMetadata } from '../../shared/schema';
 import { generationMetadataSchema } from '../../shared/schema';
-import type { BinaryInput, ExifData, Generator, ImageFormat } from '../../shared/types';
+import type {
+  BinaryInput,
+  CivitaiMetadata,
+  ExifData,
+  Generator,
+  ImageFormat,
+} from '../../shared/types';
 import { sniffFormat } from '../format';
 import { defaultParsers } from '../parsers/registry';
 import type { MetadataParser, ParserContext } from '../parsers/types';
@@ -26,12 +34,21 @@ export interface MediaMetadata {
   format: ImageFormat | 'unknown';
   /** Which generator's format matched, or null when none did. */
   generator: Generator | null;
-  /** Parsed + schema-validated generation metadata; `{}` when nothing matched or parsing failed. */
-  meta: GenerationMetadata;
+  /**
+   * The primary output: a generator-independent, stably-typed view of the
+   * generation metadata. Absent when nothing matched or parsing failed.
+   */
+  generation?: NormalizedGeneration;
+  /**
+   * The verbatim per-generator bag (schema-validated; `{}` on no match/failure).
+   * Preserves every passthrough key exactly as the source wrote it — the escape
+   * hatch for generator-specific detail, and the civitai app's storage shape.
+   */
+  raw: GenerationMetadata;
   /** Flattened raw tags (including the raw `userComment` bytes when present). */
   exif: Readonly<ExifData>;
-  /** Civitai convention (EXIF Artist === 'ai'); set by the civitai plugin, absent without it. */
-  madeOnSite?: boolean;
+  /** Set by the civitai() plugin; absent without it. */
+  civitai?: CivitaiMetadata;
 }
 
 export async function readMetadata(
@@ -68,9 +85,12 @@ export async function readMetadata(
   }
 
   const result = generationMetadataSchema.safeParse(rawMeta ?? {});
-  const meta = (result.success ? result.data : {}) as GenerationMetadata;
+  const raw = (result.success ? result.data : {}) as GenerationMetadata;
 
-  const md: MediaMetadata = { format, generator, meta, exif };
+  const generation =
+    generator && Object.keys(raw).length > 0 ? normalizeGeneration(raw, generator) : undefined;
+
+  const md: MediaMetadata = { format, generator, generation, raw, exif };
   for (const plugin of plugins ?? []) plugin.enrich?.(md);
   return md;
 }

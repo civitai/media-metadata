@@ -117,6 +117,65 @@
     "width": 1024,
     "height": 1024
   },
+  "generation": {
+    "prompt": "novan_realism_1, cinematic shot of  robot Voodoo doll robot duck DJ made of creamy cookies at the decks, in a cookie-world junkyard minion skate park, wearing sunglasses and a top-hat, a red flower on his hat, manic grin, Voronoi textures, expansive cityscape made of creamy cookies, overcast golden hour, god rays,  baked and glazed voronoi Arches made of creamy cookies,  crazy cookie energy,  soft dynamic light, distant voronoi cake city, consistent depth, soft volumetric lighting, digital art, master piece, high quality",
+    "negativePrompt": "monochrome, blurry, boring, poor, bad, CyberRealistic_Negative",
+    "steps": 25,
+    "cfgScale": 5,
+    "seed": 351677678,
+    "clipSkip": 2,
+    "width": 1024,
+    "height": 1024,
+    "sampler": "DPM++ 2M",
+    "scheduler": "karras",
+    "model": {
+      "civitaiModelVersionId": 3017793
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "civitaiModelVersionId": 3017793
+      },
+      {
+        "kind": "lora",
+        "weight": 0.4,
+        "civitaiModelVersionId": 947620
+      },
+      {
+        "kind": "lora",
+        "weight": 0.7,
+        "civitaiModelVersionId": 2858836
+      },
+      {
+        "kind": "lora",
+        "weight": 0.6,
+        "civitaiModelVersionId": 595500
+      },
+      {
+        "kind": "lora",
+        "weight": 0.25,
+        "civitaiModelVersionId": 161586
+      },
+      {
+        "kind": "lora",
+        "weight": 0.8,
+        "civitaiModelVersionId": 656520
+      },
+      {
+        "kind": "embedding",
+        "weight": 1,
+        "civitaiModelVersionId": 3002212
+      },
+      {
+        "kind": "embedding",
+        "weight": 1,
+        "civitaiModelVersionId": 82745
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

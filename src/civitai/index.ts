@@ -1,4 +1,4 @@
-export { civitai, type CivitaiPluginOptions } from './plugin';
+export { civitai, toImageMetaProps, type CivitaiPluginOptions } from './plugin';
 export { createCivitaiComfyParser } from './comfy';
 export { civitaiResourcesExtractor, civitaiMetadataExtractor } from './a1111';
 export { parseAir, parseAirSafe, isAir, type ParsedAir } from './air';

@@ -20,6 +20,32 @@
     "height": 1344,
     "Model": "flux1-dev"
   },
+  "generation": {
+    "prompt": "emotional poster with the title saying \"mom I'm out of buzz\",small cute 5 year old girl crying while holding thunder emoji, dramatic lighting, focus of heavy tears, anime style",
+    "steps": 20,
+    "seed": 752255611419338,
+    "denoise": 1,
+    "width": 768,
+    "height": 1344,
+    "sampler": "Euler",
+    "scheduler": "simple",
+    "model": {
+      "name": "flux1-dev"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "flux1-dev"
+      },
+      {
+        "kind": "vae",
+        "name": "ae"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

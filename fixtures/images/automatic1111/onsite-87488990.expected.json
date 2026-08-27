@@ -40,6 +40,49 @@
     "width": 832,
     "height": 1216
   },
+  "generation": {
+    "prompt": "illustrated by Gabriel Picolo, (resplendent highlighting) in the style of casual line and wash sketch, hauntingly beautiful, violento colorido, influenced by Bernard Buffet, a contemporary watercolor painting, tightly framed, close-up portrait of a deltarune githyanki with wild hair, by Aleksi Briclot, fantasy art, super wide angel, ginger wavy hair, karol bak, decay, lovely dark autumn princess FLAT COLORS, concept art by syd mead, minimal shading, plump lips",
+    "negativePrompt": "watermark, cloned face, same face, nsfw, nipples, elongated, long neck makeup, face paint, weapons, sticks, holding objects, long forearms, duplicate ears, (elongated arms:1.5), (Blurry eyes:1.5), Duplicate mouth, duplicate lips, duplicate nostrils, misaligned fingers hand and arm, misaligned toes feet, and leg), (misaligned irises, misaligned pupils), (semi-realistic, CGI, 3D, render, sketch, cartoon, drawing, anime (deformed, distorted, disfigured:1.4), (extra fingers hand or arm, extra toes foot or leg:1.4), (missing fingers hand or arm, missing toes foot or leg:1.4), (elongated hands and too many fingers), (elongated feet and too many toes)",
+    "steps": 21,
+    "cfgScale": 6,
+    "seed": 740360497,
+    "clipSkip": 2,
+    "width": 832,
+    "height": 1216,
+    "sampler": "Euler a",
+    "model": {
+      "civitaiModelVersionId": 128078
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "civitaiModelVersionId": 128078
+      },
+      {
+        "kind": "lora",
+        "weight": 0.5,
+        "civitaiModelVersionId": 1140252
+      },
+      {
+        "kind": "lora",
+        "weight": 0.7,
+        "civitaiModelVersionId": 403123
+      },
+      {
+        "kind": "lora",
+        "weight": 0.8,
+        "civitaiModelVersionId": 211718
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 1982223
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

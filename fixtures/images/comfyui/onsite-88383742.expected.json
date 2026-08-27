@@ -46,6 +46,37 @@
     ],
     "denoise": 0.3
   },
+  "generation": {
+    "prompt": "masterpiece, best_quality, absurdres, ultra-detailed, intricate_details, sharp_focus, painterly, traditional media, hdr, vibrant_colors, ink_wash, cinematic_lighting, epic_composition, landscape, scenery, wide_shot, aerial_view, panoramic_view, sweeping_view, extreme_depth_of_field, vanishing_point, depth, atmospheric_perspective, layered_landscape, matte_painting, towering_mountains, karst_mountains, mountain_peak, cliff, chasm, pagoda, multi-tiered_pagoda, ancient_china, asian_architecture, ornate_bridge, bridge_over_water, river, waterfall, plunging_waterfall, turquoise_water, rice_paddy, terraced_field, cherry_blossoms, sakura, full_bloom, pine_tree, ancient_tree, prayer_flags, fluttering, sunset, golden_hour, colorful_sky, orange_sky, magenta_sky, lavender_sky, volumetric_lighting, god_rays, ((ethereal, mist, fog)), dreamlike, majestic, breathtaking",
+    "negativePrompt": "(worst quality, low quality, normal quality:2), blurry, pixelated, grainy, noisy, oversaturated, jpeg artifacts, watermark, signature, text, logo, border, frame, sketch, cartoon, 3d, cgi, anime, flat_lighting, broken perspective, depth_fail, unnatural depth, bad composition, ugly color palette, photo, real_life",
+    "steps": 35,
+    "cfgScale": 8.5,
+    "seed": 907808944,
+    "denoise": 0.3,
+    "width": 832,
+    "height": 1216,
+    "sampler": "DPM++ 2M",
+    "scheduler": "karras",
+    "resources": [
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 1900496
+      },
+      {
+        "kind": "other",
+        "weight": 1.1,
+        "civitaiModelVersionId": 1571875
+      },
+      {
+        "kind": "upscaler",
+        "civitaiModelVersionId": 164821
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

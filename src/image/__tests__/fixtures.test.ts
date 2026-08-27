@@ -41,10 +41,16 @@ describe.each(images.map((file) => [relative(FIXTURES_DIR, file).replace(/\\/g, 
         new Uint8Array(bytes.buffer, bytes.byteOffset, bytes.byteLength),
         READ_OPTIONS
       );
-      expect({ generator: md.generator, madeOnSite: md.madeOnSite, meta: md.meta }).toEqual({
+      expect({
+        generator: md.generator,
+        madeOnSite: md.civitai?.madeOnSite,
+        meta: md.raw,
+        generation: md.generation ?? null,
+      }).toEqual({
         generator: expected.generator,
         madeOnSite: expected.madeOnSite,
         meta: expected.meta,
+        generation: expected.generation ?? null,
       });
     });
 
@@ -60,7 +66,7 @@ describe.each(images.map((file) => [relative(FIXTURES_DIR, file).replace(/\\/g, 
 
         const restored = await copyMetadata(new Uint8Array(source), new Uint8Array(resized));
         const md = await readMetadata(restored, READ_OPTIONS);
-        expect({ generator: md.generator, meta: md.meta }).toEqual({
+        expect({ generator: md.generator, meta: md.raw }).toEqual({
           generator: expected.generator,
           meta: expected.meta,
         });

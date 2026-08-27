@@ -25,12 +25,24 @@ import { readMetadata } from '@civitai/media-metadata';
 import { civitai } from '@civitai/media-metadata/civitai';
 
 const md = await readMetadata(fileOrBytesOrUrl, { plugins: [civitai()] });
-// md.format     -> 'png' | 'jpeg' | 'webp' | 'unknown'
+// md.generation -> THE PRIMARY OUTPUT: normalized, generator-independent view
+//                  (camelCase, guaranteed number types, one merged `resources`
+//                   list, `model: {name, hash}`, `tool: {name, version}`)
+// md.raw        -> the verbatim per-generator bag, every passthrough key intact
+//                  (escape hatch; also the civitai app's storage shape)
+// md.civitai    -> the plugin's namespace: { madeOnSite, extra }; resolved resources
+//                  appear IN generation.resources, tagged with their civitaiModelVersionId
 // md.generator  -> 'automatic1111' | 'comfyui' | 'swarmui' | 'ruinedfooocus' | null
-// md.meta       -> parsed generation metadata (prompt, sampler, resources, ...)
+// md.format     -> 'png' | 'jpeg' | 'webp' | 'unknown'
 // md.exif       -> raw flattened tags
-// md.madeOnSite -> civitai's on-site marker (set by the civitai plugin)
 ```
+
+Use `md.generation` unless you need generator-specific detail: it's the stable surface
+(`generation.steps` is always a `number`; `generation.resources` merges the five shapes the
+underlying formats scatter resources across). `md.raw` preserves the source faithfully — mixed
+key casing, string values, extension keys like `AddNet Module 1` — and is what `encodeMetadata`
+consumes. Plugins never write into the shared bag's top level; each gets its own namespace
+(`md.civitai`).
 
 Inputs can be a `Uint8Array`, `ArrayBuffer`, `Blob`/`File`, or a URL string (fetched). The core is
 isomorphic — browser and node — with no native dependencies. Node-only conveniences live under

@@ -20,6 +20,32 @@
     "denoise": 0.75,
     "Model": "oo"
   },
+  "generation": {
+    "prompt": "a cute black haired catgirl, bat wings , plain white oversized tees , black  shorts , long black sports socks and shoes , black archer  gloves , sitting on a swing in a dark room",
+    "negativePrompt": "worst quality, low quality, score_1, score_2, score_3, blurry, jpeg artifacts, sepia",
+    "steps": 29,
+    "cfgScale": 4.499999999999998,
+    "seed": 0,
+    "denoise": 0.75,
+    "sampler": "er_sde",
+    "scheduler": "simple",
+    "model": {
+      "name": "oo"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "oo"
+      },
+      {
+        "kind": "vae",
+        "name": "qwen_image_vae"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

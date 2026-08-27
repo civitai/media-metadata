@@ -43,5 +43,5 @@ const md = await readMetadata(restored, { plugins: [civitai()] });
 console.log('after restore: generator =', md.generator);
 console.log(
   'workflow survived:',
-  typeof md.meta.comfy === 'string' && md.meta.comfy.includes('"workflow"')
+  typeof md.raw.comfy === 'string' && md.raw.comfy.includes('"workflow"')
 );

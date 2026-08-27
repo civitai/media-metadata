@@ -22,6 +22,29 @@
     "width": 896,
     "height": 1152
   },
+  "generation": {
+    "prompt": "score_9, score_8_up, score_7_up, san, 1girl, full body, squatting, solo, short hair, brown hair, gray eyes, headband, face paint, earrings, white sleeveless top, navy under dress, arm cuffs, fur headdress, fur cape, light-skinned female, female focus, looking at viewer, smiling, forest, (blush:1.1) concept art, realistic, expressiveh, knva",
+    "negativePrompt": "score_6, score_5, score_4",
+    "steps": 25,
+    "cfgScale": 7,
+    "seed": 3269595310,
+    "width": 896,
+    "height": 1152,
+    "sampler": "Euler a",
+    "scheduler": "karras",
+    "model": {
+      "hash": "67ab2fd8ec"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "hash": "67ab2fd8ec"
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

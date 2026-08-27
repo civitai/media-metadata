@@ -20,7 +20,35 @@
     "height": 0,
     "Model": "flux1-dev"
   },
+  "generation": {
+    "prompt": "a digital illustration of a movie poster titled \"Finding Emo\", finding nemo parody poster, featuring a depressed cartoon clownfish with black emo hair, eyeliner, and piercings, bored expression, swimming in a dark underwater scene, in the background, movie title in a dripping, grungy font, moody blue and purple color palette",
+    "steps": 25,
+    "seed": 419750308183444,
+    "denoise": 1,
+    "width": 0,
+    "height": 0,
+    "sampler": "Euler",
+    "scheduler": "simple",
+    "model": {
+      "name": "flux1-dev"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "flux1-dev"
+      },
+      {
+        "kind": "vae",
+        "name": "ae"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
-    "formats": ["png"]
+    "formats": [
+      "png"
+    ]
   }
 }

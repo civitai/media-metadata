@@ -21,6 +21,33 @@
     "height": 1216,
     "Model": "flux1-dev"
   },
+  "generation": {
+    "prompt": "portrait of a man is a fun square block full of wool in the middle of the frame in landscape Minecraft",
+    "steps": 20,
+    "cfgScale": 3.5,
+    "seed": 267766578212961,
+    "denoise": 1,
+    "width": 832,
+    "height": 1216,
+    "sampler": "Euler",
+    "scheduler": "simple",
+    "model": {
+      "name": "flux1-dev"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "flux1-dev"
+      },
+      {
+        "kind": "vae",
+        "name": "ae"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

@@ -22,7 +22,34 @@
     },
     "scheduler": "karras"
   },
+  "generation": {
+    "prompt": "elven cleric with a faceless mask, branches for hair, nature",
+    "negativePrompt": "hands",
+    "steps": 30,
+    "cfgScale": 8,
+    "seed": 2061698111,
+    "width": 896,
+    "height": 1152,
+    "sampler": "DPM++ 2M SDE",
+    "scheduler": "karras",
+    "model": {
+      "name": "juggernautXL_juggernautX",
+      "hash": "19743de3"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "juggernautXL_juggernautX",
+        "hash": "19743de3"
+      }
+    ],
+    "tool": {
+      "name": "ruinedfooocus"
+    }
+  },
   "roundTrip": {
-    "formats": ["png"]
+    "formats": [
+      "png"
+    ]
   }
 }

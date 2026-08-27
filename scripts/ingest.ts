@@ -45,7 +45,7 @@ for (const { name, url, notes } of candidates) {
   manifest = manifest.filter((m) => m.file !== file);
   manifest.push({ file, url, sha256, generator: md.generator, notes });
   console.log(
-    `saved ${file} (${bytes.length}b, generator=${md.generator}, onsite=${md.madeOnSite})`
+    `saved ${file} (${bytes.length}b, generator=${md.generator}, onsite=${md.civitai?.madeOnSite})`
   );
 }
 

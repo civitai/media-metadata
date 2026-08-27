@@ -42,9 +42,12 @@ rest) would be a deliberate, easily-tested divergence. Worth deciding alongside 
 
 ## 3. Sampler mapping: gaps, and TWO diverging tables in the app — open decision
 
-**Corpus evidence:** blessed metas retain un-normalized sampler names `dpmpp_2m_sde_gpu`
+**Corpus evidence:** raw metas retain un-normalized sampler names `dpmpp_2m_sde_gpu`
 (every RuinedFooocus fixture), `dpmpp_3m_sde_gpu` (SwarmUI), `er_sde` (ComfyUI) — the vendored
-`samplerMap` has no aliases for them. Inconsistently, `DPM++ SDE` *does* carry its `_gpu` alias
+`samplerMap` has no aliases for them. *(Update 2026-08-27: `generation.sampler` now canonicalizes
+the 2M/3M SDE variants via normalize-only aliases that deliberately bypass the raw-rewriting
+samplerMap; `er_sde` has no A1111 name and stays verbatim. The raw-layer gap remains until the
+unified table below.)* Inconsistently, `DPM++ SDE` *does* carry its `_gpu` alias
 while `DPM++ 2M SDE` doesn't, and there is no `DPM++ 3M SDE` entry at all.
 
 **The deeper issue (flagged by Briant, confirmed 2026-08-26):** the civitai app maintains two

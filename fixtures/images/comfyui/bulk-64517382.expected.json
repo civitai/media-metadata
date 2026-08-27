@@ -23,6 +23,36 @@
     "height": 1024,
     "Model": "FluxDev\\flux_dev"
   },
+  "generation": {
+    "steps": 30,
+    "cfgScale": 2.2,
+    "seed": 1067524912691762,
+    "denoise": 1,
+    "width": 1024,
+    "height": 1024,
+    "sampler": "Euler",
+    "scheduler": "simple",
+    "model": {
+      "name": "flux_dev"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "flux_dev"
+      },
+      {
+        "kind": "vae",
+        "name": "flux_ae"
+      },
+      {
+        "kind": "upscaler",
+        "name": "DAT_x4"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

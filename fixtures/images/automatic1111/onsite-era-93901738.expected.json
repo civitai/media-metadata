@@ -19,6 +19,28 @@
     "width": 1216,
     "height": 832
   },
+  "generation": {
+    "prompt": "a strange alien forest, plants and trees made of nerves and brain tissue, dendrite vines, nerve grass, biotech fantasy landscape, surreal, macrophotogrpahy, vibrant, bioluminescent, sparks of cibrant colors jump form nerve cluster to nerve cluster, surreal > render of a, hyper realistic, 4k, artistic, ultra detailed, octane render, photorealistic, glowing, ultra realistic:: a plesiosaurus that is standing in the water, a detailed matte painting, by Darek Zabrocki, loch ness monster, metal dragon tail, digital art 4k unsettling, coiled realistic serpents, black glossy xenomorph, digital matte painting, highly realistic digital art, twilight ; digital painting, flat matte painting, high res render, highly photographic render --ar 2:3 --v 6.0",
+    "steps": 30,
+    "cfgScale": 7,
+    "seed": 1739813491,
+    "clipSkip": 2,
+    "width": 1216,
+    "height": 832,
+    "sampler": "Euler a",
+    "model": {
+      "civitaiModelVersionId": 1714002
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "civitaiModelVersionId": 1714002
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

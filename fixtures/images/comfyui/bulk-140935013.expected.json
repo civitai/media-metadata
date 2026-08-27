@@ -15,6 +15,22 @@
     "width": 640,
     "height": 960
   },
+  "generation": {
+    "prompt": "__antballs__",
+    "negativePrompt": "worst quality, low quality, bad quality",
+    "steps": 40,
+    "cfgScale": 7,
+    "seed": 661965597529964,
+    "denoise": 1,
+    "width": 640,
+    "height": 960,
+    "sampler": "DPM++ 2M SDE",
+    "scheduler": "karras",
+    "resources": [],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

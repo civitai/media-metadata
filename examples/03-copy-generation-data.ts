@@ -26,5 +26,5 @@ const md = await readMetadata(new Uint8Array(await readFile(file)), { plugins: [
 
 // text/plain half of the clipboard payload (the app pairs it with a JSON-carrying
 // text/html blob via its own copyMetadataToClipboard)
-const text = encodeMetadata(md.meta);
+const text = encodeMetadata(md.raw);
 console.log(text.slice(0, 400));

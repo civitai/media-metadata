@@ -51,6 +51,44 @@
     "width": 512,
     "height": 768
   },
+  "generation": {
+    "prompt": "1girl, sakurako mikage, laughing, school uniform,  looking at viewer, upper body, simple background, high quality, detailed",
+    "negativePrompt": "easynegative, bad-hands-5, lowres, bad anatomy, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, blurry",
+    "steps": 25,
+    "cfgScale": 7,
+    "seed": 3574642233,
+    "clipSkip": 2,
+    "denoise": 0.5,
+    "width": 512,
+    "height": 768,
+    "sampler": "DPM++ 2M",
+    "scheduler": "karras",
+    "model": {
+      "name": "Anything-V3.0-pruned-fp16",
+      "hash": "812cd9f9d9"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "Anything-V3.0-pruned-fp16",
+        "hash": "812cd9f9d9"
+      },
+      {
+        "kind": "lora",
+        "name": "01",
+        "hash": "8c052dc68980",
+        "weight": 0.8
+      },
+      {
+        "kind": "vae",
+        "hash": "f921fb3f29"
+      }
+    ],
+    "tool": {
+      "name": "automatic1111",
+      "version": "v1.9.3"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

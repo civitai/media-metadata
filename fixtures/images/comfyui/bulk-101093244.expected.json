@@ -48,6 +48,43 @@
       "urn:air:other:upscaler:civitai:147759@164821"
     ]
   },
+  "generation": {
+    "prompt": "Set in medieval times. A woman is riding a horse down a village street. She is riding away from the viewer. there is a large foreboding castle in the distance. Lightning can be seen streaking across the sky. She has long messy auburn hair. She is wearing dark leather armor. The horse has a saddle and saddle bags. It is raining and there are puddles forming in the dirt. sharp scenery, lush background, ultra-detailed environment, natural textures, vibrant lighting, crisp clouds, realistic water surface, vivid skies, photo-real terrain, fantstyle, MythP0rt, raz'sscenesmith-mk.1",
+    "steps": 30,
+    "cfgScale": 2.5,
+    "seed": 1539806058,
+    "width": 832,
+    "height": 1216,
+    "resources": [
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 691639
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 1227179
+      },
+      {
+        "kind": "other",
+        "weight": 0.6,
+        "civitaiModelVersionId": 1940311
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 900870
+      },
+      {
+        "kind": "upscaler",
+        "civitaiModelVersionId": 164821
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

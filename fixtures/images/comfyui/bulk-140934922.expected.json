@@ -42,6 +42,25 @@
       }
     }
   },
+  "generation": {
+    "prompt": "illustration Image\nposter\ndigital art\n\n\nThis is a three quarter illustration of a futuristic, robotic humanoid figure with a striking and intimidating appearance. \n\nThe robot's head is made of black metal.\nThe robot's face, forehead and upper head is adorned with a glossy black pattern featuring vertical white stripes that create an optical illusion, reminiscent of a striped prison uniform. \n\nThe face has a large and massive high-tech and intricate black visor, covering the eyes, which are not visible in this image. \n\nThe robot wears a wide, evil grin, revealing large white pointy teeth and (red gums:1.2) that contrast strikingly with the black metal of its face.\n\nThe robot wears a black military-style jacket with prominent silver epaulettes on the shoulders, adding a sense of authority and rank. \nThe collar of the jacket is adorned with numerous small, diamond-like sparkling buttons that catch the light, enhancing its metallic texture. \n\nThe background is a smooth, vertical, gradient transitioning from blue to gray, which contrasts sharply with the robot's color scheme, making it stand out prominently. \n\nThe overall style of the illustration is high-tech and futuristic, with a strong emphasis on contrast and optical illusions. \nThe image evokes a sense of both intimidation and fascination, blending elements of military aesthetics with sci-fi robotics.",
+    "negativePrompt": "lowres, worst quality, low quality, bad anatomy, bad hands, jpeg artifacts, signature, watermark, artist name, extra digits, censored, patreon username, loli, deformed, wrong fingers, missing fingers, extra fingers, crooked",
+    "steps": 8,
+    "cfgScale": 1,
+    "seed": 785730947714512,
+    "denoise": 1,
+    "sampler": "Euler",
+    "scheduler": "simple",
+    "resources": [
+      {
+        "kind": "vae",
+        "name": "Qwen_Image-VAE"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

@@ -21,6 +21,30 @@
     },
     "scheduler": "karras"
   },
+  "generation": {
+    "prompt": "circuitboard, a beautiful woman with circuit board hair and skin",
+    "steps": 30,
+    "cfgScale": 5,
+    "seed": 1331315455,
+    "width": 896,
+    "height": 1152,
+    "sampler": "DPM++ 2M SDE",
+    "scheduler": "karras",
+    "model": {
+      "name": "crystalClearXL_ccxl",
+      "hash": "cbc222b0"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "crystalClearXL_ccxl",
+        "hash": "cbc222b0"
+      }
+    ],
+    "tool": {
+      "name": "ruinedfooocus"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

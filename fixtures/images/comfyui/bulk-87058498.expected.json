@@ -49,6 +49,52 @@
     ],
     "Model": "urn:air:sdxl:checkpoint:civitai:140272@1697082"
   },
+  "generation": {
+    "prompt": "masterpiece, best quality, very aesthetic, (aliasing:1.2), (jaggy lines:1.2), photo \\(medium\\), cosplay photo, (realistic:1.1), photorealistic, (by 96yottea:1.2), \n1girl, solo, black ninja outfit, red belts, Japanese words background, head covered by hoodie, holding the katana, katana infront the face, upper body, sharp eyes, glowing effects, high texture, \nmasterpiece, best quality, amazing quality, very aesthetic, highres, perfect katana, glowing, art, art style, side shot, top view, bloody background, blood, melting, the girl is melting, splash, \n nhl-005,\n, , masterpiece, best quality, very aesthetic, absurdres",
+    "negativePrompt": "jpeg artifacts, film graain, scanlines, scan artifacts, adversarial noise,\nbad anatomy, bad hands, (disembodied:1.1), missing fingers, fewer digits, extra, signature, watermark, logo, sweat, sweatdrop, colored inner hair, hair intakes",
+    "steps": 19,
+    "cfgScale": 4,
+    "seed": 2078684535,
+    "sampler": "Euler a",
+    "model": {
+      "name": "urn:air:sdxl:checkpoint:civitai:140272@1697082",
+      "civitaiModelVersionId": 1697082
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "urn:air:sdxl:checkpoint:civitai:140272@1697082",
+        "civitaiModelVersionId": 1697082
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 1420683
+      },
+      {
+        "kind": "lora",
+        "weight": 0.4,
+        "civitaiModelVersionId": 1682812
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 1380520
+      },
+      {
+        "kind": "lora",
+        "weight": 0.6,
+        "civitaiModelVersionId": 1141520
+      },
+      {
+        "kind": "upscaler",
+        "civitaiModelVersionId": 164821
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

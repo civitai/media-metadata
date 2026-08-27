@@ -72,6 +72,76 @@
     ],
     "Model": "urn:air:sdxl:checkpoint:civitai:1277670@1896532"
   },
+  "generation": {
+    "prompt": "Lazypos, masterpiece, best quality, very aesthetic,\nBREAK\n1 girl, Large breast, \nKiaKaBum, high ponytail, kiana kaslana, white hair, long hair, blue eyes, symbol-shaped pupils, white leotard, leotard under clothes, black corset, corset, underbust, snake print, detached collar, chinese clothes, red collared collar, half-skirt, high-waist skirt, red skirt, red waist cape, snake around leg, asymmetrical clothes, single-shoulder cape, single bare shoulder, red cape, light brown neck ribbon, halterneck, single detached sleeve, sleeve garter, layered clothes, jewelry, single sleeve, arm strap, armlet, single wrist guard, single fingerless glove, black gloves, red tassel, hair scrunchie,\nBREAK\n1 animal, RicCakHi3, no humans, animal, red scarf, horns, snake, white snake, +_+, snake floating near chest,\nRed theme, fireworks, fetal position, holding animal, cheek to cheek, happy, floating, :D, open mouth, one eye closed, full body,\nBREAK\n(rella:1.2), (redum4:1.2) (au \\(d elete\\):1.2) (dino \\(dinoartforame\\):1.1), wlop, epic",
+    "negativePrompt": "(realistic, photorealistic) ,(worst quality, bad quality:1.2), lipstick, 3d lips, lowres,low quality,bad_quality,anatomical nonsense,interlocked fingers,extra fingers,watermark,transparent,logo,text,signature,jpeg artifacts,username,censored,extra digit,ugly,bad_hands,bad_feet,bad_anatomy,deformed anatomy,bad proportions",
+    "steps": 20,
+    "cfgScale": 5,
+    "sampler": "Euler a",
+    "model": {
+      "name": "urn:air:sdxl:checkpoint:civitai:1277670@1896532",
+      "civitaiModelVersionId": 1896532
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "urn:air:sdxl:checkpoint:civitai:1277670@1896532",
+        "civitaiModelVersionId": 1896532
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 1459992
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 1459981
+      },
+      {
+        "kind": "lora",
+        "weight": 0.3,
+        "civitaiModelVersionId": 1191626
+      },
+      {
+        "kind": "lora",
+        "weight": 0.1,
+        "civitaiModelVersionId": 1278054
+      },
+      {
+        "kind": "lora",
+        "weight": 0.3,
+        "civitaiModelVersionId": 1247042
+      },
+      {
+        "kind": "lora",
+        "weight": 0.3,
+        "civitaiModelVersionId": 1398703
+      },
+      {
+        "kind": "lora",
+        "weight": -0.5,
+        "civitaiModelVersionId": 1444863
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 1833157
+      },
+      {
+        "kind": "lora",
+        "weight": 0.3,
+        "civitaiModelVersionId": 2237448
+      },
+      {
+        "kind": "upscaler",
+        "civitaiModelVersionId": 164821
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

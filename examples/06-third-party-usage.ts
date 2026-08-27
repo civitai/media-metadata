@@ -27,20 +27,16 @@ const bytes = new Uint8Array(await readFile(file));
 
 // 1) Bare core: vanilla A1111 fields only — no civitai semantics
 const bare = await readMetadata(bytes);
-console.log(
-  'bare:   civitaiResources =',
-  bare.meta.civitaiResources,
-  '| madeOnSite =',
-  bare.madeOnSite
-);
+console.log('bare:   civitaiResources =', bare.raw.civitaiResources, '| namespace =', bare.civitai);
 
 // 2) With the bundled civitai plugin
 const site = await readMetadata(bytes, { plugins: [civitai()] });
 console.log(
-  'plugin: civitaiResources =',
-  (site.meta.civitaiResources as unknown[])?.length,
-  'entries | madeOnSite =',
-  site.madeOnSite
+  'plugin: resources =',
+  site.generation?.resources.length,
+  `(${site.generation?.resources.filter((r) => r.civitaiModelVersionId).length} with civitaiModelVersionId)`,
+  '| madeOnSite =',
+  site.civitai?.madeOnSite
 );
 
 // 3) Your own plugin: extract a custom details-line block and tag the result
@@ -64,7 +60,7 @@ console.log(
 );
 
 // 4) Context knobs work with or without plugins (e.g. protect your internal keys on encode)
-const text = encodeMetadata({ ...site.meta, myAppInternalId: 'abc123' }, 'automatic1111', {
+const text = encodeMetadata({ ...site.raw, myAppInternalId: 'abc123' }, 'automatic1111', {
   context: { a1111ExcludedKeys: [...defaultA1111ExcludedKeys, 'myAppInternalId'] },
 });
 console.log('encoded contains internal key:', text.includes('myAppInternalId'));

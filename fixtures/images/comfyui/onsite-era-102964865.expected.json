@@ -49,6 +49,52 @@
     ],
     "Model": "urn:air:sdxl:checkpoint:civitai:827184@1761560"
   },
+  "generation": {
+    "prompt": "masterpiece, newest,absurdres,incredibly absurdres, best quality, amazing quality, very aesthetic, impressionism, painterly, pastel colors, \n\nAbstract image of a girl, an open window, striped cats, colorful feathers light particles\n\n stylized 0__11Xx_illu bW9t",
+    "negativePrompt": "worst quality, bad quality, low quality, anatomical nonsense, bad anatomy,interlocked fingers, extra fingers,watermark, jacket",
+    "steps": 45,
+    "cfgScale": 5,
+    "seed": 1334422993,
+    "sampler": "DPM++ 2M",
+    "model": {
+      "name": "urn:air:sdxl:checkpoint:civitai:827184@1761560",
+      "civitaiModelVersionId": 1761560
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "urn:air:sdxl:checkpoint:civitai:827184@1761560",
+        "civitaiModelVersionId": 1761560
+      },
+      {
+        "kind": "lora",
+        "weight": 0.7,
+        "civitaiModelVersionId": 1348455
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 1839268
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 1701079
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 1840805
+      },
+      {
+        "kind": "upscaler",
+        "civitaiModelVersionId": 164821
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

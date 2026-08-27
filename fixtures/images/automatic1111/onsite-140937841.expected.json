@@ -93,6 +93,53 @@
     "width": 832,
     "height": 1248
   },
+  "generation": {
+    "prompt": "poster style captures essence, whimsical boujie girl, dress in fuzzy red and black ladybug costume, l translucent wings, kawaii , flowers pastel watercolor, in the art style of Gorjuss, Ryden, Walsh Anglund, soft-focus and diffused lighting akin to Roversi, Kuksi-like intricate background detail, digital painting, perfectly centered composition, rule of thirds, ultra-detailed, cinematic.",
+    "negativePrompt": "out of frame, Deformed, text, words, extra limbs, blurry, bad anatomy, 2 heads, disfigured, poorly drawn face, mutation, mutated, extra limb, ugly, poorly drawn hands, extra fingers, extra toes, missing limb, blurry, floating limbs, disconnected limbs, malformed hands, blur, out of focus, long neck, long body, ((((mutated hands and fingers)))), (((out of frame))), signature, watermark, trademark, nsfw, nudity",
+    "steps": 30,
+    "cfgScale": 3.5,
+    "seed": 835724166,
+    "width": 832,
+    "height": 1248,
+    "sampler": "Euler",
+    "model": {
+      "civitaiModelVersionId": 3072329
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "civitaiModelVersionId": 3072329
+      },
+      {
+        "kind": "lora",
+        "weight": 0.5,
+        "civitaiModelVersionId": 3161209
+      },
+      {
+        "kind": "lora",
+        "weight": 0.35,
+        "civitaiModelVersionId": 3070143
+      },
+      {
+        "kind": "lora",
+        "weight": 0.35,
+        "civitaiModelVersionId": 3088042
+      },
+      {
+        "kind": "lora",
+        "weight": 0.8,
+        "civitaiModelVersionId": 3180374
+      },
+      {
+        "kind": "lora",
+        "weight": 0.3,
+        "civitaiModelVersionId": 3144156
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",

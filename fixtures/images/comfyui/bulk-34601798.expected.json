@@ -12,6 +12,24 @@
     ],
     "Model": "flux1-dev fp16"
   },
+  "generation": {
+    "model": {
+      "name": "flux1-dev fp16"
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "flux1-dev fp16"
+      },
+      {
+        "kind": "vae",
+        "name": "ae"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

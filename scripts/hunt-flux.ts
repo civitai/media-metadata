@@ -37,8 +37,8 @@ for (let page = 0; page < pages && found < 2; page++) {
       const md = await readMetadata(bytes);
       if (
         md.generator === 'comfyui' &&
-        typeof md.meta.comfy === 'string' &&
-        md.meta.comfy.includes('SamplerCustomAdvanced')
+        typeof md.raw.comfy === 'string' &&
+        md.raw.comfy.includes('SamplerCustomAdvanced')
       ) {
         found++;
         console.log(

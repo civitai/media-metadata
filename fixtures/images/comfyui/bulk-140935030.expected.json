@@ -42,6 +42,25 @@
       }
     }
   },
+  "generation": {
+    "prompt": "illustration Image\nposter\ndigital art\n\n\nThis is a digitally created, vibrant, and highly detailed illustration of an anthropomorphic monkey character. \nThe monkey has gray fur with darker shading around the face, ears, and neck, and is wearing a blue baseball cap adorned with a yellow lightning bolt symbol on the front. \nHe also sports purple, rectangular eyeglasses that reflect light, adding depth to his eyes. \nHis expression is aggressive and mischievous, with a wide grin exposing sharp, white teeth. \nA large brown cigar is clenched between his lips, emitting white smoke that curls upward.\n\nThe monkey's right hand is positioned near his chin.\nHe's smoking a large cigar, while his left ear has multiple gold hoop earrings. \nHe wears a dark blue shirt with a yellow lightning bolt emblem on the chest, matching the one on his cap, suggesting a cohesive theme or brand. \n\nThe background is a gradient of green to black, adding contrast and making the character stand out prominently. \nThe overall style of the illustration is dynamic and comic-like, with bold colors, sharp lines, and exaggerated features that convey a sense of energy and personality. \nThe texture of the fur, fabric, and smoke are highly detailed, contributing to the image's vividness and realism.",
+    "negativePrompt": "lowres, worst quality, low quality, bad anatomy, bad hands, jpeg artifacts, signature, watermark, artist name, extra digits, censored, patreon username, loli, deformed, wrong fingers, missing fingers, extra fingers, crooked",
+    "steps": 8,
+    "cfgScale": 1,
+    "seed": 79551010453849,
+    "denoise": 1,
+    "sampler": "Euler",
+    "scheduler": "simple",
+    "resources": [
+      {
+        "kind": "vae",
+        "name": "Qwen_Image-VAE"
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png"

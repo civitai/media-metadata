@@ -69,6 +69,66 @@
     ],
     "Model": "urn:air:sdxl:checkpoint:civitai:643227@770375"
   },
+  "generation": {
+    "prompt": "(absurdres, best quality, masterpiece:1.4), score_9, score_8_up, score_7_up, score_6_up, detailed, detailed body, detailed face, world of warcraft, fantasy, \n\nfFaceDetail, SkinDetail, ((female, draenei, tall, athletic arms, pale white skin, smooth skin, long white hair, purple eyes, no pupil, no sclera, long white tail), (h0rns, ram horns, white horns), \n(long fingers, purple fingernails, purple nail polish)), \n\n(long loose cyan dress, simple armlet, black facemask, cyan silk scarf), dagger, holding a dagger,\n\nfull body, squatting, \n\noutdoor, evening, mountains, sunset, snow",
+    "negativePrompt": "civit_nsfw, nude, cleavage, plain background, text, anime, score_4, score_5, easynegative, negative_hand, \n\nlong ears, human, elf, bull horns, kudu horn, split horn, nipples, skin markings, \n\nhair behind eyes, blur, blurry face, broken shoulders,  tattoo, tattoos,  \n\ntight clothing",
+    "steps": 25,
+    "cfgScale": 3.5,
+    "seed": 658775543,
+    "sampler": "Euler a",
+    "model": {
+      "name": "urn:air:sdxl:checkpoint:civitai:643227@770375",
+      "civitaiModelVersionId": 770375
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "name": "urn:air:sdxl:checkpoint:civitai:643227@770375",
+        "civitaiModelVersionId": 770375
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 9208
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 60938
+      },
+      {
+        "kind": "lora",
+        "weight": 0.85,
+        "civitaiModelVersionId": 522995
+      },
+      {
+        "kind": "lora",
+        "weight": 1,
+        "civitaiModelVersionId": 663601
+      },
+      {
+        "kind": "lora",
+        "weight": 4,
+        "civitaiModelVersionId": 712947
+      },
+      {
+        "kind": "other",
+        "weight": 1,
+        "civitaiModelVersionId": 720175
+      },
+      {
+        "kind": "vae",
+        "civitaiModelVersionId": 333245
+      },
+      {
+        "kind": "upscaler",
+        "civitaiModelVersionId": 164821
+      }
+    ],
+    "tool": {
+      "name": "comfyui"
+    }
+  },
   "roundTrip": {
     "formats": [
       "png",
