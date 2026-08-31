@@ -9,7 +9,7 @@ import {
 } from '../src/index';
 import { civitai } from '../src/civitai/index';
 
-const REPO_URL = 'https://github.com/civitai/generation-metadata';
+const REPO_URL = 'https://github.com/civitai/media-metadata';
 
 const AVAILABLE_PLUGINS: { id: string; make: () => ParserPlugin }[] = [
   { id: 'civitai', make: () => civitai() },

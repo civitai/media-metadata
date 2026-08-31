@@ -1,8 +1,10 @@
 # @civitai/generation-metadata
 
-Standardized tooling for reading and writing **AI generation metadata** embedded in media files.
-Images today (PNG / JPEG / WebP); the API is shaped so video and audio containers can be added
-later without breaking changes. No native dependencies; browser and node.
+Read and write the **AI generation metadata** embedded in images: the prompt, sampler, seed,
+and resources that Automatic1111, ComfyUI, SwarmUI, RuinedFooocus, and civitai.com write into
+PNG / JPEG / WebP files. Not another generic exif parser: it understands the generator formats,
+survives resizing, and is verified against a corpus of real images. No native dependencies;
+browser and node.
 
 ## Install
 
@@ -125,7 +127,11 @@ The write side exists so **resizing or converting an image doesn't silently dest
 data** — including ComfyUI workflows on PNGs, which the pre-package app code lost.
 
 ```ts
-import { copyMetadata, embedMetadata, payloadFromMediaMetadata } from '@civitai/generation-metadata';
+import {
+  copyMetadata,
+  embedMetadata,
+  payloadFromMediaMetadata,
+} from '@civitai/generation-metadata';
 
 // The resize-safe primitive: re-embed source metadata into resized/converted bytes
 const restored = await copyMetadata(originalFile, resizedBytes);

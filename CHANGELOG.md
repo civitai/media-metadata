@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 — not yet published to npm (stamp the date on publish)
+## 0.1.0 — 2026-08-31
 
 Initial public API.
 
