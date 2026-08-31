@@ -33,6 +33,10 @@ const gen = normalizeGeneration(md.raw, md.generator);
 const restored = await copyMetadata(originalFile, resizedBytes);
 ```
 
+**Try it in your browser:** <https://civitai.github.io/media-metadata/> — drop any image to
+see exactly what parses, compare with/without the civitai plugin, test resize round-trips, and
+report images that parse wrong.
+
 The parsers were extracted from the [civitai.com](https://civitai.com) app and are
 behavior-locked by a corpus of real images that every test run parses and round-trips.
 
@@ -275,6 +279,7 @@ its replacement API.
 ```bash
 pnpm examples     # run them all against the fixture corpus
 pnpm playground   # drag-and-drop parser inspector at http://localhost:5199
+                  # (hosted: https://civitai.github.io/media-metadata/)
 ```
 
 The playground is a dev-only Vite page: drop any image (or paste a civitai CDN URL) and see the

@@ -1,0 +1,54 @@
+name: Deploy playground to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Ship only the four sample images the page's buttons reference, not the
+      # full fixture corpus the dev server serves from fixtures/images.
+      - name: Stage sample images
+        run: |
+          mkdir -p /tmp/samples/automatic1111 /tmp/samples/comfyui /tmp/samples/swarmui /tmp/samples/ruinedfooocus
+          cp fixtures/images/automatic1111/onsite-140937841.jpeg /tmp/samples/automatic1111/
+          cp fixtures/images/comfyui/workflow-22566974.png /tmp/samples/comfyui/
+          cp fixtures/images/swarmui/params-24641975.png /tmp/samples/swarmui/
+          cp fixtures/images/ruinedfooocus/software-7519656.png /tmp/samples/ruinedfooocus/
+      - name: Build playground
+        run: pnpm exec vite build --config playground/vite.config.ts
+        env:
+          PLAYGROUND_BASE: /${{ github.event.repository.name }}/
+          PLAYGROUND_PUBLIC_DIR: /tmp/samples
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: playground/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

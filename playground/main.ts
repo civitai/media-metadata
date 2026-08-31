@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import type { MediaMetadata, ParserPlugin } from '../src/index';
 import {
   applyPlugins,
@@ -457,5 +458,9 @@ urlInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && urlInput.value) void handleUrl(urlInput.value);
 });
 for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-sample]')) {
-  btn.addEventListener('click', () => void handleUrl(btn.dataset.sample!));
+  // BASE_URL is '/' in dev; '/<repo>/' on GitHub project pages
+  btn.addEventListener(
+    'click',
+    () => void handleUrl(import.meta.env.BASE_URL.replace(/\/$/, '') + btn.dataset.sample!)
+  );
 }
