@@ -49,8 +49,11 @@ export interface ExifTags {
   imageDescription?: string | string[];
 }
 
-/** Build a complete JPEG APP1 segment (marker + length + Exif TIFF/IFD0). */
-export function createExifSegment(args: ExifTags): Uint8Array {
+/**
+ * Build a bare EXIF TIFF structure (byte-order header + IFD0) — the payload a
+ * PNG `eXIf` chunk carries directly, and the body of a JPEG APP1 segment.
+ */
+export function createExifTiff(args: ExifTags): Uint8Array {
   const tagsArray = Object.entries(args)
     .map(([key, value]) => {
       const tagMapMatch = tagMap[key as keyof typeof tagMap];
@@ -98,6 +101,12 @@ export function createExifSegment(args: ExifTags): Uint8Array {
 
   const ifdBlock = [...idfBlockSize, ...entryBytes.flat(), ...nextIFDBlockOffset];
 
+  return new Uint8Array([...tiffHeader, ...ifdBlock, ...dataBytes.flatMap((x) => [...x])]);
+}
+
+/** Build a complete JPEG APP1 segment (marker + length + "Exif\0\0" + TIFF/IFD0). */
+export function createExifSegment(args: ExifTags): Uint8Array {
+  const tiff = createExifTiff(args);
   const exifBody = new Uint8Array([
     0x45,
     0x78,
@@ -105,9 +114,7 @@ export function createExifSegment(args: ExifTags): Uint8Array {
     0x66,
     0x00,
     0x00, // "Exif\0\0"
-    ...tiffHeader,
-    ...ifdBlock,
-    ...dataBytes.flatMap((x) => [...x]),
+    ...tiff,
   ]);
 
   const segmentLength = exifBody.length + 2;

@@ -1,12 +1,25 @@
 {
-  "name": "@civitai/media-metadata",
-  "version": "0.0.0",
+  "name": "@civitai/generation-metadata",
+  "version": "0.1.0",
   "description": "Read and write AI generation metadata embedded in media files (images today; video/audio planned)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/civitai/media-metadata.git"
+    "url": "git+https://github.com/civitai/generation-metadata.git"
   },
+  "homepage": "https://github.com/civitai/generation-metadata#readme",
+  "keywords": [
+    "stable-diffusion",
+    "generation-metadata",
+    "a1111",
+    "automatic1111",
+    "comfyui",
+    "swarmui",
+    "exif",
+    "png-chunks",
+    "usercomment",
+    "image-metadata"
+  ],
   "type": "module",
   "packageManager": "pnpm@10.28.1",
   "engines": {

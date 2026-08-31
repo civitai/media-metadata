@@ -35,12 +35,12 @@
     "sampler": "DPM++ 2M",
     "scheduler": "karras",
     "model": {
-      "civitaiModelVersionId": 1714314
+      "modelVersionId": 1714314
     },
     "resources": [
       {
         "kind": "checkpoint",
-        "civitaiModelVersionId": 1714314
+        "modelVersionId": 1714314
       }
     ],
     "tool": {

@@ -58,37 +58,37 @@
     "sampler": "DPM++ 2M",
     "model": {
       "name": "urn:air:sdxl:checkpoint:civitai:827184@1761560",
-      "civitaiModelVersionId": 1761560
+      "modelVersionId": 1761560
     },
     "resources": [
       {
         "kind": "checkpoint",
         "name": "urn:air:sdxl:checkpoint:civitai:827184@1761560",
-        "civitaiModelVersionId": 1761560
+        "modelVersionId": 1761560
       },
       {
         "kind": "lora",
         "weight": 0.7,
-        "civitaiModelVersionId": 1348455
+        "modelVersionId": 1348455
       },
       {
         "kind": "lora",
         "weight": 1,
-        "civitaiModelVersionId": 1839268
+        "modelVersionId": 1839268
       },
       {
         "kind": "lora",
         "weight": 1,
-        "civitaiModelVersionId": 1701079
+        "modelVersionId": 1701079
       },
       {
         "kind": "lora",
         "weight": 1,
-        "civitaiModelVersionId": 1840805
+        "modelVersionId": 1840805
       },
       {
         "kind": "upscaler",
-        "civitaiModelVersionId": 164821
+        "modelVersionId": 164821
       }
     ],
     "tool": {

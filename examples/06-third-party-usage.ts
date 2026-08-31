@@ -13,7 +13,7 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { A1111DetailExtractor, ParserPlugin } from '../src/index';
 import { defaultA1111ExcludedKeys, encodeMetadata, readMetadata } from '../src/index';
-import { civitai } from '../src/civitai/index';
+import { readCivitaiMetadata } from '../src/civitai/index';
 
 const file = join(
   import.meta.dirname,
@@ -30,16 +30,24 @@ const bare = await readMetadata(bytes);
 console.log('bare:   civitaiResources =', bare.raw.civitaiResources, '| namespace =', bare.civitai);
 
 // 2) With the bundled civitai plugin
-const site = await readMetadata(bytes, { plugins: [civitai()] });
+const site = await readCivitaiMetadata(bytes); // civitai() baked in; md.civitai guaranteed
 console.log(
   'plugin: resources =',
-  site.generation?.resources.length,
-  `(${site.generation?.resources.filter((r) => r.civitaiModelVersionId).length} with civitaiModelVersionId)`,
+  site.civitai.generation?.resources.length,
+  `(${site.civitai.generation?.resources.filter((r) => r.modelVersionId).length} with modelVersionId)`,
   '| madeOnSite =',
-  site.civitai?.madeOnSite
+  site.civitai.madeOnSite
 );
 
-// 3) Your own plugin: extract a custom details-line block and tag the result
+// 3) Your own plugin: extract a custom details-line block and tag the result.
+// Declare your envelope namespace once via declaration merging (use the
+// package name '@civitai/generation-metadata' in your own project) and md.myApp is
+// typed everywhere — no casts.
+declare module '../src/index' {
+  interface PluginNamespaces {
+    myApp: { jobId?: string };
+  }
+}
 const myBlockExtractor: A1111DetailExtractor = (line, metadata) => {
   const match = line.match(/, MyApp job: (\S+)/);
   if (!match) return line;
@@ -50,14 +58,11 @@ const myPlugin: ParserPlugin = {
   name: 'my-app',
   context: { a1111DetailExtractors: [myBlockExtractor] },
   enrich: (md) => {
-    (md as unknown as Record<string, unknown>).processedByMyApp = true;
+    md.myApp = { jobId: md.raw.myAppJobId as string | undefined };
   },
 };
 const custom = await readMetadata(bytes, { plugins: [myPlugin] });
-console.log(
-  'custom plugin ran:',
-  (custom as unknown as Record<string, unknown>).processedByMyApp === true
-);
+console.log('custom plugin ran:', custom.myApp !== undefined);
 
 // 4) Context knobs work with or without plugins (e.g. protect your internal keys on encode)
 const text = encodeMetadata({ ...site.raw, myAppInternalId: 'abc123' }, 'automatic1111', {

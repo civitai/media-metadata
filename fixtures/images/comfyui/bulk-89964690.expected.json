@@ -60,16 +60,16 @@
       {
         "kind": "other",
         "weight": 1,
-        "civitaiModelVersionId": 1761560
+        "modelVersionId": 1761560
       },
       {
         "kind": "other",
         "weight": 1,
-        "civitaiModelVersionId": 1953811
+        "modelVersionId": 1953811
       },
       {
         "kind": "upscaler",
-        "civitaiModelVersionId": 164821
+        "modelVersionId": 164821
       }
     ],
     "tool": {

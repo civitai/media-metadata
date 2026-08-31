@@ -4,8 +4,8 @@ import { toBytes } from '../read/exif';
 import type { MediaMetadata } from '../read/read';
 import { readMetadata } from '../read/read';
 import { decodeUserComment } from '../read/user-comment';
-import { createExifSegment, setExifSegment } from './jpeg';
-import { setTextChunk } from './png';
+import { createExifSegment, createExifTiff, setExifSegment } from './jpeg';
+import { setExifChunk, setTextChunk } from './png';
 
 /**
  * Format-agnostic carrier for embeddable generation metadata.
@@ -59,6 +59,11 @@ export function payloadFromMediaMetadata(md: MediaMetadata): MetadataPayload {
   return payload;
 }
 
+/** Whether embedMetadata/copyMetadata can write to this format. */
+export function canEmbedMetadata(format: string): format is 'png' | 'jpeg' {
+  return format === 'png' || format === 'jpeg';
+}
+
 /** Embed a metadata payload into PNG or JPEG bytes. WebP writing is not supported. */
 export async function embedMetadata(
   image: BinaryInput,
@@ -69,13 +74,22 @@ export async function embedMetadata(
 
   if (format === 'png') {
     let parameters = payload.parameters;
-    // A JPEG-sourced payload carries its text in the UserComment bytes
+    // A JPEG- or eXIf-sourced payload carries its text in the UserComment bytes
     if (!parameters && !payload.prompt && !payload.workflow && payload.userCommentBytes) {
       parameters = decodeUserComment(payload.userCommentBytes) || undefined;
     }
     if (parameters) bytes = setTextChunk(bytes, 'parameters', parameters);
     if (payload.prompt) bytes = setTextChunk(bytes, 'prompt', payload.prompt);
     if (payload.workflow) bytes = setTextChunk(bytes, 'workflow', payload.workflow);
+    // Artist/Software have no text-chunk convention; carry them the way
+    // civitai's own PNG output does — an eXIf chunk (the text stays in the
+    // chunks above, so the EXIF block holds only the identity tags)
+    if (payload.artist || payload.software) {
+      bytes = setExifChunk(
+        bytes,
+        createExifTiff({ artist: payload.artist, software: payload.software })
+      );
+    }
     return bytes;
   }
 

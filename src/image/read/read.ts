@@ -1,14 +1,7 @@
-import type { NormalizedGeneration } from '../../shared/normalized';
-import { normalizeGeneration } from '../../shared/normalized';
+import type { CivitaiMetadata } from '../../civitai/normalized';
 import type { GenerationMetadata } from '../../shared/schema';
 import { generationMetadataSchema } from '../../shared/schema';
-import type {
-  BinaryInput,
-  CivitaiMetadata,
-  ExifData,
-  Generator,
-  ImageFormat,
-} from '../../shared/types';
+import type { BinaryInput, ExifData, Generator, ImageFormat } from '../../shared/types';
 import { sniffFormat } from '../format';
 import { defaultParsers } from '../parsers/registry';
 import type { MetadataParser, ParserContext } from '../parsers/types';
@@ -20,7 +13,7 @@ import { extractExif, toBytes } from './exif';
 export interface ReadOptions {
   /**
    * Plugins extending the bare reader (e.g. `civitai()` from
-   * `@civitai/media-metadata/civitai`). Applied in order; explicit `parsers`/
+   * `@civitai/generation-metadata/civitai`). Applied in order; explicit `parsers`/
    * `context` options override plugin contributions.
    */
   plugins?: ParserPlugin[];
@@ -30,25 +23,36 @@ export interface ReadOptions {
   context?: Partial<ParserContext>;
 }
 
-export interface MediaMetadata {
+/**
+ * Envelope slots plugins may fill, keyed by plugin namespace. Third-party
+ * plugins get typed access via declaration merging:
+ *
+ *   declare module '@civitai/generation-metadata' {
+ *     interface PluginNamespaces { myPlugin: MyNamespace }
+ *   }
+ *
+ * after which `md.myPlugin` is typed on every MediaMetadata (write it from
+ * your plugin's `enrich` hook). All slots are optional on the envelope —
+ * present only when the owning plugin ran.
+ */
+export interface PluginNamespaces {
+  /** Set by the civitai() plugin. */
+  civitai: CivitaiMetadata;
+}
+
+export interface MediaMetadata extends Partial<PluginNamespaces> {
   format: ImageFormat | 'unknown';
   /** Which generator's format matched, or null when none did. */
   generator: Generator | null;
   /**
-   * The primary output: a generator-independent, stably-typed view of the
-   * generation metadata. Absent when nothing matched or parsing failed.
-   */
-  generation?: NormalizedGeneration;
-  /**
-   * The verbatim per-generator bag (schema-validated; `{}` on no match/failure).
-   * Preserves every passthrough key exactly as the source wrote it — the escape
-   * hatch for generator-specific detail, and the civitai app's storage shape.
+   * The primary output: the verbatim per-generator bag (schema-validated; `{}`
+   * on no match/failure). Preserves every passthrough key exactly as the source
+   * wrote it — also the civitai app's storage shape. Normalization is a plugin
+   * concern (the civitai() plugin puts its view at `md.civitai.generation`).
    */
   raw: GenerationMetadata;
   /** Flattened raw tags (including the raw `userComment` bytes when present). */
   exif: Readonly<ExifData>;
-  /** Set by the civitai() plugin; absent without it. */
-  civitai?: CivitaiMetadata;
 }
 
 export async function readMetadata(
@@ -87,10 +91,7 @@ export async function readMetadata(
   const result = generationMetadataSchema.safeParse(rawMeta ?? {});
   const raw = (result.success ? result.data : {}) as GenerationMetadata;
 
-  const generation =
-    generator && Object.keys(raw).length > 0 ? normalizeGeneration(raw, generator) : undefined;
-
-  const md: MediaMetadata = { format, generator, generation, raw, exif };
+  const md: MediaMetadata = { format, generator, raw, exif };
   for (const plugin of plugins ?? []) plugin.enrich?.(md);
   return md;
 }

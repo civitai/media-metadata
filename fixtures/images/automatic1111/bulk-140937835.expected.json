@@ -129,47 +129,47 @@
     "sampler": "DPM++ 2M",
     "scheduler": "karras",
     "model": {
-      "civitaiModelVersionId": 3017793
+      "modelVersionId": 3017793
     },
     "resources": [
       {
         "kind": "checkpoint",
-        "civitaiModelVersionId": 3017793
+        "modelVersionId": 3017793
       },
       {
         "kind": "lora",
         "weight": 0.4,
-        "civitaiModelVersionId": 947620
+        "modelVersionId": 947620
       },
       {
         "kind": "lora",
         "weight": 0.7,
-        "civitaiModelVersionId": 2858836
+        "modelVersionId": 2858836
       },
       {
         "kind": "lora",
         "weight": 0.6,
-        "civitaiModelVersionId": 595500
+        "modelVersionId": 595500
       },
       {
         "kind": "lora",
         "weight": 0.25,
-        "civitaiModelVersionId": 161586
+        "modelVersionId": 161586
       },
       {
         "kind": "lora",
         "weight": 0.8,
-        "civitaiModelVersionId": 656520
+        "modelVersionId": 656520
       },
       {
         "kind": "embedding",
         "weight": 1,
-        "civitaiModelVersionId": 3002212
+        "modelVersionId": 3002212
       },
       {
         "kind": "embedding",
         "weight": 1,
-        "civitaiModelVersionId": 82745
+        "modelVersionId": 82745
       }
     ],
     "tool": {

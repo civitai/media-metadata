@@ -3,7 +3,7 @@ import type { MetadataParser, ParserContext } from './parsers/types';
 
 /**
  * A plugin extends the bare-bones reader with ecosystem-specific behavior.
- * The package ships one: `civitai()` (from `@civitai/media-metadata/civitai`),
+ * The package ships one: `civitai()` (from `@civitai/generation-metadata/civitai`),
  * which adds parsing for metadata written by civitai.com — on-site generation
  * formats, `Civitai resources`/`Civitai metadata` blocks, AIR resolution, and
  * the made-on-site marker.

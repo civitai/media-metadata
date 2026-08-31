@@ -133,6 +133,12 @@
     "notes": "A1111 png, classic 2023 Model hash format (Deliberate gallery)"
   },
   {
+    "file": "automatic1111/onsite-exifchunk-png.png",
+    "url": "local: downloaded from the civitai generator 2026-08-28 (Z0P1E42FJS1JYF0MWF81QJ62W0)",
+    "sha256": "131317623f1ecfa90af24150ab647fa066b36e22a0ce86f833f0e18b4f135978",
+    "generator": "automatic1111",
+    "notes": "on-site PNG output: all metadata in an eXIf chunk (Artist/Software/UserComment), no text chunks"
+  },  {
     "file": "automatic1111/onsite-140937841.jpeg",
     "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c62344b8-c404-4ca4-a20e-83bfd0e16e24/original=true/c62344b8-c404-4ca4-a20e-83bfd0e16e24.jpeg",
     "sha256": "77c311f1f274ba84c48f389f47881b2680a3ffee694c77347954e119514f1cc3",

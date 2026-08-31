@@ -4,22 +4,33 @@ import type { ParserContext } from './parsers/types';
 import { createParserContext } from './parsers/types';
 import type { ParserPlugin } from './plugins';
 import { applyPlugins } from './plugins';
-import type { NormalizedGeneration } from '../shared/normalized';
-import { normalizeGeneration } from '../shared/normalized';
+import type { MediaMetadata } from './read/read';
 import type { GenerationMetadata } from '../shared/schema';
 import { generationMetadataSchema } from '../shared/schema';
 import type { Generator } from '../shared/types';
 
-export { readMetadata, type MediaMetadata, type ReadOptions } from './read/read';
+export {
+  readMetadata,
+  type MediaMetadata,
+  type PluginNamespaces,
+  type ReadOptions,
+} from './read/read';
 export { applyPlugins, type ParserPlugin } from './plugins';
 export {
+  canEmbedMetadata,
   embedMetadata,
   copyMetadata,
   payloadFromMediaMetadata,
   type MetadataPayload,
 } from './write/write';
-export { createExifSegment, setExifSegment, type ExifTags } from './write/jpeg';
-export { setTextChunk, getTextChunks, parseChunks, serializeChunks } from './write/png';
+export { createExifSegment, createExifTiff, setExifSegment, type ExifTags } from './write/jpeg';
+export {
+  setExifChunk,
+  setTextChunk,
+  getTextChunks,
+  parseChunks,
+  serializeChunks,
+} from './write/png';
 export { extractExif, toBytes } from './read/exif';
 export { decodeUserComment, encodeUserCommentUTF16BE } from './read/user-comment';
 export { sniffFormat } from './format';
@@ -59,31 +70,49 @@ function resolveContext(options?: TextOptions): ParserContext {
   return createParserContext({ ...context, ...options?.context });
 }
 
-/** Parse A1111-style generation text (e.g. pasted parameters) into metadata. */
-export function parseGenerationText(
-  text: string,
-  options?: TextOptions
-): { generation?: NormalizedGeneration; raw: GenerationMetadata } {
+/**
+ * Parse A1111-style generation text (e.g. pasted parameters) into the same
+ * envelope `readMetadata` returns (with `format: 'unknown'` and empty `exif`).
+ * Plugins apply fully — extractors AND enrich — so pasted text and a read file
+ * feed identical downstream code (e.g. `md.civitai.generation` with the
+ * civitai plugin).
+ */
+export function parseGenerationText(text: string, options?: TextOptions): MediaMetadata {
   const parsed = automatic1111Parser.parse({ generationDetails: text }, resolveContext(options));
   const result = generationMetadataSchema.safeParse(parsed);
   const raw = (result.success ? result.data : {}) as GenerationMetadata;
-  const generation =
-    Object.keys(raw).length > 0 ? normalizeGeneration(raw, 'automatic1111') : undefined;
-  return { generation, raw };
+  const md: MediaMetadata = {
+    format: 'unknown',
+    generator: Object.keys(raw).length > 0 ? 'automatic1111' : null,
+    raw,
+    exif: {},
+  };
+  for (const plugin of options?.plugins ?? []) plugin.enrich?.(md);
+  return md;
 }
 
-/** Encode metadata back into a generator's native text format. Returns '' on failure. */
+/**
+ * Encode metadata back into a generator's native text format. Returns '' on
+ * failure by default — pass `throwOnError` when silently embedding nothing
+ * would be worse than an exception. Accepts any metadata-shaped record (the
+ * encoders read known keys and pass the rest through), so callers with their
+ * own validated meta type don't need to cast.
+ */
 export function encodeMetadata(
-  meta: GenerationMetadata,
+  meta: Record<string, unknown>,
   generator: Generator = 'automatic1111',
-  options?: TextOptions
+  options?: TextOptions & { throwOnError?: boolean }
 ): string {
   const { parsers } = applyPlugins(options?.plugins, defaultParsers);
   const parser = parsers.find((p) => p.generator === generator);
-  if (!parser) return '';
+  if (!parser) {
+    if (options?.throwOnError) throw new Error(`No parser registered for generator: ${generator}`);
+    return '';
+  }
   try {
-    return parser.encode(meta, resolveContext(options));
-  } catch {
+    return parser.encode(meta as GenerationMetadata, resolveContext(options));
+  } catch (error) {
+    if (options?.throwOnError) throw error;
     return '';
   }
 }

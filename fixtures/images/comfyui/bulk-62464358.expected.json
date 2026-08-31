@@ -66,42 +66,42 @@
     "sampler": "Euler a",
     "model": {
       "name": "urn:air:sdxl:checkpoint:civitai:140272@1240288",
-      "civitaiModelVersionId": 1240288
+      "modelVersionId": 1240288
     },
     "resources": [
       {
         "kind": "checkpoint",
         "name": "urn:air:sdxl:checkpoint:civitai:140272@1240288",
-        "civitaiModelVersionId": 1240288
+        "modelVersionId": 1240288
       },
       {
         "kind": "lora",
         "weight": 0.78,
-        "civitaiModelVersionId": 1380520
+        "modelVersionId": 1380520
       },
       {
         "kind": "lora",
         "weight": 0.4,
-        "civitaiModelVersionId": 1410611
+        "modelVersionId": 1410611
       },
       {
         "kind": "lora",
         "weight": 0.45,
-        "civitaiModelVersionId": 1244133
+        "modelVersionId": 1244133
       },
       {
         "kind": "lora",
         "weight": 0.8,
-        "civitaiModelVersionId": 1384132
+        "modelVersionId": 1384132
       },
       {
         "kind": "other",
         "weight": 1,
-        "civitaiModelVersionId": 106916
+        "modelVersionId": 106916
       },
       {
         "kind": "upscaler",
-        "civitaiModelVersionId": 164821
+        "modelVersionId": 164821
       }
     ],
     "tool": {

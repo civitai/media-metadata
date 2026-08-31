@@ -78,51 +78,51 @@
     "sampler": "Euler a",
     "model": {
       "name": "urn:air:sdxl:checkpoint:civitai:643227@770375",
-      "civitaiModelVersionId": 770375
+      "modelVersionId": 770375
     },
     "resources": [
       {
         "kind": "checkpoint",
         "name": "urn:air:sdxl:checkpoint:civitai:643227@770375",
-        "civitaiModelVersionId": 770375
+        "modelVersionId": 770375
       },
       {
         "kind": "other",
         "weight": 1,
-        "civitaiModelVersionId": 9208
+        "modelVersionId": 9208
       },
       {
         "kind": "other",
         "weight": 1,
-        "civitaiModelVersionId": 60938
+        "modelVersionId": 60938
       },
       {
         "kind": "lora",
         "weight": 0.85,
-        "civitaiModelVersionId": 522995
+        "modelVersionId": 522995
       },
       {
         "kind": "lora",
         "weight": 1,
-        "civitaiModelVersionId": 663601
+        "modelVersionId": 663601
       },
       {
         "kind": "lora",
         "weight": 4,
-        "civitaiModelVersionId": 712947
+        "modelVersionId": 712947
       },
       {
         "kind": "other",
         "weight": 1,
-        "civitaiModelVersionId": 720175
+        "modelVersionId": 720175
       },
       {
         "kind": "vae",
-        "civitaiModelVersionId": 333245
+        "modelVersionId": 333245
       },
       {
         "kind": "upscaler",
-        "civitaiModelVersionId": 164821
+        "modelVersionId": 164821
       }
     ],
     "tool": {

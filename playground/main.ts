@@ -1,8 +1,15 @@
 import type { MediaMetadata, ParserPlugin } from '../src/index';
-import { copyMetadata, encodeMetadata, payloadFromMediaMetadata, readMetadata } from '../src/index';
+import {
+  applyPlugins,
+  copyMetadata,
+  defaultParsers,
+  encodeMetadata,
+  payloadFromMediaMetadata,
+  readMetadata,
+} from '../src/index';
 import { civitai } from '../src/civitai/index';
 
-const REPO_URL = 'https://github.com/civitai/media-metadata';
+const REPO_URL = 'https://github.com/civitai/generation-metadata';
 
 const AVAILABLE_PLUGINS: { id: string; make: () => ParserPlugin }[] = [
   { id: 'civitai', make: () => civitai() },
@@ -52,9 +59,21 @@ function syncQueryConfig() {
   history.replaceState(null, '', `${location.pathname}?${params}`);
 }
 
+// Derived from the live registry (plugins can swap/extend parsers), not hardcoded
+function syncParserList() {
+  const { parsers } = applyPlugins(currentPlugins(), defaultParsers);
+  document.getElementById('parsers')!.textContent = [
+    ...new Set(parsers.map((p) => p.generator)),
+  ].join(', ');
+}
+
 applyQueryConfig();
+syncParserList();
 for (const box of document.querySelectorAll<HTMLInputElement>('[data-plugin], #compare'))
-  box.addEventListener('change', syncQueryConfig);
+  box.addEventListener('change', () => {
+    syncQueryConfig();
+    syncParserList();
+  });
 
 // #region [multi-image report selection]
 type ReportItem = { name: string; md: MediaMetadata };
@@ -122,6 +141,8 @@ function render(name: string, bytes: Uint8Array, md: MediaMetadata) {
   if (md.civitai?.madeOnSite) badges.append(el('span', 'badge good', 'made on civitai'));
   const metaKeys = Object.keys(md.raw).length;
   badges.append(el('span', 'badge', `${metaKeys} meta key${metaKeys === 1 ? '' : 's'}`));
+  if (Object.keys(md.exif).length === 0)
+    badges.append(el('span', 'badge bad', 'no readable exif/text data'));
   const pluginIds = activePluginIds();
   badges.append(
     el('span', 'badge', pluginIds.length ? `plugins: ${pluginIds.join(', ')}` : 'bare core')
@@ -130,12 +151,33 @@ function render(name: string, bytes: Uint8Array, md: MediaMetadata) {
   header.append(info);
   card.append(header);
 
-  if (md.generation)
+  // Opens itself when no generator matched: the exif dump is how a user tells
+  // "unsupported format with readable data" apart from "no metadata at all"
+  const exifKeys = Object.keys(md.exif).length;
+  card.append(
+    section(
+      `Source tags as read from the file (md.exif) — ${exifKeys} tag${exifKeys === 1 ? '' : 's'}`,
+      exifKeys
+        ? JSON.stringify(describeExif(md.exif), null, 2)
+        : 'No readable exif / text-chunk metadata in this file.',
+      !md.generator
+    )
+  );
+  card.append(
+    section(
+      'Parsed metadata — raw parser output, before normalization (md.raw)',
+      JSON.stringify(md.raw, null, 2),
+      true
+    )
+  );
+  if (md.civitai)
     card.append(
-      section('Normalized generation (primary)', JSON.stringify(md.generation, null, 2), true)
+      section(
+        'civitai plugin namespace (md.civitai — madeOnSite, extra, normalized generation)',
+        JSON.stringify(md.civitai, null, 2),
+        true
+      )
     );
-  if (md.civitai) card.append(section('civitai namespace', JSON.stringify(md.civitai, null, 2)));
-  card.append(section('Raw parser bag (raw)', JSON.stringify(md.raw, null, 2)));
   const encoded = encodeMetadata(md.raw);
   if (encoded) card.append(section('Re-encoded A1111 text (encodeMetadata)', encoded));
   const payload = payloadFromMediaMetadata(md);
@@ -154,7 +196,6 @@ function render(name: string, bytes: Uint8Array, md: MediaMetadata) {
       )
     )
   );
-  card.append(section('Raw tags (exif)', JSON.stringify(describeExif(md.exif), null, 2)));
   card.append(transformControls(name, bytes, md));
 
   const actions = el('div', 'actions');

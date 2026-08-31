@@ -5,15 +5,14 @@ import { samplerMap } from '../../shared/constants';
 import { parseAir, parseAirSafe } from '../../civitai/air';
 
 describe('parseGenerationText', () => {
-  it('parses pasted A1111 parameters into a normalized view plus the raw bag', () => {
-    const { generation, raw } = parseGenerationText(
+  it('parses pasted A1111 parameters into the raw bag', () => {
+    const { raw } = parseGenerationText(
       `a castle on a hill\nNegative prompt: blurry\nSteps: 30, Sampler: Euler a, CFG scale: 7, Seed: 42, Size: 512x512`
     );
-    expect(generation?.prompt).toBe('a castle on a hill');
-    expect(generation?.negativePrompt).toBe('blurry');
-    expect(generation?.steps).toBe(30); // normalized: always a number
-    expect(generation?.width).toBe(512);
-    expect(raw.steps).toBe(30); // raw is schema-validated too (coerced)
+    expect(raw.prompt).toBe('a castle on a hill');
+    expect(raw.negativePrompt).toBe('blurry');
+    expect(raw.steps).toBe(30); // schema-validated (coerced to number)
+    expect(raw.width).toBe(512);
   });
 });
 

@@ -80,62 +80,62 @@
     "sampler": "Euler a",
     "model": {
       "name": "urn:air:sdxl:checkpoint:civitai:1277670@1896532",
-      "civitaiModelVersionId": 1896532
+      "modelVersionId": 1896532
     },
     "resources": [
       {
         "kind": "checkpoint",
         "name": "urn:air:sdxl:checkpoint:civitai:1277670@1896532",
-        "civitaiModelVersionId": 1896532
+        "modelVersionId": 1896532
       },
       {
         "kind": "lora",
         "weight": 1,
-        "civitaiModelVersionId": 1459992
+        "modelVersionId": 1459992
       },
       {
         "kind": "lora",
         "weight": 1,
-        "civitaiModelVersionId": 1459981
+        "modelVersionId": 1459981
       },
       {
         "kind": "lora",
         "weight": 0.3,
-        "civitaiModelVersionId": 1191626
+        "modelVersionId": 1191626
       },
       {
         "kind": "lora",
         "weight": 0.1,
-        "civitaiModelVersionId": 1278054
+        "modelVersionId": 1278054
       },
       {
         "kind": "lora",
         "weight": 0.3,
-        "civitaiModelVersionId": 1247042
+        "modelVersionId": 1247042
       },
       {
         "kind": "lora",
         "weight": 0.3,
-        "civitaiModelVersionId": 1398703
+        "modelVersionId": 1398703
       },
       {
         "kind": "lora",
         "weight": -0.5,
-        "civitaiModelVersionId": 1444863
+        "modelVersionId": 1444863
       },
       {
         "kind": "other",
         "weight": 1,
-        "civitaiModelVersionId": 1833157
+        "modelVersionId": 1833157
       },
       {
         "kind": "lora",
         "weight": 0.3,
-        "civitaiModelVersionId": 2237448
+        "modelVersionId": 2237448
       },
       {
         "kind": "upscaler",
-        "civitaiModelVersionId": 164821
+        "modelVersionId": 164821
       }
     ],
     "tool": {

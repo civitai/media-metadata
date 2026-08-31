@@ -81,6 +81,19 @@ export function setTextChunk(png: Uint8Array, keyword: string, text: string): Ui
   return serializeChunks(chunks);
 }
 
+/**
+ * Insert or replace the `eXIf` chunk. `tiff` is a bare EXIF TIFF structure
+ * (starting with the II/MM byte-order header — no "Exif\0\0" prefix, per the
+ * PNG spec). This is how civitai's generator carries Artist/Software/UserComment
+ * in its PNG output.
+ */
+export function setExifChunk(png: Uint8Array, tiff: Uint8Array): Uint8Array {
+  const chunks = parseChunks(png).filter((c) => c.type !== 'eXIf');
+  const insertIndex = chunks.findIndex((c) => c.type !== 'IHDR');
+  chunks.splice(insertIndex === -1 ? chunks.length : insertIndex, 0, { type: 'eXIf', data: tiff });
+  return serializeChunks(chunks);
+}
+
 /** Read all text chunks as keyword → text (tEXt latin-1, iTXt utf-8; zTXt skipped). */
 export function getTextChunks(png: Uint8Array): Record<string, string> {
   const out: Record<string, string> = {};

@@ -1,0 +1,85 @@
+{
+  "generator": "automatic1111",
+  "madeOnSite": true,
+  "meta": {
+    "prompt": "a woman riding a bike",
+    "cfgScale": 7,
+    "steps": 30,
+    "sampler": "Euler a",
+    "seed": 200030550,
+    "clipSkip": 2,
+    "resources": [],
+    "civitaiResources": [
+      {
+        "type": "checkpoint",
+        "modelVersionId": 889818
+      }
+    ],
+    "extra": {
+      "workflow": "txt2img",
+      "priority": "low",
+      "outputFormat": "png",
+      "ecosystem": "Illustrious",
+      "aspectRatio": {
+        "value": "1:1",
+        "width": 1024,
+        "height": 1024
+      },
+      "snippets": {
+        "wildcardSetIds": [],
+        "mode": "random",
+        "batchCount": 1,
+        "targets": {
+          "prompt": [],
+          "negativePrompt": []
+        }
+      },
+      "prompt": "a woman riding a bike",
+      "negativePrompt": "",
+      "sampler": "Euler a",
+      "cfgScale": 7,
+      "steps": 30,
+      "clipSkip": 2,
+      "seed": 200030550,
+      "enhancedCompatibility": false,
+      "quantity": 1,
+      "resources": [
+        {
+          "modelVersionId": 889818,
+          "type": "Checkpoint"
+        }
+      ]
+    },
+    "Created Date": "2026-08-28T1928:05.5804717Z",
+    "width": 1024,
+    "height": 1024
+  },
+  "generation": {
+    "prompt": "a woman riding a bike",
+    "steps": 30,
+    "cfgScale": 7,
+    "seed": 200030550,
+    "clipSkip": 2,
+    "width": 1024,
+    "height": 1024,
+    "sampler": "Euler a",
+    "model": {
+      "modelVersionId": 889818
+    },
+    "resources": [
+      {
+        "kind": "checkpoint",
+        "modelVersionId": 889818
+      }
+    ],
+    "tool": {
+      "name": "automatic1111"
+    }
+  },
+  "roundTrip": {
+    "formats": [
+      "png",
+      "jpeg"
+    ]
+  }
+}

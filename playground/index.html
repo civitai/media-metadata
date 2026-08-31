@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>media-metadata playground</title>
+    <title>generation-metadata playground</title>
     <style>
       :root {
         color-scheme: dark;
@@ -213,10 +213,13 @@
     </style>
   </head>
   <body>
-    <h1>@civitai/media-metadata playground</h1>
+    <h1>@civitai/generation-metadata playground</h1>
     <div class="sub">
       Drop images (or paste a URL) to see exactly what the parser reads — generator detection,
       parsed metadata, re-encoded A1111 text, and the raw tags.
+      <br />
+      Supported parsers: <span id="parsers"></span> · reads PNG / JPEG / WebP · writes PNG / JPEG
+      (WebP is read-only). Anything else shows “no generator detected”.
     </div>
     <div id="drop">Drop images here, click to browse, or paste an image from the clipboard</div>
     <input id="file" type="file" accept="image/*" multiple hidden />

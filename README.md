@@ -1,18 +1,38 @@
-# @civitai/media-metadata
+# @civitai/generation-metadata
 
 Standardized tooling for reading and writing **AI generation metadata** embedded in media files.
 Images today (PNG / JPEG / WebP); the API is shaped so video and audio containers can be added
-later without breaking changes.
-
-Extracted from the [civitai.com](https://civitai.com) app, redesigned for a clean, immutable API,
-and behavior-locked against the original parsers by a corpus of real civitai images that every
-test run parses and round-trips.
+later without breaking changes. No native dependencies; browser and node.
 
 ## Install
 
 ```bash
-pnpm add @civitai/media-metadata
+pnpm add @civitai/generation-metadata
 ```
+
+## Quick start (no plugin needed)
+
+```ts
+import { readMetadata, normalizeGeneration, copyMetadata } from '@civitai/generation-metadata';
+// node with a file path? import { readMetadataFromFile } from '@civitai/generation-metadata/node'
+
+const md = await readMetadata(fileOrBytesOrUrl);
+console.log(md.generator); //  'automatic1111' | 'comfyui' | 'swarmui' | 'ruinedfooocus' | null
+console.log(md.raw.prompt, md.raw.steps, md.raw.sampler); // the verbatim parsed bag
+
+// Prefer the normalized view for typed access — `raw` is a loose bag whose
+// index signature makes a typo'd key compile as `unknown`, not an error.
+// normalizeGeneration is a pure function over md.raw, supported for everyone,
+// no plugin required; the only field a non-civitai consumer won't get is the
+// resources' modelVersionId (a civitai identifier, added by the civitai plugin).
+const gen = normalizeGeneration(md.raw, md.generator);
+
+// Resizing/converting strips metadata; copyMetadata restores it:
+const restored = await copyMetadata(originalFile, resizedBytes);
+```
+
+The parsers were extracted from the [civitai.com](https://civitai.com) app and are
+behavior-locked by a corpus of real images that every test run parses and round-trips.
 
 ## Reading
 
@@ -21,41 +41,81 @@ The reader is **bare-bones by default** and extended by plugins. The package bun
 it** — without the plugin, civitai-specific blocks degrade (see Plugins below).
 
 ```ts
-import { readMetadata } from '@civitai/media-metadata';
-import { civitai } from '@civitai/media-metadata/civitai';
+import { readMetadata } from '@civitai/generation-metadata';
+import { civitai } from '@civitai/generation-metadata/civitai';
 
 const md = await readMetadata(fileOrBytesOrUrl, { plugins: [civitai()] });
-// md.generation -> THE PRIMARY OUTPUT: normalized, generator-independent view
-//                  (camelCase, guaranteed number types, one merged `resources`
-//                   list, `model: {name, hash}`, `tool: {name, version}`)
-// md.raw        -> the verbatim per-generator bag, every passthrough key intact
-//                  (escape hatch; also the civitai app's storage shape)
-// md.civitai    -> the plugin's namespace: { madeOnSite, extra }; resolved resources
-//                  appear IN generation.resources, tagged with their civitaiModelVersionId
-// md.generator  -> 'automatic1111' | 'comfyui' | 'swarmui' | 'ruinedfooocus' | null
-// md.format     -> 'png' | 'jpeg' | 'webp' | 'unknown'
-// md.exif       -> raw flattened tags
+// md.raw       -> THE CORE OUTPUT: the verbatim per-generator bag, every
+//                 passthrough key intact (also the civitai app's storage shape)
+// md.civitai   -> the plugin's namespace: { madeOnSite, extra, generation }.
+//                 `generation` is the plugin's NORMALIZED view of raw (camelCase,
+//                 guaranteed number types, one merged `resources` list with
+//                 modelVersionId on civitai-identified entries)
+// md.generator -> 'automatic1111' | 'comfyui' | 'swarmui' | 'ruinedfooocus' | null
+// md.format    -> 'png' | 'jpeg' | 'webp' | 'unknown'
+// md.exif      -> raw flattened tags
 ```
 
-Use `md.generation` unless you need generator-specific detail: it's the stable surface
-(`generation.steps` is always a `number`; `generation.resources` merges the five shapes the
-underlying formats scatter resources across). `md.raw` preserves the source faithfully — mixed
-key casing, string values, extension keys like `AddNet Module 1` — and is what `encodeMetadata`
-consumes. Plugins never write into the shared bag's top level; each gets its own namespace
-(`md.civitai`).
+The core stops at `md.raw` — a faithful, schema-validated rendering of what the generator wrote.
+It's what `encodeMetadata` consumes. **Normalization is a plugin concern**: the civitai plugin
+ships one opinionated normalized view at `md.civitai.generation`, and other plugins are free to
+normalize differently — or not at all. Plugins never write into the shared bag's top level; each
+gets its own namespace (`md.civitai`).
 
-Inputs can be a `Uint8Array`, `ArrayBuffer`, `Blob`/`File`, or a URL string (fetched). The core is
-isomorphic — browser and node — with no native dependencies. Node-only conveniences live under
-`@civitai/media-metadata/node` (`readMetadataFromFile`).
+Inputs can be a `Uint8Array`, `ArrayBuffer`, `Blob`/`File`, or a URL string (fetched). Node-only
+conveniences live under `@civitai/generation-metadata/node` (`readMetadataFromFile`).
+
+### The shape of `md.raw`
+
+These fields are schema-backed and consistently typed across all four generators (numbers are
+coerced even when the source wrote strings):
+
+| Field                                   | Type                      | Notes                                                            |
+| --------------------------------------- | ------------------------- | ---------------------------------------------------------------- |
+| `prompt`, `negativePrompt`, `sampler`   | `string?`                 | empty strings become absent                                      |
+| `steps`, `cfgScale`, `seed`, `clipSkip` | `number?`                 | coerced                                                          |
+| `hashes`                                | `Record<string, string>?` | `model` / `vae` / `lora:NAME` / `embed:NAME` keys                |
+| `resources`, `additionalResources`      | arrays                    | `{type, name?, weight?, hash?}` shapes                           |
+| `civitaiResources`                      | array                     | only with the civitai plugin: `{modelVersionId, type?, weight?}` |
+| `comfy`                                 | string or object          | the ComfyUI graph (`prompt` + `workflow` JSON)                   |
+| `version`, `engine`, `extra`            | misc                      | generator/tool detail                                            |
+
+Everything else is a **passthrough key preserved verbatim** — `'Model hash'`, `width`,
+`'Denoising strength'`, `'AddNet Module 1'`, ComfyUI's `models`/`vaes` arrays — typed `unknown`
+and differing per generator. The reference for exactly what each generator produces is the
+committed corpus: every image in `fixtures/images/<generator>/` has a `*.expected.json` beside it
+showing its full `md.raw`.
+
+⚠️ Three different things are named `workflow`: `raw.workflow` is a _string_ (civitai's workflow
+name, e.g. `txt2img`); the ComfyUI workflow JSON lives in `raw.comfy`; and `MetadataPayload.workflow`
+is the PNG `workflow` chunk text on the write side.
+
+### Parsing pasted text
+
+`parseGenerationText` parses an A1111-style parameters string (the "copy generation data" format)
+into the same envelope `readMetadata` returns — plugins apply fully, so pasted text and a read
+file feed identical downstream code:
+
+```ts
+import { parseGenerationText } from '@civitai/generation-metadata';
+import { civitai } from '@civitai/generation-metadata/civitai';
+
+const md = parseGenerationText(pastedParameters, { plugins: [civitai()] });
+// md.raw, md.civitai.generation — same as a file read; md.format is 'unknown'
+```
+
+Note: anything that parses is labeled `generator: 'automatic1111'` (there is no reliable way to
+tell which tool produced a bare parameters string), so don't present the paste path's `tool` as
+authoritative.
 
 ### Supported formats
 
-| Generator | Container | Where the metadata lives |
-|---|---|---|
-| Automatic1111 (and compatible: Forge, on-site civitai) | PNG, JPEG | `parameters` text chunk / EXIF UserComment |
-| ComfyUI | PNG, WebP, JPEG (legacy) | `prompt` + `workflow` chunks / EXIF Model tag / UserComment JSON |
-| SwarmUI | PNG | `sui_image_params` JSON in `parameters` |
-| RuinedFooocus | PNG | JSON in `parameters` with a `software` marker |
+| Generator                                              | Container                | Where the metadata lives                                         |
+| ------------------------------------------------------ | ------------------------ | ---------------------------------------------------------------- |
+| Automatic1111 (and compatible: Forge, on-site civitai) | PNG, JPEG                | `parameters` text chunk / EXIF UserComment                       |
+| ComfyUI                                                | PNG, WebP, JPEG (legacy) | `prompt` + `workflow` chunks / EXIF Model tag / UserComment JSON |
+| SwarmUI                                                | PNG                      | `sui_image_params` JSON in `parameters`                          |
+| RuinedFooocus                                          | PNG                      | JSON in `parameters` with a `software` marker                    |
 
 Detection order matters (formats overlap) and is preserved from the original app implementation.
 
@@ -65,7 +125,7 @@ The write side exists so **resizing or converting an image doesn't silently dest
 data** — including ComfyUI workflows on PNGs, which the pre-package app code lost.
 
 ```ts
-import { copyMetadata, embedMetadata, payloadFromMediaMetadata } from '@civitai/media-metadata';
+import { copyMetadata, embedMetadata, payloadFromMediaMetadata } from '@civitai/generation-metadata';
 
 // The resize-safe primitive: re-embed source metadata into resized/converted bytes
 const restored = await copyMetadata(originalFile, resizedBytes);
@@ -76,11 +136,32 @@ const withMeta = await embedMetadata(pngOrJpegBytes, payload);
 ```
 
 - **PNG**: writes `parameters` / `prompt` / `workflow` as `tEXt` chunks (`iTXt` when the text
-  isn't Latin-1-safe), replacing same-keyword chunks.
+  isn't Latin-1-safe), replacing same-keyword chunks. Artist/Software travel in an `eXIf` chunk
+  (the same mechanism civitai's generator uses for its PNG output, where all metadata —
+  UserComment included — lives in EXIF-in-PNG), so the on-site marker survives format conversion.
 - **JPEG**: builds and splices an APP1 EXIF segment (Artist, Software, UserComment), replacing an
   existing Exif segment in place. Raw source UserComment bytes are carried verbatim, so JPEG→JPEG
   copies are byte-lossless.
 - **WebP**: read-only in v1.
+
+### What survives a copy
+
+`copyMetadata` works off the **source's raw tags** (`md.exif` — original chunk text /
+UserComment bytes), never off parsed or normalized data. That makes it plugin-independent (no
+`plugins` option, none needed), immune to parser bugs, and able to preserve metadata it can't
+even parse.
+
+| Source → Target | Result                                                                                              |
+| --------------- | --------------------------------------------------------------------------------------------------- |
+| JPEG → JPEG     | byte-lossless (UserComment bytes carried verbatim)                                                  |
+| PNG → PNG       | text chunks re-embedded verbatim; `eXIf` rebuilt from Artist/Software                               |
+| JPEG → PNG      | UserComment decoded into a `parameters` chunk; Artist/Software into `eXIf`                          |
+| PNG → JPEG      | `parameters` text re-encoded as UTF-16 UserComment                                                  |
+| ComfyUI → JPEG  | best-effort legacy UserComment format — graph survives, `meta.comfy` differs                        |
+| anything → WebP | **throws** (`Metadata writing is not supported`) — gate with `canEmbedMetadata(sniffFormat(bytes))` |
+
+The parse result is identical on both sides of every supported conversion — the fixture suite
+asserts it per image, including there-and-back chains (`jpeg → png → jpeg`).
 
 ## Plugins
 
@@ -90,14 +171,41 @@ The core parses the four generator formats vanilla-style and knows nothing site-
 - **`parsers`** — transform the registry (wrap, replace, extend, reorder parsers)
 - **`context`** — merge `ParserContext` contributions (details-line extractors, sampler map,
   excluded keys, debug hook)
-- **`enrich`** — annotate the result envelope after parsing
+- **`enrich`** — annotate the result envelope after parsing. **Synchronous** — do async work
+  (hash lookups, API calls) outside the read, or pre-resolve it into the plugin's closure the way
+  `civitai({ resolveAir })` does.
+
+Plugin instances must be reusable across reads (the same instance may see many files); keep
+per-read state out of the plugin object. Each plugin writes only its own envelope namespace, and
+gets typed access to it via declaration merging:
+
+```ts
+declare module '@civitai/generation-metadata' {
+  interface PluginNamespaces {
+    myPlugin: { jobId?: string };
+  }
+}
+// enrich: (md) => { md.myPlugin = { jobId: ... } }  — typed, no casts
+```
 
 ### The bundled `civitai()` plugin
 
 ```ts
-import { civitai } from '@civitai/media-metadata/civitai';
-const md = await readMetadata(input, { plugins: [civitai()] });
+import { readCivitaiMetadata } from '@civitai/generation-metadata/civitai';
+const md = await readCivitaiMetadata(input); // civitai() baked in; md.civitai guaranteed present
 ```
+
+`readCivitaiMetadata` is the recommended entry point when you want civitai semantics — it makes
+forgetting the plugin impossible and its return type drops the `?` on `md.civitai`. The explicit
+form `readMetadata(input, { plugins: [civitai()] })` is equivalent.
+
+For metadata you already have as a bag (e.g. previously stored in a database) rather than a file,
+`normalizeCivitaiGeneration(raw, generator?)` produces exactly what `md.civitai.generation` would
+contain — including `modelVersionId` resource folding — with no file or exif in sight. The
+`generator` is optional: omit it for stored rows that never recorded one and the result simply
+has no `tool` (absence over guessing). `normalizeGeneration` is its generator-agnostic base
+(everything except the civitai resource folding, also re-exported from the package root), and
+both are supported public API for any consumer, civitai-affiliated or not.
 
 It adds: `Civitai resources:` / `Civitai metadata:` details-line blocks (with AIR → version-id
 resolution, overridable via `civitai({ resolveAir })`), the `CivitaiModelSelector` ComfyUI node,
@@ -109,7 +217,7 @@ Civitai's orchestrator writes standard A1111 text with its blocks appended, so *
 plugin the standard fields (prompt, sampler, steps, size, …) still parse fully** — the core lifts
 any unrecognized `Key: {...}`/`Key: [...]` JSON block out of the details line as a raw string
 passthrough (`raw['Civitai resources']` etc.) instead of letting it mangle the scanner. The
-plugin is what *interprets* those blocks (`civitaiResources` with resolved version ids, `extra`,
+plugin is what _interprets_ those blocks (`civitaiResources` with resolved version ids, `extra`,
 `madeOnSite`) and what handles the on-site ComfyUI formats.
 
 ### Writing your own
@@ -143,7 +251,7 @@ arbitrary `Key: value` pairs, and an allowlist would silently drop them. The def
 (`defaultA1111ExcludedKeys`) covers this package's own internal keys; extend it if you add yours:
 
 ```ts
-import { defaultA1111ExcludedKeys, encodeMetadata } from '@civitai/media-metadata';
+import { defaultA1111ExcludedKeys, encodeMetadata } from '@civitai/generation-metadata';
 
 encodeMetadata(meta, 'automatic1111', {
   a1111ExcludedKeys: [...defaultA1111ExcludedKeys, 'myInternalKey'],
@@ -177,7 +285,7 @@ opens a prefilled GitHub issue for images that parse wrong — see below.
 Bad parses become test fixtures through a two-step pipeline:
 
 1. Anyone files an issue via the **fixture-report template** (or the playground's per-card
-   Report button / multi-select "Report N selected" button) and drags the *original* image
+   Report button / multi-select "Report N selected" button) and drags the _original_ image
    file(s) into it — several per issue is fine; each attachment becomes its own fixture.
 2. A maintainer adds the `fixture-report` label; the `fixture-report.yml` workflow downloads the
    attachment, ingests it into `fixtures/`, blesses an expectation pinning **current** parser
@@ -235,6 +343,9 @@ into metadata; `encode` renders your native text format. Register it in
 - RuinedFooocus detection is whitespace-tolerant (`"software":"RuinedFooocus"` with or without a
   space); the app requires python-json spacing.
 - SwarmUI's version is read from the spec-correct `swarm_version` key (also fixed in the app).
+- `parseGenerationText` schema-validates on parse, so numeric fields come back as numbers where
+  the app's old `parsePromptMetadata` returned raw strings — code comparing `meta.steps === '30'`
+  breaks silently.
 
 ## Development
 

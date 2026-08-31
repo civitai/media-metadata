@@ -59,21 +59,21 @@
     "scheduler": "karras",
     "model": {
       "name": "urn:air:sdxl:checkpoint:civitai:24350@3187704",
-      "civitaiModelVersionId": 3187704
+      "modelVersionId": 3187704
     },
     "resources": [
       {
         "kind": "checkpoint",
         "name": "urn:air:sdxl:checkpoint:civitai:24350@3187704",
-        "civitaiModelVersionId": 3187704
+        "modelVersionId": 3187704
       },
       {
         "kind": "vae",
-        "civitaiModelVersionId": 669051
+        "modelVersionId": 669051
       },
       {
         "kind": "upscaler",
-        "civitaiModelVersionId": 164821
+        "modelVersionId": 164821
       }
     ],
     "tool": {

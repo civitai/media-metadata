@@ -62,34 +62,34 @@
     "width": 832,
     "height": 1216,
     "model": {
-      "civitaiModelVersionId": 691639
+      "modelVersionId": 691639
     },
     "resources": [
       {
         "kind": "lora",
         "name": "Glitchcore_Flux",
         "weight": 1,
-        "civitaiModelVersionId": 1050932
+        "modelVersionId": 1050932
       },
       {
         "kind": "lora",
         "name": "FluxDFaeTasticDetails",
         "weight": 0.5,
-        "civitaiModelVersionId": 720252
+        "modelVersionId": 720252
       },
       {
         "kind": "checkpoint",
-        "civitaiModelVersionId": 691639
+        "modelVersionId": 691639
       },
       {
         "kind": "lora",
         "weight": 1,
-        "civitaiModelVersionId": 877992
+        "modelVersionId": 877992
       },
       {
         "kind": "lora",
         "weight": 1,
-        "civitaiModelVersionId": 945122
+        "modelVersionId": 945122
       }
     ],
     "tool": {

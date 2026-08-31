@@ -1,13 +1,27 @@
-import { samplerMap } from './constants';
-import type { GenerationMetadata } from './schema';
-import type { Generator } from './types';
-import { findKeyForValue } from './utils';
+import { samplerMap } from '../shared/constants';
+import type { GenerationMetadata } from '../shared/schema';
+import type { Generator } from '../shared/types';
+import { findKeyForValue } from '../shared/utils';
 
 /**
- * The primary, generator-independent view of parsed generation metadata:
- * stable camelCase names, guaranteed number types, and ONE merged resource
- * list. Derived from the verbatim parser bag (`MediaMetadata.raw`), which
- * remains available for generator-specific detail.
+ * Namespace the civitai() plugin attaches to MediaMetadata. Normalization is a
+ * plugin concern — the core stops at the verbatim parser bag (`md.raw`), and
+ * each plugin decides what a normalized view should look like for its needs.
+ */
+export interface CivitaiMetadata {
+  /** EXIF Artist === 'ai' — the on-site generation marker. */
+  madeOnSite: boolean;
+  /** The `Civitai metadata:` payload / on-site extras. */
+  extra?: Record<string, unknown>;
+  /** The plugin's normalized view of `md.raw`. Absent when nothing parsed. */
+  generation?: NormalizedGeneration;
+}
+
+/**
+ * This plugin's normalized view of parsed generation metadata: stable
+ * camelCase names, guaranteed number types, and ONE merged resource list.
+ * Derived from the verbatim parser bag (`MediaMetadata.raw`), which remains
+ * available for generator-specific detail.
  */
 export interface NormalizedGeneration {
   prompt?: string;
@@ -22,14 +36,16 @@ export interface NormalizedGeneration {
   sampler?: string;
   scheduler?: string;
   /** The primary checkpoint, when identifiable. */
-  model?: { name?: string; hash?: string; civitaiModelVersionId?: number };
+  model?: { name?: string; hash?: string; modelVersionId?: number };
   /** Every resource the metadata references, merged from all source shapes. */
   resources: NormalizedResource[];
   /**
-   * `version` is present only when the generator writes one (A1111 and SwarmUI
-   * do; ComfyUI and RuinedFooocus don't) — absence means unrecorded, not v0.
+   * Absent when the caller didn't know the generator (e.g. normalizing meta
+   * stored long ago without recording one) — absence means unrecorded, never a
+   * guess. `version` is present only when the generator writes one (A1111 and
+   * SwarmUI do; ComfyUI and RuinedFooocus don't).
    */
-  tool: { name: Generator; version?: string };
+  tool?: { name: Generator; version?: string };
 }
 
 export type ResourceKind =
@@ -51,7 +67,7 @@ export interface NormalizedResource {
    * The civitai model-version id, when the metadata identifies the resource on
    * civitai (AIRs, on-site generation blocks). Set by the civitai() plugin.
    */
-  civitaiModelVersionId?: number;
+  modelVersionId?: number;
   /** The source's original type string when it didn't map to a known kind. */
   rawType?: string;
 }
@@ -265,10 +281,16 @@ function buildResources(raw: GenerationMetadata): ResourceSet {
   return set;
 }
 
-/** Build the normalized view from a parser's verbatim bag. */
+/**
+ * Build the generator-agnostic normalized view from a parser's verbatim bag.
+ * Nothing here needs the civitai plugin or civitai metadata — third-party
+ * consumers can call this on any `md.raw`. The only thing it will never
+ * produce is `modelVersionId`; that comes from
+ * [[normalizeCivitaiGeneration]], which layers the civitai-specific data in.
+ */
 export function normalizeGeneration(
   raw: GenerationMetadata,
-  generator: Generator
+  generator?: Generator | null
 ): NormalizedGeneration {
   const resources = buildResources(raw).all();
   const model = resources.find((r) => r.kind === 'checkpoint');
@@ -290,9 +312,70 @@ export function normalizeGeneration(
     scheduler,
     model: model ? { name: model.name, hash: model.hash } : undefined,
     resources,
-    tool: {
-      name: generator,
-      version: asString(raw.version) ?? asString(raw.Version) ?? undefined,
-    },
+    tool: generator
+      ? { name: generator, version: asString(raw.version) ?? asString(raw.Version) ?? undefined }
+      : undefined,
   };
+}
+
+/**
+ * The complete civitai normalization: [[normalizeGeneration]] plus everything
+ * the plugin's enrich step adds — width/height recovered from the on-site
+ * `extra` payload, and `civitaiResources` folded into the resource list with
+ * their `modelVersionId`. Works on a bare raw bag, so it can normalize
+ * metadata that was stored long ago (e.g. the civitai app's DB `meta` column),
+ * not just a freshly read file — omit `generator` when the stored row never
+ * recorded one, and the result simply has no `tool`. `readMetadata` with the
+ * civitai() plugin produces exactly this at `md.civitai.generation`.
+ */
+export function normalizeCivitaiGeneration(
+  raw: GenerationMetadata,
+  generator?: Generator | null
+): NormalizedGeneration {
+  const generation = normalizeGeneration(raw, generator);
+
+  // on-site generations put dimensions in the extras payload, not the graph
+  const extra = raw.extra as Record<string, unknown> | undefined;
+  if (extra) {
+    const w = Number(extra.width);
+    const h = Number(extra.height);
+    if (Number.isFinite(w)) generation.width ??= w;
+    if (Number.isFinite(h)) generation.height ??= h;
+  }
+
+  // civitai-resolved resources fold into THE resource list: a resource being
+  // "from civitai" is a property (modelVersionId), not a parallel array
+  const resolved = raw.civitaiResources as
+    { modelVersionId: number; type?: string; weight?: number }[] | undefined;
+  if (resolved?.length) {
+    for (const r of resolved) {
+      // on-site resource lists can repeat an id — one entry per modelVersionId
+      if (generation.resources.some((x) => x.modelVersionId === r.modelVersionId)) continue;
+      const { kind, rawType } = resourceKind(r.type);
+      // the source formats carry no name/hash link between a resolved id and a
+      // graph/extranet entry — attach only on an unambiguous kind+weight match
+      const twins = generation.resources.filter(
+        (x) => x.kind === kind && x.modelVersionId === undefined && x.weight === r.weight
+      );
+      if (twins.length === 1) {
+        twins[0].modelVersionId = r.modelVersionId;
+      } else {
+        generation.resources.push({
+          kind,
+          weight: r.weight,
+          modelVersionId: r.modelVersionId,
+          rawType,
+        });
+      }
+    }
+    const checkpoint = generation.resources.find((x) => x.kind === 'checkpoint');
+    if (checkpoint) {
+      generation.model ??= {};
+      generation.model.name ??= checkpoint.name;
+      generation.model.hash ??= checkpoint.hash;
+      generation.model.modelVersionId ??= checkpoint.modelVersionId;
+    }
+  }
+
+  return generation;
 }

@@ -68,17 +68,17 @@
     "height": 1216,
     "sampler": "Euler",
     "model": {
-      "civitaiModelVersionId": 290640
+      "modelVersionId": 290640
     },
     "resources": [
       {
         "kind": "checkpoint",
-        "civitaiModelVersionId": 290640
+        "modelVersionId": 290640
       },
       {
         "kind": "lora",
         "weight": 0.85,
-        "civitaiModelVersionId": 3257961
+        "modelVersionId": 3257961
       }
     ],
     "tool": {

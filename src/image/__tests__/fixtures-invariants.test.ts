@@ -63,11 +63,11 @@ describe.each(cases.map((c) => [c.label, c.expected] as const))('%s', (_label, e
         expect(r.name, r.name).not.toMatch(/[\\/]/);
       }
       if (r.rawType !== undefined) expect(r.kind).toBe('other');
-      if (r.civitaiModelVersionId !== undefined) {
-        expect(ids.has(r.civitaiModelVersionId), `dup id ${r.civitaiModelVersionId}`).toBe(false);
-        ids.add(r.civitaiModelVersionId);
+      if (r.modelVersionId !== undefined) {
+        expect(ids.has(r.modelVersionId), `dup id ${r.modelVersionId}`).toBe(false);
+        ids.add(r.modelVersionId);
       }
-      expect(r.name ?? r.hash ?? r.civitaiModelVersionId, 'unidentifiable resource').toBeDefined();
+      expect(r.name ?? r.hash ?? r.modelVersionId, 'unidentifiable resource').toBeDefined();
     }
 
     // the model summary agrees with the checkpoint resource

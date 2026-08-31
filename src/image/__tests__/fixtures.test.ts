@@ -45,7 +45,7 @@ describe.each(images.map((file) => [relative(FIXTURES_DIR, file).replace(/\\/g, 
         generator: md.generator,
         madeOnSite: md.civitai?.madeOnSite,
         meta: md.raw,
-        generation: md.generation ?? null,
+        generation: md.civitai?.generation ?? null,
       }).toEqual({
         generator: expected.generator,
         madeOnSite: expected.madeOnSite,
@@ -66,11 +66,47 @@ describe.each(images.map((file) => [relative(FIXTURES_DIR, file).replace(/\\/g, 
 
         const restored = await copyMetadata(new Uint8Array(source), new Uint8Array(resized));
         const md = await readMetadata(restored, READ_OPTIONS);
-        expect({ generator: md.generator, meta: md.raw }).toEqual({
+        expect({
+          generator: md.generator,
+          madeOnSite: md.civitai?.madeOnSite,
+          meta: md.raw,
+        }).toEqual({
           generator: expected.generator,
+          madeOnSite: expected.madeOnSite,
           meta: expected.meta,
         });
       }
     );
+
+    // Cross-container translation is not byte-copying (JPEG UserComment UTF-16
+    // vs PNG text chunks), so a there-and-back chain proves it converges rather
+    // than drifting a little on every hop. Second copy sources from the FIRST
+    // hop's output — the chain, not the original.
+    if (formats.includes('png') && formats.includes('jpeg')) {
+      it('parses identically after a there-and-back format chain', async () => {
+        const source = readFileSync(file);
+        const sourceFormat: 'png' | 'jpeg' = /\.png$/i.test(file) ? 'png' : 'jpeg';
+        const otherFormat = sourceFormat === 'png' ? 'jpeg' : 'png';
+
+        const hop1 = await sharp(source).resize({ width: 128 }).toFormat(otherFormat).toBuffer();
+        const mid = await copyMetadata(new Uint8Array(source), new Uint8Array(hop1));
+
+        const hop2 = await sharp(Buffer.from(mid)).toFormat(sourceFormat).toBuffer();
+        const back = await copyMetadata(mid, new Uint8Array(hop2));
+
+        for (const restored of [mid, back]) {
+          const md = await readMetadata(restored, READ_OPTIONS);
+          expect({
+            generator: md.generator,
+            madeOnSite: md.civitai?.madeOnSite,
+            meta: md.raw,
+          }).toEqual({
+            generator: expected.generator,
+            madeOnSite: expected.madeOnSite,
+            meta: expected.meta,
+          });
+        }
+      });
+    }
   }
 );

@@ -83,7 +83,7 @@ for (const [index, url] of urls.entries()) {
         generator: md.generator,
         madeOnSite: md.civitai?.madeOnSite ?? false,
         meta: md.raw,
-        generation: md.generation ?? null,
+        generation: md.civitai?.generation ?? null,
         roundTrip: { formats: defaultRoundTripFormats(md) },
       },
       null,

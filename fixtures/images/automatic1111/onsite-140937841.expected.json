@@ -103,37 +103,37 @@
     "height": 1248,
     "sampler": "Euler",
     "model": {
-      "civitaiModelVersionId": 3072329
+      "modelVersionId": 3072329
     },
     "resources": [
       {
         "kind": "checkpoint",
-        "civitaiModelVersionId": 3072329
+        "modelVersionId": 3072329
       },
       {
         "kind": "lora",
         "weight": 0.5,
-        "civitaiModelVersionId": 3161209
+        "modelVersionId": 3161209
       },
       {
         "kind": "lora",
         "weight": 0.35,
-        "civitaiModelVersionId": 3070143
+        "modelVersionId": 3070143
       },
       {
         "kind": "lora",
         "weight": 0.35,
-        "civitaiModelVersionId": 3088042
+        "modelVersionId": 3088042
       },
       {
         "kind": "lora",
         "weight": 0.8,
-        "civitaiModelVersionId": 3180374
+        "modelVersionId": 3180374
       },
       {
         "kind": "lora",
         "weight": 0.3,
-        "civitaiModelVersionId": 3144156
+        "modelVersionId": 3144156
       }
     ],
     "tool": {
