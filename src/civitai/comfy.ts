@@ -179,6 +179,11 @@ export function createCivitaiComfyParser(
     parse(state, ctx) {
       const { scan } = scanComfyState(state, ctx, selectorIntercept);
 
+      // An on-site image carries a curated summary of what actually ran, so an
+      // empty prompt in it is a fact, not a gap — reaching into the UI graph for
+      // a stale widget value here would invent a prompt the generation never had.
+      if (state.extraMetadata) scan.promptTextFallback = undefined;
+
       // Default to an object (not undefined) so airs discovered in resource names below can be
       // attached even when the image carries only a `prompt` chunk and no `workflow` chunk.
       const workflow = state.workflow ? (JSON.parse(state.workflow) as any) : {};
@@ -200,7 +205,7 @@ export function createCivitaiComfyParser(
       if (extraMetadata && typeof extraMetadata === 'object' && extraMetadata.prompt) {
         applyExtraMetadata(metadata, extraMetadata);
       } else if (scan.customAdvancedSampler) {
-        applyFluxSampler(scan.customAdvancedSampler, metadata);
+        applyFluxSampler(scan.customAdvancedSampler, metadata, scan.promptTextFallback);
       } else {
         applySamplerNode(metadata, scan);
         if (state.extraMetadata) metadata.extra = state.extraMetadata as Record<string, unknown>;

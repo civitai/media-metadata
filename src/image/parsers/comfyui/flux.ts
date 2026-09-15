@@ -1,12 +1,16 @@
 import type { GenerationMetadata } from '../../../shared/schema';
-import type { ComfyNode, ComfyNumber } from './graph';
+import type { ComfyNode, ComfyNumber, PromptTextFallback } from './graph';
 import { getNumberValue } from './graph';
 
 /**
  * Flux-style graphs don't use KSampler — generation params hang off a
  * SamplerCustomAdvanced node's noise/sampler/guider/sigmas/latent inputs.
  */
-export function applyFluxSampler(sampler: ComfyNode, metadata: GenerationMetadata): void {
+export function applyFluxSampler(
+  sampler: ComfyNode,
+  metadata: GenerationMetadata,
+  promptTextFallback?: PromptTextFallback
+): void {
   const seedNode = sampler.inputs.noise as ComfyNode;
   if (seedNode?.class_type === 'RandomNoise') metadata.seed = seedNode.inputs.noise_seed as number;
 
@@ -39,6 +43,7 @@ export function applyFluxSampler(sampler: ComfyNode, metadata: GenerationMetadat
       metadata.prompt = textNode.inputs.populated_text as string;
     } else if (textNode?.class_type === 'String Literal')
       metadata.prompt = textNode.inputs.string as string;
+    if (!metadata.prompt) metadata.prompt = promptTextFallback?.(textEncoderNode, 'positive');
   }
 
   const schedulerNode = sampler.inputs.sigmas as ComfyNode;

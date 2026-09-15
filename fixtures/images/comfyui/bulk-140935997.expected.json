@@ -2,6 +2,7 @@
   "generator": "comfyui",
   "madeOnSite": false,
   "meta": {
+    "prompt": "a 20-year old woman dressed as a mushroom faery with iridescent accents, fairy core",
     "cfgScale": 1,
     "steps": 8,
     "sampler": "Euler",
@@ -28,31 +29,10 @@
     ],
     "scheduler": "simple",
     "denoise": 1,
-    "width": {
-      "inputs": {
-        "aspect_ratio": "2:3 (Portrait Photo)",
-        "megapixels": 1,
-        "multiple": 8
-      },
-      "class_type": "ResolutionSelector",
-      "_meta": {
-        "title": "Resolution Selector"
-      }
-    },
-    "height": {
-      "inputs": {
-        "aspect_ratio": "2:3 (Portrait Photo)",
-        "megapixels": 1,
-        "multiple": 8
-      },
-      "class_type": "ResolutionSelector",
-      "_meta": {
-        "title": "Resolution Selector"
-      }
-    },
     "Model": "Krea2_Turbo_convrot_int8mixed"
   },
   "generation": {
+    "prompt": "a 20-year old woman dressed as a mushroom faery with iridescent accents, fairy core",
     "steps": 8,
     "cfgScale": 1,
     "seed": 580059059455692,
