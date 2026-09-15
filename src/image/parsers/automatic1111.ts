@@ -94,7 +94,14 @@ function collectResources(metadata: GenerationMetadata): SDResource[] {
 
   if (metadata['Lora hashes']) {
     if (!metadata.hashes) metadata.hashes = {};
-    for (const [name, hash] of Object.entries(metadata['Lora hashes'])) {
+    // A string here is a block the details-line parser failed to split. Iterating one
+    // costs every LoRA on the image AND writes a `lora:<n>` hash per CHARACTER, which
+    // is what shipped for two weeks; parse it rather than enumerate it.
+    const loraHashes =
+      typeof metadata['Lora hashes'] === 'string'
+        ? parseDetailsLine(metadata['Lora hashes'])
+        : (metadata['Lora hashes'] as Record<string, string>);
+    for (const [name, hash] of Object.entries(loraHashes)) {
       metadata.hashes[`lora:${name}`] = hash;
       const resource = resources.find((r) => r.name === name);
       if (resource) resource.hash = hash;

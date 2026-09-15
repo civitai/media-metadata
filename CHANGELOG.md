@@ -1,6 +1,42 @@
 # Changelog
 
-## Unreleased
+## 0.3.0 — 2026-09-15
+
+**A1111 / Forge LoRAs stopped auto-linking on upload (regression, 2026-08-31 to 2026-09-15).**
+ClickUp 868m53cpr / Freshdesk 72028. A quoted details-line value was read as a nested
+`name: hash` block only when it matched a SHAPE heuristic whose character class allowed
+letters, digits, spaces and `.+-`. A LoRA name is whatever the creator called the file, so
+`Lora hashes: "Krea2 - FACE - Licking Lips (Krea2): 4cf2eea941da"` failed on its brackets and
+unquoted to a plain string; `collectResources` then iterated that string, emitting one
+`lora:<n>` hash per CHARACTER. Non-Latin names failed the same way (`\w` is ASCII-only).
+
+The heuristic reads only the START of the block, so the failure is POSITIONAL: a block is
+mangled when its FIRST entry has an awkward character, and then every entry in it is lost
+together — six LoRAs on one sampled image, because `Greywolf_(Monster_Rancher)_(…)` happened
+to sort first. A block whose first name is plain parses fine with brackets later, which is
+why impact varies per image and why a count of affected images is a floor. Checkpoints and
+VAEs were never in the block, which is why this read as "LoRAs no longer recognised" rather
+than as a parser failure.
+
+- Nested hash blocks are now decided by the KEY (`Lora hashes`, `TI hashes`, `Hashes`,
+  `Hypernet hashes`, `ControlNet N`, `AddNet …`), the way A1111 itself decides. The shape
+  heuristic still applies to keys outside that list, so nothing else changes.
+- `collectResources` parses a string-valued `Lora hashes` instead of enumerating it, so a
+  block this misses in future costs the LoRAs rather than producing per-character garbage.
+
+Verified against 40 real affected production images through the full reader: character-split
+hashes went 36 → 0, 36 images recovered their real LoRA hash keys, and no non-character hash
+key was lost. 16 of the 17 distinct recovered hashes resolve to a hosted model file, and
+feeding the corrected hashes through the detection query attributes them to the right model
+versions — including the bracketed name, which resolves to the model it is actually named
+after. A pre-regression image carrying a bracketed `lora:` hash key has detected rows, so the
+key shape was never the problem downstream.
+
+Note for backfill: the mangled rows are self-repairing without the original files — the
+`lora:0`, `lora:1` … keys spell out the original block in order, so it can be reassembled
+and re-parsed in place.
+
+## 0.2.0 — 2026-09-15
 
 ComfyUI coverage: graphs built on custom nodes parsed to little or nothing, so images uploaded
 to civitai showed no prompt and no resources (Freshdesk 72488 / 70088).

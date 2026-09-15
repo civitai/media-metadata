@@ -3,6 +3,7 @@ import { civitai } from '../../../civitai/plugin';
 import { applyPlugins } from '../../plugins';
 import { defaultParsers } from '../registry';
 import { automatic1111Parser } from '../automatic1111';
+import { parseDetailsLine } from '../a1111-text';
 import { createParserContext } from '../types';
 
 // Most of these strings carry civitai blocks (Civitai resources/metadata), so
@@ -172,5 +173,70 @@ Steps: 20, Sampler: Euler, CFG scale: 7, Seed: 1, Model hash: aadddd3d75, Model:
     const result = detectAndParse(rawMetadata);
     expect(Date.now() - start).toBeLessThan(1000);
     expect(result.steps).toBe('5');
+  });
+});
+
+describe('parseDetailsLine - nested hash blocks keyed on the field name', () => {
+  // Reassembled verbatim from the character-split keys stored on image 142441991 by the
+  // build that shipped 2026-08-31. The brackets are what failed the shape heuristic.
+  const REAL_NAME = 'Krea2 - FACE - Licking Lips (Krea2)';
+
+  it('splits a Lora hashes block whose name carries brackets and dashes', () => {
+    const result = parseDetailsLine(`Steps: 24, Lora hashes: "${REAL_NAME}: 4cf2eea941da"`);
+    expect(result['Lora hashes']).toEqual({ [REAL_NAME]: '4cf2eea941da' });
+  });
+
+  it.each([
+    ['非ラテン文字のLoRA', 'aabbccddeeff'],
+    ['name with (parens) and [brackets]', '001122334455'],
+    ["it's a #1 lora!", '667788990011'],
+    ['plain_name_v2', 'bed61886a493'],
+  ])('splits a Lora hashes block for the name %s', (name, hash) => {
+    const result = parseDetailsLine(`Lora hashes: "${name}: ${hash}"`);
+    expect(result['Lora hashes']).toEqual({ [name]: hash });
+  });
+
+  it('splits the sibling hash blocks A1111 writes the same way', () => {
+    for (const key of ['TI hashes', 'Hashes', 'Hypernet hashes']) {
+      const result = parseDetailsLine(`${key}: "a (b): 0011aabb"`);
+      expect(result[key], `${key} was left as a raw string`).toEqual({ 'a (b)': '0011aabb' });
+    }
+  });
+
+  it('does not newly split prose under a key that is not a hash block', () => {
+    // The negative control for the rule above: keying on the field name must not widen
+    // what gets split. A value that never matched the shape heuristic still must not.
+    const result = parseDetailsLine('Wildcard prompt: "  <lora:x:1> a portrait, dramatic"');
+    expect(result['Wildcard prompt']).toBe('<lora:x:1> a portrait, dramatic');
+  });
+
+  it('leaves the pre-existing shape heuristic alone for non-hash keys', () => {
+    // PRE-EXISTING, not introduced here and not fixed here: prose beginning `word: `
+    // is split by the shape heuristic, so a Hires prompt can still be mangled. Pinned
+    // so a future change to NESTED_BLOCK_KEYS is not blamed for it, and so that
+    // widening the heuristic shows up as a change to this expectation.
+    const result = parseDetailsLine('Hires prompt: "a portrait: closeup, dramatic", Steps: 24');
+    expect(result['Hires prompt']).toEqual({ 'a portrait': 'closeup' });
+    expect(result['steps']).toBe('24');
+  });
+});
+
+describe('collectResources - a Lora hashes block that arrives as a string', () => {
+  it('parses it instead of enumerating its characters', () => {
+    // The shipped failure: Object.entries over a string yields index/char pairs, so every
+    // LoRA was lost AND meta.hashes gained one `lora:<n>` key per character.
+    const line =
+      'Steps: 24, Sampler: Euler a, Model hash: 23d793a158, Model: GenericModel, Lora hashes: "Krea2 - FACE (Krea2): 4cf2eea941da", Version: v1.9.3';
+    const state = automatic1111Parser.detect({ parameters: `a prompt\n${line}` }, ctx);
+    const meta = automatic1111Parser.parse(state!, ctx) as Record<string, any>;
+
+    expect(meta.hashes).toEqual({
+      model: '23d793a158',
+      'lora:Krea2 - FACE (Krea2)': '4cf2eea941da',
+    });
+    expect(Object.keys(meta.hashes).some((k) => /^lora:\d+$/.test(k))).toBe(false);
+    expect(meta.resources).toContainEqual(
+      expect.objectContaining({ type: 'lora', name: 'Krea2 - FACE (Krea2)', hash: '4cf2eea941da' })
+    );
   });
 });

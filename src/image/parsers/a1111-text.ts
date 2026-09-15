@@ -115,13 +115,22 @@ export function quoteInfotextValue(value: string): string {
 const KEY_VALUE_SHAPE = /^[\w][\w\s.+-]*: /;
 
 /**
+ * Keys A1111 always writes as a nested `name: value` block. Decided by KEY, because
+ * the shape test below reads the resource NAME, and a name is whatever the creator
+ * called their file: parentheses, punctuation, non-Latin scripts. `Lora hashes:
+ * "Krea2 - FACE - Licking Lips (Krea2): 4cf2eea941da"` failed the shape test on its
+ * brackets, unquoted to a plain string, and every LoRA on the image was lost.
+ */
+const NESTED_BLOCK_KEYS = /^(lora|ti|hypernet|checkpoint)? ?hashes$|^controlnet \d+$|^addnet /i;
+
+/**
  * A quoted value is either a nested key/value block (`Lora hashes: "a: 1, b: 2"`,
  * which A1111 splits after unquoting — we recurse directly) or an A1111
  * JSON-quoted plain string (`Wildcard prompt: "text, with commas"`), which
  * unquotes back to text like upstream's unquote().
  */
-function resolveQuotedValue(raw: string): unknown {
-  if (KEY_VALUE_SHAPE.test(raw)) return parseDetailsLine(raw);
+function resolveQuotedValue(raw: string, key: string): unknown {
+  if (NESTED_BLOCK_KEYS.test(key) || KEY_VALUE_SHAPE.test(raw)) return parseDetailsLine(raw);
   try {
     return JSON.parse(`"${raw}"`);
   } catch {
@@ -152,7 +161,7 @@ export function parseDetailsLine(line: string | undefined): Record<string, any> 
       i++;
     } else if (char === '"') {
       if (insideQuotes) {
-        if (currentKey) result[currentKey] = resolveQuotedValue(currentValue.trim());
+        if (currentKey) result[currentKey] = resolveQuotedValue(currentValue.trim(), currentKey);
         currentKey = '';
       }
       insideQuotes = !insideQuotes;
