@@ -1,6 +1,6 @@
 {
   "name": "@civitai/generation-metadata",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Read and write AI generation metadata embedded in images (PNG / JPEG / WebP): Automatic1111, ComfyUI, SwarmUI, RuinedFooocus, and civitai on-site formats",
   "license": "MIT",
   "repository": {
